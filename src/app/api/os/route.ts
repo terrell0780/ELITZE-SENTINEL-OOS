@@ -43,10 +43,22 @@ export async function POST(req: NextRequest) {
       case "update": return NextResponse.json({ updated: db.update(params.collection, params.query, params.data) });
       case "delete": return NextResponse.json({ deleted: db.delete(params.collection, params.query) });
       case "stats": return NextResponse.json(db.stats());
-      default: return NextResponse.json({ error: "Unknown action" }, { status: 400 });
+      default: return NextResponse.json({
+        error_code: "UNAVAILABLE",
+        message: "Unknown action requested",
+        request_id: `req-${Date.now()}`,
+        component: "api_gateway",
+        timestamp: new Date().toISOString()
+      }, { status: 400 });
     }
   } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    return NextResponse.json({
+      error_code: "FAILED",
+      message: e.message || "Internal server error",
+      request_id: `req-${Date.now()}`,
+      component: "api_gateway",
+      timestamp: new Date().toISOString()
+    }, { status: 500 });
   }
 }
 
@@ -54,5 +66,11 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const action = url.searchParams.get("action");
   if (action === "stats") return NextResponse.json(db.stats());
-  return NextResponse.json({ error: "Use POST" }, { status: 400 });
+  return NextResponse.json({
+    error_code: "UNAVAILABLE",
+    message: "HTTP GET not supported for this action. Use POST.",
+    request_id: `req-${Date.now()}`,
+    component: "api_gateway",
+    timestamp: new Date().toISOString()
+  }, { status: 400 });
 }
