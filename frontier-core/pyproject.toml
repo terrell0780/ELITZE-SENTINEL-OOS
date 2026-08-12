@@ -1,0 +1,23 @@
+# Copyright (c) 2026 Terrell Hall / TrueElitze Digital. All rights reserved.
+[project]
+name = "Frontier-core"
+version = "1.0.0"
+description = "Frontier Core — Open-Source AI Gateway & Workbench"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic",
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic",
+    "httpx",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.2",
+    "pytest-asyncio>=0.23.7",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests", "."]

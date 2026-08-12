@@ -1,0 +1,14 @@
+# Copyright (c) 2026 Terrell Hall / TrueElitze Digital. All rights reserved.
+[project]
+name = "api-gateway"
+version = "1.0.0"
+description = "Unified /v1 API Gateway — identity, governance, operations, intelligence, knowledge, marketplace, pipeline"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"

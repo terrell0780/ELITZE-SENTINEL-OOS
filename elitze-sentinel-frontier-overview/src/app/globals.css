@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #07090F;
+  --bg-card: #10131A;
+  --border: #252A38;
+  --primary: #D92A2A;
+  --text: #F5F5F5;
+  --secondary: #A7B0C2;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #252A38 transparent;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(217, 42, 42, 0.3);
+  color: #F5F5F5;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.7s ease-out forwards;
+}
+
+.animate-fade-in-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.animate-fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.animate-fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
+.animate-fade-in-delay-4 { animation-delay: 0.4s; opacity: 0; }
+.animate-fade-in-delay-5 { animation-delay: 0.5s; opacity: 0; }

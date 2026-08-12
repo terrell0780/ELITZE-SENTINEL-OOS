@@ -1,0 +1,23 @@
+# Copyright (c) 2026 Terrell Hall / TrueElitze Digital. All rights reserved.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: Frontier-enterprise-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+    - hosts:
+        - enterprise.Frontier.ai
+      secretName: Frontier-enterprise-tls
+  rules:
+    - host: enterprise.Frontier.ai
+      http:
+        paths:
+          - path: /api/v1/enterprise
+            pathType: Prefix
+            backend:
+              service:
+                name: Frontier-enterprise
+                port:
+                  number: 8000

@@ -1,0 +1,13 @@
+pyproject.toml
+src/__init__.py
+src/agent.py
+src/cli.py
+src/model.py
+src/frontier_code.egg-info/PKG-INFO
+src/frontier_code.egg-info/SOURCES.txt
+src/frontier_code.egg-info/dependency_links.txt
+src/frontier_code.egg-info/entry_points.txt
+src/frontier_code.egg-info/requires.txt
+src/frontier_code.egg-info/top_level.txt
+src/tools/__init__.py
+tests/test_code.py

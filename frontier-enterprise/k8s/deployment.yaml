@@ -1,0 +1,72 @@
+# Copyright (c) 2026 Terrell Hall / TrueElitze Digital. All rights reserved.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Frontier-enterprise
+  labels:
+    app: Frontier-enterprise
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: Frontier-enterprise
+  template:
+    metadata:
+      labels:
+        app: Frontier-enterprise
+    spec:
+      containers:
+        - name: Frontier-enterprise
+          image: Frontier-enterprise:latest
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          env:
+            - name: FABLE_ENTERPRISE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: frontier-enterprise-secrets
+                  key: SECRET_KEY
+            - name: FABLE_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: frontier-enterprise-secrets
+                  key: DATABASE_URL
+            - name: FABLE_REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: frontier-enterprise-secrets
+                  key: REDIS_URL
+            - name: FABLE_SSO_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: frontier-enterprise-secrets
+                  key: SSO_JWT_SECRET
+            - name: FABLE_LOG_LEVEL
+              value: "info"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: Frontier-enterprise-config
+data:
+  FABLE_LOG_LEVEL: "info"
+  FABLE_API_PORT: "8000"

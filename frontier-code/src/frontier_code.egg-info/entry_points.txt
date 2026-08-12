@@ -1,0 +1,2 @@
+[console_scripts]
+frontier-code = src.cli:main

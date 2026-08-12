@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package frontier.gaming.v1;
+
+option go_package = "github.com/elitze/frontier-gaming-compiler/gen/go";
+option python_package = "frontier.gaming.v1";
+
+// Gaming Compiler Service — compiles natural language prompts into
+// Unreal C++ headers and Unity C# scripts via gRPC.
+
+service GamingCompiler {
+  // Compile a world specification into engine bindings
+  rpc CompileWorld(CompileWorldRequest) returns (CompileWorldResponse);
+  
+  // Validate a prompt without full compilation (fast check)
+  rpc ValidatePrompt(ValidatePromptRequest) returns (ValidatePromptResponse);
+  
+  // Get supported engine targets and versions
+  rpc GetEngineTargets(GetEngineTargetsRequest) returns (GetEngineTargetsResponse);
+  
+  // Stream compilation progress for long-running jobs
+  rpc CompileWorldStream(CompileWorldRequest) returns (stream CompileProgress);
+}
+
+// ─── Request/Response Types ──────────────────────────────────
+
+message CompileWorldRequest {
+  string prompt = 1;
+  WorldScale world_scale = 2;
+  SecurityDifficulty security_difficulty = 3;
+  bool enable_cybernetic_networks = 4;
+  bool enable_single_companion_ai = 5;
+  repeated EngineTarget target_engines = 6;  // empty = all
+}
+
+message CompileWorldResponse {
+  string blueprint_id = 1;
+  uint64 seed = 2;
+  int32 scale_meters = 3;
+  string provenance_hash = 4;
+  EngineBindings engine_bindings = 5;
+  MythosValidation mythos_validation = 6;
+  CompilationStatus status = 7;
+  string error_message = 8;
+}
+
+message ValidatePromptRequest {
+  string prompt = 1;
+}
+
+message ValidatePromptResponse {
+  bool valid = 1;
+  string sanitized_prompt = 2;
+  repeated string warnings = 3;
+}
+
+message GetEngineTargetsRequest {}
+
+message GetEngineTargetsResponse {
+  repeated EngineTargetInfo targets = 1;
+}
+
+message CompileProgress {
+  string stage = 1;
+  int32 progress_percent = 2;
+  string message = 3;
+  EngineBindings partial_bindings = 4;
+  bool done = 5;
+}
+
+// ─── Domain Types ────────────────────────────────────────────
+
+enum WorldScale {
+  WORLD_SCALE_UNSPECIFIED = 0;
+  WORLD_SCALE_SMALL_2KM = 1;
+  WORLD_SCALE_MEDIUM_4KM = 2;
+  WORLD_SCALE_LARGE_8KM = 3;
+}
+
+enum SecurityDifficulty {
+  SECURITY_DIFFICULTY_UNSPECIFIED = 0;
+  SECURITY_DIFFICULTY_STANDARD = 1;
+  SECURITY_DIFFICULTY_HARDENED = 2;
+  SECURITY_DIFFICULTY_CYBERPUNK_GRID_DECEPTION = 3;
+}
+
+enum EngineTarget {
+  ENGINE_TARGET_UNSPECIFIED = 0;
+  ENGINE_TARGET_UNREAL_5_5 = 1;
+  ENGINE_TARGET_UNREAL_5_6 = 2;
+  ENGINE_TARGET_UNREAL_5_8_EXPERIMENTAL = 3;
+  ENGINE_TARGET_UNITY_6_LTS = 4;
+  ENGINE_TARGET_UNITY_RUNTIME_CORE = 5;
+}
+
+enum CompilationStatus {
+  COMPILATION_STATUS_UNSPECIFIED = 0;
+  COMPILATION_STATUS_SUCCESS = 1;
+  COMPILATION_STATUS_FAILED = 2;
+  COMPILATION_STATUS_PARTIAL = 3;
+}
+
+message EngineTargetInfo {
+  EngineTarget target = 1;
+  string display_name = 2;
+  string version = 3;
+  bool supports_cpp = 4;
+  bool supports_csharp = 5;
+}
+
+message GeologicalLayer {
+  string landscape_resolution = 1;
+  repeated string edit_layers = 2;
+  string heightmap_source = 3;  // e.g., "google_earth_engine"
+}
+
+message CyberInfrastructure {
+  double voronoi_grid_mesh_density = 1;
+  SecurityDifficulty encryption_complexity = 2;
+  repeated string network_topologies = 3;
+}
+
+message CompanionProfile {
+  string system_class = 1;
+  string assigned_skin_preset = 2;
+  bool singleton_enforced = 3;
+}
+
+message GeospatialLayer {
+  bool mcp_server_active = 1;
+  string imagery_source = 2;
+  repeated string grounded_locations = 3;
+}
+
+message UnrealCppBinding {
+  string file_name = 1;
+  string source_raw = 2;
+  repeated string compilation_targets = 3;
+  string class_name = 4;
+  repeated string includes = 5;
+}
+
+message UnityCSharpBinding {
+  string file_name = 1;
+  string source_raw = 2;
+  repeated string compilation_targets = 3;
+  string class_name = 4;
+  string namespace = 5;
+}
+
+message EngineBindings {
+  repeated UnrealCppBinding unreal_cpp_bindings = 1;
+  repeated UnityCSharpBinding unity_csharp_bindings = 2;
+}
+
+message MythosValidation {
+  bool companion_singleton_rule_verified = 1;
+  bool cpp_header_syntax_valid = 2;
+  bool csharp_class_syntax_valid = 3;
+  repeated string ip_sanitization_applied = 4;
+}
