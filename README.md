@@ -1,8 +1,8 @@
-# Elitze Sentinel Frontier OOS
+# Elitze Sentinel Frontier Oss
 
 <div align="center">
 
-![Elitze Sentinel Frontier OOS Banner](https://elitze.ca/og-image.png)
+![Elitze Sentinel Frontier Oss Banner](https://elitze.ca/og-image.png)
 
 ### The Sovereign AI Operating System
 **Multi-Model Orchestration • Autonomous Agent Mesh • Enterprise Operations • Sovereign Security**
@@ -19,7 +19,7 @@
 
 ## 🚀 Overview
 
-**Elitze Sentinel Frontier OOS** is a sovereign AI operating system built for enterprises, developers, researchers, security operations, and creators.
+**Elitze Sentinel Frontier Oss** is a sovereign AI operating system built for enterprises, developers, researchers, security operations, and creators.
 
 Unlike standard conversational AI wrappers, **Frontier OOS** provides an all-in-one operating environment where multi-model reasoning, code execution, real-time CRM, video rendering, security governance, lead generation, automated job application agents, and workflow pipelines execute inside a single, unified workspace under strict OS Kernel control:
 

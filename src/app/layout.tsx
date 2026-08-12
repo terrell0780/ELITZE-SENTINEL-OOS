@@ -6,7 +6,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 export const metadata: Metadata = {
   metadataBase: new URL("https://elitze.ca"),
   title: {
-    default: "Elitze Sentinel Frontier — Sovereign AI Operating System",
+    default: "Elitze Sentinel Frontier Oss — Sovereign AI Operating System",
     template: "%s | Elitze Frontier",
   },
   description: "The premier enterprise AI operating system. Command your own multi-model orchestration, autonomous agents, CRM, lead generation, and security with full data sovereignty.",
