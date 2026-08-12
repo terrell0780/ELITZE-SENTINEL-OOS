@@ -157,6 +157,7 @@ npm run build
 
 | Channel | Details |
 |---|---|
+| **System Manifest** | [MANIFEST.md](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/MANIFEST.md) |
 | **Production Domain** | [elitze.ca](https://elitze.ca) |
 | **Console Hub** | [app.elitze.ca](https://app.elitze.ca) |
 | **Contact Email** | `terrell0780@gmail.com` |
