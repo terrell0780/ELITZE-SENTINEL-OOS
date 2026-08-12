@@ -1,4 +1,5 @@
 "use client";
+// Force Vercel Clean Rebuild - Chat Page Bundle 2026-08-12
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
