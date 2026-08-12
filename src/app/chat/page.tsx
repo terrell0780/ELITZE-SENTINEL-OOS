@@ -36,25 +36,48 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [waiting, setWaiting] = useState(false);
   const [selectedModel, setSelectedModel] = useState("Llama 3.3 70B");
+  const [searchActive, setSearchActive] = useState(false);
+  const [workflowActive, setWorkflowActive] = useState(false);
+  const [attachedFiles, setAttachedFiles] = useState<string[]>([]);
 
   const endRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, waiting]);
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const fileName = e.target.files[0].name;
+      setAttachedFiles(prev => [...prev, fileName]);
+    }
+  };
+
   const sendMessage = useCallback(async (text: string) => {
     if (!text.trim() || waiting) return;
     const query = text.trim();
     setInput("");
-    setMessages(prev => [...prev, { id: `u-${Date.now()}`, role: "user", content: query, timestamp: Date.now() }]);
+    
+    let fullPrompt = query;
+    if (attachedFiles.length > 0) {
+      fullPrompt += `\n\n[Attached files: ${attachedFiles.join(", ")}]`;
+    }
+    if (searchActive) {
+      fullPrompt += ` [Tool: Search Web]`;
+    }
+    if (workflowActive) {
+      fullPrompt += ` [Tool: Execute Workflow]`;
+    }
+
+    setMessages(prev => [...prev, { id: `u-${Date.now()}`, role: "user", content: fullPrompt, timestamp: Date.now() }]);
     setWaiting(true);
 
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [{ role: "user", content: query }], model: selectedModel }),
+        body: JSON.stringify({ messages: [{ role: "user", content: fullPrompt }], model: selectedModel }),
       });
       const data = await res.json();
       const content = data.content || data.error || "Request processed by Frontier OS Engine Kernel.";
@@ -67,14 +90,19 @@ export default function ChatPage() {
         timestamp: Date.now() 
       }]);
     }
+
+    setAttachedFiles([]);
     setWaiting(false);
-  }, [waiting, selectedModel]);
+  }, [waiting, selectedModel, searchActive, workflowActive, attachedFiles]);
 
   const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); sendMessage(input); };
   const handleKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } };
 
   return (
     <div className="flex flex-col h-full bg-[#09090B] relative overflow-hidden text-white">
+
+      {/* Hidden File Input for Attach Tool */}
+      <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileUpload} />
 
       {/* Top Navigation Bar */}
       <header className="h-14 border-b border-[#27272A] flex items-center justify-between px-6 bg-[#09090B] shrink-0 z-20">
@@ -99,10 +127,10 @@ export default function ChatPage() {
 
         {/* Right Action Icons */}
         <div className="flex items-center gap-3 text-[#71717A]">
-          <button className="p-1.5 hover:text-white transition-colors rounded-lg hover:bg-[#141416]">
+          <button className="p-1.5 hover:text-white transition-colors rounded-lg hover:bg-[#141416]" title="Toggle Theme">
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           </button>
-          <button className="p-1.5 hover:text-white transition-colors rounded-lg hover:bg-[#141416]">
+          <button className="p-1.5 hover:text-white transition-colors rounded-lg hover:bg-[#141416]" title="Voice Mode">
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
           </button>
         </div>
@@ -113,15 +141,15 @@ export default function ChatPage() {
         <div className="max-w-4xl mx-auto min-h-full flex flex-col justify-center px-6">
 
           {messages.length === 0 ? (
-            /* ── HERO EMPTY STATE: EMBLEM WATERMARK + GREETING (Exact Match to Right Photo) ── */
+            /* ── HERO EMPTY STATE: LARGE EMBLEM WATERMARK + GREETING (Exact Match to Right Photo) ── */
             <div className="flex flex-col items-center justify-center text-center my-auto relative py-12">
               
-              {/* Central Emblem Background Watermark */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+              {/* Central Emblem Background Watermark (Large Size matching Image 2) */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-25 z-0">
                 <img
                   src="/chat-bg.jpg"
                   alt=""
-                  className="w-[520px] h-[520px] object-cover rounded-full filter contrast-125"
+                  className="w-[680px] h-[680px] md:w-[740px] md:h-[740px] object-cover rounded-full filter contrast-125 brightness-110"
                 />
               </div>
 
@@ -139,6 +167,18 @@ export default function ChatPage() {
               {/* Floating Centrally Anchored Chat Box (Right Photo Exact Match) */}
               <div className="w-full max-w-2xl relative z-10">
                 <form onSubmit={handleSubmit} className="bg-[#141416] border border-[#27272A] rounded-2xl p-4 shadow-2xl flex flex-col gap-3">
+                  
+                  {/* Attachment Pills Header */}
+                  {attachedFiles.length > 0 && (
+                    <div className="flex flex-wrap gap-2 pb-1">
+                      {attachedFiles.map((file, idx) => (
+                        <span key={idx} className="text-xs bg-[#27272A] text-white px-2.5 py-1 rounded-md flex items-center gap-1.5">
+                          📎 {file}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
                   <textarea
                     value={input}
                     onChange={e => setInput(e.target.value)}
@@ -151,19 +191,40 @@ export default function ChatPage() {
                   {/* Inner Action Bar */}
                   <div className="flex items-center justify-between pt-1">
                     <div className="flex items-center gap-3">
-                      {/* Attachment Icon */}
-                      <button type="button" className="p-1.5 text-[#71717A] hover:text-white transition-colors rounded-lg hover:bg-[#27272A]">
+                      {/* Attachment Tool Button */}
+                      <button 
+                        type="button" 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="p-1.5 text-[#71717A] hover:text-white transition-colors rounded-lg hover:bg-[#27272A]"
+                        title="Attach File"
+                      >
                         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
                       </button>
 
-                      {/* Search Pill */}
-                      <button type="button" className="flex items-center gap-1.5 px-3 py-1 bg-[#1C1C1F] hover:bg-[#27272A] border border-[#27272A] rounded-full text-xs text-[#A1A1AA] hover:text-white transition-all font-medium">
+                      {/* Search Tool Pill */}
+                      <button 
+                        type="button" 
+                        onClick={() => setSearchActive(!searchActive)}
+                        className={`flex items-center gap-1.5 px-3 py-1 border rounded-full text-xs font-medium transition-all ${
+                          searchActive 
+                            ? "bg-[#D92A2A]/20 border-[#D92A2A] text-[#D92A2A]" 
+                            : "bg-[#1C1C1F] hover:bg-[#27272A] border-[#27272A] text-[#A1A1AA] hover:text-white"
+                        }`}
+                      >
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                         <span>Search</span>
                       </button>
 
-                      {/* Workflow Pill */}
-                      <button type="button" className="flex items-center gap-1.5 px-3 py-1 bg-[#1C1C1F] hover:bg-[#27272A] border border-[#27272A] rounded-full text-xs text-[#A1A1AA] hover:text-white transition-all font-medium">
+                      {/* Workflow Tool Pill */}
+                      <button 
+                        type="button" 
+                        onClick={() => setWorkflowActive(!workflowActive)}
+                        className={`flex items-center gap-1.5 px-3 py-1 border rounded-full text-xs font-medium transition-all ${
+                          workflowActive 
+                            ? "bg-[#D92A2A]/20 border-[#D92A2A] text-[#D92A2A]" 
+                            : "bg-[#1C1C1F] hover:bg-[#27272A] border-[#27272A] text-[#A1A1AA] hover:text-white"
+                        }`}
+                      >
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         <span>Workflow</span>
                       </button>
