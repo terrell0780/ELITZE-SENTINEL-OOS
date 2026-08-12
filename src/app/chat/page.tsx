@@ -35,6 +35,7 @@ export default function ChatPage() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [waiting, setWaiting] = useState(false);
+  const [selectedModel, setSelectedModel] = useState("Llama 3.3 70B");
 
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +54,7 @@ export default function ChatPage() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [{ role: "user", content: query }] }),
+        body: JSON.stringify({ messages: [{ role: "user", content: query }], model: selectedModel }),
       });
       const data = await res.json();
       const content = data.content || data.error || "Request processed by Frontier OS Engine Kernel.";
@@ -67,13 +68,45 @@ export default function ChatPage() {
       }]);
     }
     setWaiting(false);
-  }, [waiting]);
+  }, [waiting, selectedModel]);
 
   const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); sendMessage(input); };
   const handleKey = (e: React.KeyboardEvent<HTMLTextAreaElement>) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } };
 
   return (
     <div className="flex flex-col h-full bg-[#09090B] relative overflow-hidden text-white">
+
+      {/* Top Navigation Bar */}
+      <header className="h-14 border-b border-[#27272A] flex items-center justify-between px-6 bg-[#09090B] shrink-0 z-20">
+        <div className="flex items-center gap-3">
+          {/* Model Selector Dropdown */}
+          <div className="relative">
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              className="bg-[#141416] text-xs font-semibold text-white border border-[#27272A] rounded-xl px-3 py-1.5 outline-none appearance-none pr-8 cursor-pointer hover:border-[#3F3F46] transition-colors"
+            >
+              <option value="Llama 3.3 70B">Llama 3.3 70B</option>
+              <option value="Qwen3 235B">Qwen3 235B</option>
+              <option value="DeepSeek Coder V2">DeepSeek Coder V2</option>
+              <option value="Claude 3.5 Sonnet">Claude 3.5 Sonnet</option>
+            </select>
+            <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#71717A]">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Action Icons */}
+        <div className="flex items-center gap-3 text-[#71717A]">
+          <button className="p-1.5 hover:text-white transition-colors rounded-lg hover:bg-[#141416]">
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+          <button className="p-1.5 hover:text-white transition-colors rounded-lg hover:bg-[#141416]">
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+          </button>
+        </div>
+      </header>
 
       {/* Main Chat Canvas */}
       <div className="flex-1 overflow-y-auto relative">
