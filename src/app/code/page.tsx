@@ -4,11 +4,11 @@ import { useState } from "react";
 import { brain } from "@/lib/brain";
 
 export default function CodePage() {
-  const [activeRepo, setActiveRepo] = useState("elitze-sentinel-frontier-oos");
+  const [activeRepo, setActiveRepo] = useState("elitze-sentinel-frontier-os");
   const [activeBranch, setActiveBranch] = useState("main");
   const [activeTab, setActiveTab] = useState<"editor" | "prs" | "review">("editor");
 
-  const repos = ["elitze-sentinel-frontier-oos", "frontier-runtime", "frontier-console", "elitze-sentinel"];
+  const repos = ["elitze-sentinel-frontier-os", "frontier-runtime", "frontier-console", "elitze-sentinel"];
   const branches = ["main", "develop", "feature/sovereign-ai"];
 
   return (

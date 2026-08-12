@@ -87,7 +87,7 @@ export default function ChatPage() {
                   {getGreeting()}, Terrell
                 </h1>
                 <p className="text-sm text-[#6B6B78]">
-                  How can Frontier OOS help you today?
+                  How can Frontier OS help you today?
                 </p>
               </div>
             </div>

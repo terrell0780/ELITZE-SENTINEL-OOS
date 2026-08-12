@@ -1,4 +1,4 @@
-# Elitze Sentinel Frontier Oos
+# Elitze Sentinel Frontier OS
 
 An AI-first, autonomous enterprise workspace designed to consolidate Go-To-Market strategies, development workflows, and creative studios into a single, high-performance console.
 
