@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/dashboard/settings', '/enterprise/billing'],
     },
-    sitemap: 'https://www.elitze.ca/sitemap.xml',
+    sitemap: 'https://elitze.ca/sitemap.xml',
   };
 }

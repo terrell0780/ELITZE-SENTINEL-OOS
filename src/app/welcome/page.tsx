@@ -133,7 +133,7 @@ export default function WelcomePage() {
       <footer className="py-12 bg-slate-900 text-white/80 border-t border-slate-800 mt-auto">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
           <div>
-            &copy; {new Date().getFullYear()} www.elitze.ca — Elitze Sentinel Frontier OS
+            &copy; {new Date().getFullYear()} elitze.ca — Elitze Sentinel Frontier OS
           </div>
           <div className="flex items-center gap-8 text-white/70">
             <span>ISO 27001 Certified</span>
