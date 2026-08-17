@@ -2,15 +2,15 @@
 
 <div align="center">
 
-![Elitze Sentinel Frontier Oss Banner](https://elitze.ca/og-image.png)
+![Elitze Sentinel Frontier Oss Banner](https://elitze.org/og-image.png)
 
 ### The Sovereign AI Operating System
 **Multi-Model Orchestration • Autonomous Agent Mesh • Enterprise Operations • Sovereign Security**
 
-[![Domain](https://img.shields.io/badge/Domain-elitze.ca-red.svg)](https://elitze.ca)
-[![App Console](https://img.shields.io/badge/Console-app.elitze.ca-0055ff.svg)](https://app.elitze.ca)
-[![Tests](https://img.shields.io/badge/Pytest-281%2F281%20PASSED-emerald.svg)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/pytest.ini)
-[![TypeScript](https://img.shields.io/badge/TypeScript-0%20ERRORS-blue.svg)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/tsconfig.json)
+[![Domain](https://img.shields.io/badge/Domain-elitze.org-red.svg)](https://elitze.org)
+[![App Console](https://img.shields.io/badge/Console-app.elitze.org-0055ff.svg)](https://app.elitze.org)
+[![Tests](https://img.shields.io/badge/Pytest-281%2F281%20PASSED-emerald.svg)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/frontier-runtime/tests)
+[![TypeScript](https://img.shields.io/badge/TypeScript-0%20ERRORS-blue.svg)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/frontier-console)
 [![License](https://img.shields.io/badge/License-Proprietary%20%2F%20Open-orange.svg)](#license)
 
 </div>

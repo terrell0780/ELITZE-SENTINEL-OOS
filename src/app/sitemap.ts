@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://elitze.ca';
+  const baseUrl = 'https://elitze.org';
 
   // These are the main public and app routes
   const routes = [

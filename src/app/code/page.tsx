@@ -97,7 +97,7 @@ export default function CodePage() {
             <br />
             <p className="text-[#A1A1AA]">@app.get("/health")</p>
             <p className="text-[#D92A2A]">async def health():</p>
-            <p className="text-[#A1A1AA] pl-4">return {"{"}"status": "healthy", "domain": "elitze.ca"{"}"}</p>
+            <p className="text-[#A1A1AA] pl-4">return {"{"}"status": "healthy", "domain": "elitze.org"{"}"}</p>
           </div>
         </main>
 

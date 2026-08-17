@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/dashboard/settings', '/enterprise/billing'],
+      disallow: ['/api/'],
     },
-    sitemap: 'https://elitze.ca/sitemap.xml',
+    sitemap: 'https://elitze.org/sitemap.xml',
   };
 }

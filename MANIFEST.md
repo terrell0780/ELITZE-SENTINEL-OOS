@@ -1,7 +1,7 @@
 # MANIFEST.md — Elitze Sentinel Frontier Oss
 
 > **Sovereign Enterprise AI Operating System & Architecture Manifest**  
-> **Canonical Domain**: [https://elitze.ca](https://elitze.ca)  
+> **Canonical Domain**: [https://elitze.org](https://elitze.org)  
 > **System Owner / Author**: Terrell Hall (`terrell0780@gmail.com`)  
 > **Codebase License**: Sovereign Enterprise Proprietary / Full IP Ownership Transfer Ready  
 > **Quality Verification**: **281 / 281 Pytest Tests Passed** (100% Green) \| **42 / 42 Next.js App Router Routes Compiled** (Exit Code 0)

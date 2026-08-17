@@ -4,14 +4,14 @@ import ConditionalSidebar from "@/components/ConditionalSidebar";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://elitze.ca"),
+  metadataBase: new URL("https://elitze.org"),
   title: {
     default: "Elitze Sentinel Frontier Oss — Sovereign AI Operating System",
     template: "%s | Elitze Frontier",
   },
   description: "The premier enterprise AI operating system. Command your own multi-model orchestration, autonomous agents, CRM, lead generation, and security with full data sovereignty.",
   keywords: ["Sovereign AI", "AI Operating System", "Enterprise AI", "LLM Orchestration", "AI Agents", "Lead Generation", "Cybersecurity", "Elitze Frontier", "On-Premise AI"],
-  authors: [{ name: "Terrell Hall / TrueElitze Digital", url: "https://elitze.ca" }],
+  authors: [{ name: "Terrell Hall / TrueElitze Digital", url: "https://elitze.org" }],
   creator: "Terrell Hall",
   publisher: "TrueElitze Digital",
   formatDetection: {
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://elitze.ca",
+    url: "https://elitze.org",
     title: "Elitze Sentinel Frontier",
     description: "The sovereign AI operating system for enterprise. Multi-model orchestration, agent workflows, security, and full data ownership.",
     siteName: "Elitze Sentinel Frontier",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     images: ["/logo.jpg"],
   },
   alternates: {
-    canonical: "https://elitze.ca",
+    canonical: "https://elitze.org",
   },
 };
 
