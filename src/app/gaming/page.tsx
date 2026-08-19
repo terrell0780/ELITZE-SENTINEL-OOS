@@ -378,19 +378,21 @@ export default function GamingPage() {
             F
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[13px] font-bold text-white tracking-tight">FRONTIER STUDIO</span>
-            <span className="text-[9px] font-semibold text-[#8B5CF6]/70 uppercase tracking-widest">Game Development</span>
+            <span className="text-[13px] font-bold text-white tracking-tight">PROJECT: MYTHOS WORLD</span>
+            <span className="text-[9px] font-semibold text-[#8B5CF6]/70 uppercase tracking-widest">FRONTIER GAME ENGINE</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-[10px]">
-          <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#141418] border border-[#1F1F28] text-[#71717A] font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-            Build v1.0.4
-          </span>
-          <span className="px-2.5 py-1 rounded-md bg-[#141418] border border-[#1F1F28] text-[#71717A] font-mono">
-            UE 5.6 · C++23
-          </span>
+        <div className="flex items-center gap-2">
+          <button className="px-3 py-1 rounded-md bg-[#10B981] hover:bg-[#059669] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-[#10B981]/20 transition-all">
+            <span>▶</span> PLAY
+          </button>
+          <button className="px-3 py-1 rounded-md bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-[#8B5CF6]/20 transition-all">
+            <span>⚡</span> BUILD
+          </button>
+          <button className="px-3 py-1 rounded-md bg-[#141418] border border-[#1F1F28] hover:bg-[#1C1C24] text-[#A1A1AA] hover:text-white font-semibold text-xs transition-all">
+            EXPORT
+          </button>
         </div>
       </header>
 
@@ -624,6 +626,33 @@ export default function GamingPage() {
         </div>
 
       </div>
+
+      {/* ─── Bottom Studio Dock ─────────────────────────────────── */}
+      <footer className="h-9 border-t border-[#1F1F28] bg-[#0C0C0F] px-4 flex items-center justify-between shrink-0 z-20 select-none">
+        <div className="flex items-center gap-1 font-mono text-[10px]">
+          {["ASSETS", "AGENTS", "CONSOLE", "LOGS", "SIMULATION", "BUILD"].map((tab, idx) => (
+            <button
+              key={tab}
+              className={`px-3 py-1 rounded transition-colors ${
+                idx === 0
+                  ? "bg-[#1F1F28] text-white font-bold"
+                  : "text-[#71717A] hover:text-[#A1A1AA] hover:bg-[#141418]"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-3 text-[10px] text-[#52525B] font-mono">
+          <span className="flex items-center gap-1 text-[#10B981]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+            Agent Mesh Active
+          </span>
+          <span>UE 5.6 Runtime</span>
+          <span>FPS: 60</span>
+        </div>
+      </footer>
+
     </div>
   );
 }

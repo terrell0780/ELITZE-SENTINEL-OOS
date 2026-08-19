@@ -31,8 +31,10 @@ const NAV_SECTIONS: NavSection[] = [
       { label: "Game Designer", href: "/gaming/studio", icon: "studio" },
       { label: "World Builder", href: "/world", icon: "studio" },
       { label: "Characters & NPCs", href: "/visual", icon: "users" },
-      { label: "Story Director", href: "/storytelling", icon: "brain" },
+      { label: "Story & Narrative", href: "/storytelling", icon: "brain" },
       { label: "Asset Factory", href: "/visual", icon: "studio" },
+      { label: "AI Director Mesh", href: "/swarm", icon: "brain" },
+      { label: "Build & Export", href: "/workflows", icon: "workflow" },
     ],
   },
   {
