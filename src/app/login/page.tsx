@@ -13,9 +13,10 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    localStorage.setItem("frontier_authenticated", "true");
     setTimeout(() => {
       router.push("/dashboard");
-    }, 500);
+    }, 400);
   };
 
   return (

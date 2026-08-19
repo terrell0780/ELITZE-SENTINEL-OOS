@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ConditionalSidebar from "@/components/ConditionalSidebar";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import AuthGuard from "@/components/AuthGuard";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://elitze.org"),
@@ -73,7 +74,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ConditionalSidebar />
           <main className="flex-1 flex flex-col min-w-0 relative overflow-hidden">
             <ErrorBoundary>
-              {children}
+              <AuthGuard>
+                {children}
+              </AuthGuard>
             </ErrorBoundary>
           </main>
         </div>
