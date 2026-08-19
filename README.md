@@ -1,167 +1,109 @@
 # Elitze Sentinel Frontier Oss
-
-<div align="center">
-
-![Elitze Sentinel Frontier Oss Banner](https://elitze.org/og-image.png)
-
 ### The Sovereign AI Operating System
-**Multi-Model Orchestration • Autonomous Agent Mesh • Enterprise Operations • Sovereign Security**
-
-[![Domain](https://img.shields.io/badge/Domain-elitze.org-red.svg)](https://elitze.org)
-[![Tests](https://img.shields.io/badge/Pytest-281%2F281%20PASSED-emerald.svg)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/frontier-runtime/tests)
-[![TypeScript](https://img.shields.io/badge/TypeScript-0%20ERRORS-blue.svg)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/frontier-console)
-[![License](https://img.shields.io/badge/License-Proprietary%20%2F%20Open-orange.svg)](#license)
-
-</div>
-
----
-
-## 🚀 Overview
-
-**Elitze Sentinel Frontier Oss** is a sovereign AI operating system built for enterprises, developers, researchers, security operations, and creators.
-
-Unlike standard conversational AI wrappers, **Frontier OOS** provides an all-in-one operating environment where multi-model reasoning, code execution, real-time CRM, video rendering, security governance, lead generation, automated job application agents, and workflow pipelines execute inside a single, unified workspace under strict OS Kernel control:
-
-* **Every workflow begins in** [Frontier Chat](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/chat/page.tsx).
-* **Every action is governed by** [Elitze Sentinel](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/security/page.tsx).
-* **Every execution runs on** [Frontier OS Kernel](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/elitze_sentinel/backend/app/core/kernel.py).
-
----
-
-## ⚡ Key Features
-
-* 🧠 **Executive Brain & Multi-Model Router**: Orchestrates requests across local runtimes (Ollama/vLLM) and cloud models (Qwen3 235B, Llama 3.3 70B, DeepSeek Coder V2) via OpenRouter.
-* 💳 **Live Payment Checkout (Stripe)**: Built-in subscription checkout session generation (`STRIPE_SECRET_KEY`) with automated webhook upgrade hooks (`POST /v1/payments/webhook`).
-* 🎬 **Multi-Engine AI Video Pipeline**: Real video rendering via fal.ai Pixverse v3 (`FAL_KEY`) with background job progress tracking.
-* ✉️ **Outbound SMTP Email Inbox**: Dedicated email composer and inbox UI with real SMTP delivery (`POST /v1/email/send`).
-* 🛡️ **Elitze Sentinel Security & Threat Intel**: RBAC, policy enforcement, audit logs, and MITRE ATT&CK → Splunk SPL / Sentinel KQL query generation via `TerrellHallGuardrails`.
-* 💼 **Sales CRM & Auto-Apply Job Agent**: Drag-and-drop sales deal pipeline kanban and automated job scraping/application submission.
-* 📱 **Responsive Mobile Console**: Collapsible navigation drawer with backdrop overlay dismiss optimized for phone and tablet viewports.
-* 📊 **Observability & Health Metrics**: Integrated Sentry error tracking, telemetry, and Prometheus `/metrics` endpoint.
-
----
-
-## 🛠️ System Architecture
-
-```
-                          [ Public Internet / Clients ]
-                                      │
-                                      ▼
-                             https://elitze.org
-                         (Caddy / Reverse Proxy)
-               │                                             │
-               ▼                                             ▼
-   Executive Brain API (Port 8052)                Next.js Console (Port 3001)
- ┌───────────────────────────────┐             ┌───────────────────────────────────┐
- │ • FastAPI Orchestrator        │             │ • 30 Integrated Hub Pages         │
- │ • Model Router (OpenRouter)   │ ◄────────── │ • Next.js 15 + React 19           │
- │ • 16-Plane OS Kernel         │   API Proxy │ • Tailwind CSS v4 Theme           │
- │ • Security & Guardrails       │ (/api/os)   │ • Mobile Slide-Out Drawer         │
- └──────────────┬────────────────┘             └───────────────────────────────────┘
-                │
-    ┌───────────┴───────────┬──────────────────────┬────────────────────┐
-    ▼                       ▼                      ▼                    ▼
-OpenRouter / Ollama     Stripe Payments         fal.ai Video       SMTP Mail Server
-(Qwen3, Llama 3.3,    (Checkout & Webhook)   (Pixverse Engine)   (Outbound Delivery)
- DeepSeek Coder)
-```
-
----
-
-## 🏛️ 30 Application Console Hubs
-
-| Hub Category | App Route | Description |
-|---|---|---|
-| **MISSION CONTROL** | [`/chat`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/chat/page.tsx) | Multi-model AI conversation hub with vision & research modes |
-| | [`/intelligence`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/intelligence/page.tsx) | Executive Brain pipeline & decision graph viewer |
-| | [`/dashboard`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/dashboard/page.tsx) | Real-time system health, database stats, and mission telemetry |
-| | [`/welcome`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/welcome/page.tsx) | Interactive 4-step onboarding tour and environment guide |
-| **DEVELOPMENT** | [`/studio`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/studio/page.tsx) | Three-pane drag-and-drop agent & app builder canvas |
-| | [`/code`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/code/page.tsx) | Code repository manager, PR reviews, and AI code generation |
-| | [`/runtime`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/runtime/page.tsx) | Worker pool execution mesh and live trace monitoring |
-| | [`/workflows`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/workflows/page.tsx) | Event trigger manager, webhooks, and cron job runner |
-| | [`/gateway`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/gateway/page.tsx) | API route proxy, rate limiting, and auth token manager |
-| | [`/cli`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/cli/page.tsx) | In-browser command-line terminal & script sandbox |
-| **SECURITY CENTER** | [`/security`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/security/page.tsx) | Elitze Sentinel RBAC, identity policies, and audit logs |
-| | [`/threat-intel`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/threat-intel/page.tsx) | MITRE ATT&CK → Splunk SPL / Sentinel KQL generator |
-| | [`/leadgen`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/leadgen/page.tsx) | Web prospect scraper, site auditor, and pipeline enrichment |
-| **AGENT WORKSPACE**| [`/voice`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/voice/page.tsx) | Real-time Speech-to-Text (STT) & Text-to-Speech (TTS) workspace |
-| | [`/swarm`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/swarm/page.tsx) | Multi-agent swarm orchestration & shared memory graph |
-| | [`/visual`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/visual/page.tsx) | AI image generation, design canvas, and 3D asset generation |
-| | [`/storytelling`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/storytelling/page.tsx) | Screenplay generator, character matrix, and narrative builder |
-| | [`/media`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/media/page.tsx) | AI video generation pipeline (fal.ai / Pixverse v3) |
-| **BUSINESS** | [`/sales`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/sales/page.tsx) | Real-time sales CRM Kanban board with lead stages |
-| | [`/jobs`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/jobs/page.tsx) | Job aggregator, resume matcher, and auto-apply agent |
-| | [`/email`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/integrations/email/page.tsx) | Outbound SMTP composer and inbox manager |
-| | [`/enterprise`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/enterprise/page.tsx) | Organization workspace controls, team RBAC, and billing |
-| | [`/marketplace`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/marketplace/page.tsx) | Plugin, agent, template, and MCP server store |
-| | [`/integrations`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/integrations/page.tsx) | 30+ external provider OAuth connectors & webhooks |
-| **GAMING STUDIO** | [`/gaming`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/gaming/page.tsx) | Unreal Engine 5 / Unity NPC AI compiler and build pipeline |
-| | [`/world`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/world/page.tsx) | Procedural terrain generator and weather control tools |
-| **SYSTEM** | [`/settings`](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app/settings/page.tsx) | Global API key management, model selection, and preferences |
-
----
-
-## ⚡ Quick Start & Deployment
-
-### 1. Local Development Mode
-
-```bash
-# Clone project
-cd "Elitze Sentinel Frontier Oos"
-
-# Copy environment template
-cp .env.example .env
-
-# Start Unified Next.js 15 Console
-npm install
-npm run dev -- -p 3001
-
-# Run Python Backend OS Microservices
-pytest
-```
-
-### 2. One-Command Production Docker Launch
-
-```bash
-# Set production variables in .env
-PUBLIC_DOMAIN=elitze.ca
-FAL_KEY=sk_fal_...
-STRIPE_SECRET_KEY=rk_live_...
-SMTP_HOST=smtp.gmail.com
-
-# Deploy full container stack with Caddy SSL proxy
-docker compose --profile production up -d
-```
-
----
-
-## 🧪 Testing & Quality Assurance
-
-```bash
-# Run complete Python OS Kernel test suite (281 tests passed)
-pytest
-
-# Run Next.js TypeScript & Type Validation (0 errors)
-npx tsc --noEmit
-
-# Execute Next.js Production Build (42/42 static & dynamic routes)
-npm run build
-```
-
----
-
-## 📩 Contact & Support
-
-| Channel | Details |
-|---|---|
-| **System Manifest** | [MANIFEST.md](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/MANIFEST.md) |
-| **Production Domain** | [elitze.org](https://elitze.org) |
-| **Contact Email** | `terrell0780@gmail.com` |
-
----
 
 <div align="center">
-*Last updated: 2026-08-11 23:20 PDT*<br>
-Copyright © 2026 Terrell Hall / TrueElitze Digital. All rights reserved.
+
+<img src="https://elitze.org/logo.jpg" alt="Elitze Sentinel Frontier Logo" width="720" style="border-radius: 20px; box-shadow: 0 20px 50px rgba(208,32,47,0.3);" />
+
+<br /><br />
+
+**Multi-Model Orchestration • Autonomous Agent Mesh • Gaming Studio • Sovereign Security**
+
+[![Domain](https://img.shields.io/badge/Live-elitze.org-red.svg?style=for-the-badge)](https://elitze.org)
+[![Pytest](https://img.shields.io/badge/Pytest-281%2F281%20PASSED-emerald.svg?style=for-the-badge)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/frontier-runtime/tests)
+[![Next.js](https://img.shields.io/badge/Next.js-42%2F42%20Routes-blue.svg?style=for-the-badge)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/src/app)
+[![License](https://img.shields.io/badge/Status-Acquisition%20Ready-orange.svg?style=for-the-badge)](#acquisition--contact)
+
 </div>
+
+---
+
+## ⚡ What is Elitze Sentinel Frontier Oss?
+
+Forget standard API chat wrappers. **Elitze Sentinel Frontier Oss** is a full-blown, production-verified **Sovereign AI Operating System** built from the ground up to give enterprise teams, cybersecurity specialists, game developers, and autonomous agent builders 100% control over their AI infrastructure.
+
+Whether you run on-premise hardware with local models via vLLM/Ollama or orchestrate cloud LLMs across Qwen3 235B, Llama 3.3 70B, and DeepSeek Coder V2, **Frontier OOS** unifies 30 application hubs under a single dark-mode console governed by a deterministic 16-plane security kernel.
+
+> **Full Platform & IP Acquisition**: We are accepting buyout offers for the complete codebase, architecture, branding, and intellectual property as the founder transitions to a new deep-tech project.
+
+---
+
+## 🔥 What's Included Out of the Box? (30 Killer Hubs)
+
+### 🧠 Mission Control & Intelligence
+- **Frontier Chat**: Dynamic multi-model conversation engine with dark mode theme toggles, search pills, workflow triggers, and attachment handling.
+- **Executive Brain**: Real-time decision graphs, pipeline routers, and intelligent model fallback handling.
+- **System Dashboard**: Live telemetry, telemetry health monitoring, and system metrics.
+
+### 🎮 Gaming Studio & 3D World Building (Unreal Engine 5 & Unity)
+- **NPC Decision Compiler**: Compiles autonomous NPC behavior state trees directly for UE5 and Unity.
+- **Procedural World Generator**: Drag-and-drop 3D terrain, weather control, and scene asset generation.
+- **4-Tier Memory Mesh**: Persistent Working, Episodic, Semantic, and Procedural memory for in-game characters.
+
+### 🛡️ Cybersecurity & Threat Intelligence (Elitze Sentinel)
+- **16-Plane Security Kernel**: Strict server-side RBAC, process sandboxing, and control plane risk scoring.
+- **SHA-256 Audit Trail**: Append-only, tamper-proof execution logs for regulatory compliance.
+- **TerrellHallGuardrails**: Real-time prompt sanitization, PII filtering, and MITRE ATT&CK → Splunk SPL / Sentinel KQL query generation.
+
+### 💼 Business, CRM & Automated Workflow Engines
+- **Sales CRM Kanban**: Interactive deal stage pipeline manager with lead tracking.
+- **Auto-Apply Job Agent**: Scraping engine, resume matcher, and automated application handler.
+- **Outbound Email Studio**: Integrated SMTP composer with email delivery.
+- **AI Media & Video Pipeline**: Real-time AI video generation via fal.ai / Pixverse v3.
+
+---
+
+## 🛠️ Requirements & Tech Stack (What You Need)
+
+Frontier OOS is engineered for instant local running or single-command cloud deployment:
+
+### Frontend Tech
+- **Next.js 15** + **React 19**
+- **Tailwind CSS v4** (Custom Dark Glassmorphism)
+- **TypeScript** (Strict Type Validation, 0 Errors)
+
+### Backend Engine & Microservices
+- **Python 3.14 / 3.12** with **FastAPI**
+- **Pytest** (281 / 281 Tests Passed)
+- **Docker & Docker Compose** with **Caddy SSL Reverse Proxy**
+
+### What You Need to Run It
+1. **Node.js 18+** & **npm**
+2. **Python 3.10+** (with virtualenv)
+3. *(Optional)* Docker for one-command containerized production launch.
+
+---
+
+## 🚀 Quick Setup Guide
+
+```bash
+# 1. Clone & Enter Project
+git clone https://github.com/terrell0780/ELITZE-SENTINEL-OOS.git
+cd ELITZE-SENTINEL-OOS
+
+# 2. Launch Local Next.js Console
+npm install
+npm run dev
+
+# 3. Verify Python OS Kernel Backend
+pytest
+```
+
+---
+
+## 🏆 Verified Quality Metrics
+
+We don't do mock ups or fake code. Every line of code is empirically verified:
+- **Pytest Test Suite**: `281 / 281 Passed` (0 failures across all 6 microservices)
+- **Next.js Build**: `42 / 42 Routes Compiled` (0 errors)
+- **Secret Safety**: `100% Verified Clean` (0 API keys or `.env` files tracked in Git)
+
+---
+
+## 🤝 Acquisition & Direct Contact
+
+We are evaluating acquisition offers for a full platform transfer (Source Code, Intellectual Property, System Architecture, and Brand Assets).
+
+- **Live Platform Demo**: [https://elitze.org](https://elitze.org)
+- **System Architecture Manifest**: [MANIFEST.md](MANIFEST.md)
+- **Direct Acquisition Contact**: **Terrell Hall** (`terrell0780@gmail.com`)
