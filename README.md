@@ -8,7 +8,6 @@
 **Multi-Model Orchestration • Autonomous Agent Mesh • Enterprise Operations • Sovereign Security**
 
 [![Domain](https://img.shields.io/badge/Domain-elitze.org-red.svg)](https://elitze.org)
-[![App Console](https://img.shields.io/badge/Console-app.elitze.org-0055ff.svg)](https://app.elitze.org)
 [![Tests](https://img.shields.io/badge/Pytest-281%2F281%20PASSED-emerald.svg)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/frontier-runtime/tests)
 [![TypeScript](https://img.shields.io/badge/TypeScript-0%20ERRORS-blue.svg)](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/frontier-console)
 [![License](https://img.shields.io/badge/License-Proprietary%20%2F%20Open-orange.svg)](#license)
@@ -47,10 +46,9 @@ Unlike standard conversational AI wrappers, **Frontier OOS** provides an all-in-
 ```
                           [ Public Internet / Clients ]
                                       │
-               ┌──────────────────────┴──────────────────────┐
-               ▼                                             ▼
-       https://elitze.ca                            https://app.elitze.ca
-   (Caddy / Nginx Reverse Proxy)                (Caddy / Nginx Reverse Proxy)
+                                      ▼
+                             https://elitze.org
+                         (Caddy / Reverse Proxy)
                │                                             │
                ▼                                             ▼
    Executive Brain API (Port 8052)                Next.js Console (Port 3001)
@@ -158,8 +156,7 @@ npm run build
 | Channel | Details |
 |---|---|
 | **System Manifest** | [MANIFEST.md](file:///c:/Elitze%20Sentinel%20Frontier%20Oos/MANIFEST.md) |
-| **Production Domain** | [elitze.ca](https://elitze.ca) |
-| **Console Hub** | [app.elitze.ca](https://app.elitze.ca) |
+| **Production Domain** | [elitze.org](https://elitze.org) |
 | **Contact Email** | `terrell0780@gmail.com` |
 
 ---

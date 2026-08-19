@@ -6,11 +6,10 @@
 - Before pushing to Git, verify `git ls-files` contains zero secret/credential files or hardcoded API keys (`sk-`, `ghp_`, `AIzaSy`).
 
 ## 2. Canonical Domain & Branding Invariants
-- Official Production Domain: `https://elitze.org`
-- Official App Console Subdomain: `https://app.elitze.org`
+- Official Production Domain & App Console: `https://elitze.org` ONLY (no `app.elitze.org` subdomain)
 - Official System Name: `Elitze Sentinel Frontier Oss`
 - Sole Contact Email: `terrell0780@gmail.com`
-- Exclude all legacy or non-target domains (`elitze.ca`, `elitze.com`).
+- Exclude all subdomains (`app.elitze.org`) and legacy/non-target domains (`elitze.ca`, `elitze.com`).
 
 ## 3. Strict Verification & Audit Mandate
 - Run `pytest` across all microservices (`elitze_sentinel`, `frontier-core`, `frontier-enterprise`, `frontier-api`, `frontier-code`, `frontier-gaming-studio`). All 281 unit tests must pass cleanly.
