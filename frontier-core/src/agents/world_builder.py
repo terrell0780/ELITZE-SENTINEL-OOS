@@ -286,6 +286,7 @@ try:
     from langchain_core.tools import tool as langchain_tool
     @langchain_tool(args_schema=WorldBuilderInput)
     def langchain_world_builder(spec: str, style: str, difficulty: str, size: str, cyber_vulns: bool) -> str:
+        """Generate a complete procedural world blueprint with terrain, biomes, monuments, paths, and cyber systems."""
         return world_builder_tool_handler(spec, style, difficulty, size, cyber_vulns)
 except ImportError:
     langchain_world_builder = None

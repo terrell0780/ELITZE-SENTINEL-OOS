@@ -19,17 +19,27 @@ const NAV_SECTIONS: NavSection[] = [
     section: "FRONTIER",
     items: [
       { label: "Chat", href: "/chat", icon: "chat" },
-      { label: "Command", href: "/cli", icon: "terminal" },
       { label: "Agents", href: "/swarm", icon: "users" },
-      { label: "Agent Studio", href: "/studio", icon: "studio" },
+      { label: "Command CLI", href: "/cli", icon: "terminal" },
       { label: "Workflows", href: "/workflows", icon: "workflow" },
+    ],
+  },
+  {
+    section: "GAME DEVELOPMENT",
+    items: [
+      { label: "Frontier Studio", href: "/gaming", icon: "studio" },
+      { label: "Game Designer", href: "/gaming/studio", icon: "studio" },
+      { label: "World Builder", href: "/world", icon: "studio" },
+      { label: "Characters & NPCs", href: "/visual", icon: "users" },
+      { label: "Story Director", href: "/storytelling", icon: "brain" },
+      { label: "Asset Factory", href: "/visual", icon: "studio" },
     ],
   },
   {
     section: "INTELLIGENCE",
     items: [
       { label: "Models", href: "/marketplace", icon: "models" },
-      { label: "Runtime", href: "/runtime", icon: "system" },
+      { label: "Agent Runtime", href: "/runtime", icon: "system" },
       { label: "Knowledge", href: "/intelligence", icon: "brain" },
       { label: "Memory", href: "/swarm", icon: "brain" },
     ],
@@ -37,21 +47,10 @@ const NAV_SECTIONS: NavSection[] = [
   {
     section: "SENTINEL",
     items: [
-      { label: "Security", href: "/security", icon: "shield" },
-      { label: "Vulnerabilities", href: "/security", icon: "shield" },
+      { label: "SecOps Console", href: "/security", icon: "shield" },
       { label: "CVE Intelligence", href: "/threat-intel", icon: "shield" },
-      { label: "Exposure", href: "/leadgen", icon: "shield" },
-      { label: "Threat Intel", href: "/threat-intel", icon: "shield" },
+      { label: "Exposure Monitoring", href: "/leadgen", icon: "shield" },
       { label: "Remediation", href: "/security", icon: "shield" },
-    ],
-  },
-  {
-    section: "STUDIO",
-    items: [
-      { label: "World Builder", href: "/world", icon: "studio" },
-      { label: "Game Systems", href: "/gaming", icon: "studio" },
-      { label: "Asset Factory", href: "/visual", icon: "studio" },
-      { label: "Simulation", href: "/gaming/studio", icon: "studio" },
     ],
   },
   {
@@ -59,12 +58,11 @@ const NAV_SECTIONS: NavSection[] = [
     items: [
       { label: "Projects", href: "/dashboard", icon: "home" },
       { label: "Integrations", href: "/integrations", icon: "workflow" },
-      { label: "Audit", href: "/security", icon: "shield" },
-      { label: "Policies", href: "/enterprise", icon: "settings" },
-      { label: "Team / RBAC", href: "/enterprise", icon: "users" },
+      { label: "Audit & RBAC", href: "/enterprise", icon: "settings" },
     ],
   },
 ];
+
 
 function SidebarIcon({ name }: { name: string }) {
   switch (name) {

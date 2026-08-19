@@ -1,24 +1,29 @@
-# Execution Plan: Elitze Sentinel Frontier Oos
+# Project Plan: Elitze Sentinel Sovereign AI OS Sales Package & Automation Engine
 
-## Phase 0: Survey & Initial Exploration [COMPLETED]
-- Dispatch 3 Explorers in parallel to map baseline issues across R1, R2, R3.
+## Objective
+Deliver, audit, and verify a comprehensive, battle-tested, high-converting Sales Package for `elitze.ca` (Elitze Sentinel Sovereign AI OS) across domain/SaaS marketplaces, targeted B2B outreach across Victoria BC, Vancouver BC, and global markets at a $10k–$35k valuation, and full implementation & verification of the sent email follow-up tracking and automation engine (R1 - R5).
 
-## Phase 1: Milestone 1 - Dependency & Build System Remediation (R1) [COMPLETED]
-- Explorer: Analyze package.json, vulnerabilities, build errors.
-- Worker: Run `npm install`, remediate vulnerabilities (tar, next, undici, postcss, path-to-regexp), ensure clean `npm run build` and `tsc`.
-- Reviewer (2x), Challenger (2x), Auditor (1x): Validate build & TypeScript compilation, audit integrity. (Verdict: CLEAN, 42/42 static pages built, tsc 0 errors).
+## Milestones & Execution Stages
 
-## Phase 2: Milestone 2 - Python Test Suite & Module Resolution Fix (R2) [COMPLETED]
-- Explorer: Locate all Python package structures, inspect pytest collection & import errors, locate deprecation warnings.
-- Worker: Create root `conftest.py` setting up `sys.path`, fix import errors across `elitze_sentinel`, `frontier-core`, `frontier-enterprise`, `frontier-code`, and `frontier-gaming-studio`, fix deprecation warnings.
-- Reviewer (2x), Challenger (2x), Auditor (1x): Run `pytest` and verify clean collection with 0 errors and 0 collection failures, audit integrity. (Verdict: CLEAN, 273/273 passed, 0 collection errors, 0 warnings).
+### Stage 0: Survey & Scope Exploration [IN-PROGRESS]
+- Spawn 3 parallel Explorers:
+  - **Explorer 1**: Survey R1 (Valuation & Executive Dossier for 30 Hubs) & R2 (Marketplace Listing Blueprints).
+  - **Explorer 2**: Survey R3 (Tiered Geographic Lead Directories) & R4 (CASL Outbound Campaigns).
+  - **Explorer 3**: Survey R5 (Sent Email Follow-up Tracking, `.frontier-data/emails.json`, `follow_up_scheduler.py`, `follow_up_automation_manager.md`).
 
-## Phase 3: Milestone 3 - Dark Mode UI Aesthetic Restoration (R3) [COMPLETED]
-- Explorer: Locate `layout.tsx` and verify light background `bg-[#F5F7FA]` usage.
-- Worker: Revert `layout.tsx` background to `#09090B` dark palette.
-- Reviewer (2x), Challenger (2x), Auditor (1x): Validate layout changes and verify no regression in compilation, audit integrity. (Verdict: CLEAN, #09090B restored in layout.tsx and 35 pages).
+### Stage 1: Synthesis & Project Scope Baselining (`PROJECT.md`) [PLANNED]
+- Consolidate explorer findings.
+- Update `PROJECT.md` with full Feature Inventory (R1 - R5), Milestone mapping, and verification contracts.
 
-## Phase 4: Final Verification & Synthesis [COMPLETED]
-- Confirm all acceptance criteria met cleanly.
-- Report completion to parent / user.
+### Stage 2: Implementation & Refinement via Specialists [PLANNED]
+- **Milestone 1**: Verify/refine R1 ($10k/$25k/$35k tiers, 30-hub Executive Dossier) & R2 (Marketplace Blueprints in `01_listing_copies/` and guides in `04_marketplace_submission_guides/`).
+- **Milestone 2**: Verify/refine R3 (Lead lists in `02_lead_lists/`) & R4 (CASL sequences in `03_email_campaigns/`).
+- **Milestone 3**: Implement & verify R5: `.frontier-data/emails.json` initialization, `sales_package/03_email_campaigns/follow_up_scheduler.py` engine, `sales_package/03_email_campaigns/follow_up_automation_manager.md` operations guide, and test suite.
+
+### Stage 3: Quality Gate, Dual Review, Adversarial Challenge, and Forensic Integrity Audit [PLANNED]
+- Reviewers (2) APPROVE all files across R1 - R5.
+- Challengers (2) empirically test CLI/scheduler logic, timing windows (Day 4/9), CASL compliance, lead resolution, and test suites.
+- Forensic Auditor (1) confirms CLEAN / NO CHEATING / AUTHENTIC DATA across the entire sales package and code.
+- Final Gate Evaluation: PASS.
+- Report completion and claim victory to parent (Sentinel).
 

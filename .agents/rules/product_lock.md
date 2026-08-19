@@ -33,3 +33,6 @@
 4. **Visual & Aesthetic Standard**:
    - Look expensive, coherent, polished, and finished.
    - Vercel/Linear-grade dark blue palette (`#0B0F19`), electric blue accents (`#0066FF`), micro-borders (`#1E293B`), crisp typography.
+
+5. **Git Push Control**:
+   - **DO NOT RUN `git push`** until the user explicitly instructs or approves pushing changes to remote. All edits will remain local until you give the word.

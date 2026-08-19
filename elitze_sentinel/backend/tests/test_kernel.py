@@ -13,8 +13,8 @@ from app.core.kernel import (
 
 
 @pytest.fixture
-def os_kernel(tmp_path):
-    return FrontierOSKernel(workspace_root=str(tmp_path))
+def os_kernel():
+    return FrontierOSKernel(workspace_root="./test_sandbox")
 
 
 def test_process_lifecycle(os_kernel):
@@ -76,9 +76,9 @@ def test_memory_architecture(os_kernel):
     assert os_kernel.memory.episodic[0]["action"] == "compile"
 
 
-def test_sandbox_path_sanitization(os_kernel, tmp_path):
+def test_sandbox_path_sanitization(os_kernel):
     safe_path = os_kernel.workspace.sanitize_path("sub/file.txt")
-    assert str(tmp_path) in safe_path
+    assert "test_sandbox" in safe_path
 
     with pytest.raises(PermissionError):
         os_kernel.workspace.sanitize_path("../../../etc/passwd")
