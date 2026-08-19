@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { brain } from "@/lib/brain";
 
-/* ─── Studio Data Model ──────────────────────────────────────────── */
+/* ─── Studio Data Model & Agent Hierarchy ──────────────────────────── */
 
 interface TreeNode {
   id: string;
@@ -16,65 +16,52 @@ interface TreeNode {
 const STUDIO_TREE: { id: string; label: string; icon: string; accent: string; children: TreeNode[] }[] = [
   {
     id: "world",
-    label: "World",
+    label: "WORLD",
     icon: "🌍",
     accent: "#10B981",
     children: [
       { id: "terrain", label: "Terrain", status: "Heightmap 8K", type: "generator" },
-      { id: "biomes", label: "Biomes", status: "16 Active", type: "system" },
-      { id: "climate", label: "Climate", status: "Dynamic Weather", type: "simulation" },
-      { id: "ecology", label: "Ecology", status: "Flora & Fauna Graph", type: "system" },
-      { id: "settlements", label: "Settlements", status: "8 Towns, 2 Castles", type: "placement" },
+      { id: "environment", label: "Environment", status: "Dynamic Weather", type: "simulation" },
+      { id: "locations", label: "Locations", status: "3 Settlements + Military Base", type: "placement" },
+      { id: "biomes", label: "Biomes", status: "Coastal & Wasteland", type: "system" },
     ],
   },
   {
-    id: "characters",
-    label: "Characters",
+    id: "content",
+    label: "CONTENT",
     icon: "🧙",
     accent: "#F59E0B",
     children: [
-      { id: "npcs", label: "NPCs", status: "42 Active", type: "entity" },
-      { id: "creatures", label: "Creatures", status: "18 Species", type: "entity" },
-      { id: "factions", label: "Factions", status: "6 Factions", type: "relationship" },
-      { id: "behaviors", label: "Behaviors", status: "Behavior Trees", type: "ai" },
+      { id: "characters", label: "Characters", status: "Faction Leads", type: "entity" },
+      { id: "npcs", label: "NPCs", status: "42 Simulated", type: "entity" },
+      { id: "creatures", label: "Creatures", status: "Hostile Wildlife", type: "entity" },
+      { id: "items", label: "Items & Weapons", status: "Loot Tables Active", type: "system" },
     ],
   },
   {
     id: "gameplay",
-    label: "Gameplay",
+    label: "GAMEPLAY",
     icon: "⚔️",
     accent: "#8B5CF6",
     children: [
-      { id: "missions", label: "Missions", status: "12 Active Chains", type: "quest" },
-      { id: "quests", label: "Quests", status: "24 Total", type: "quest" },
-      { id: "dialogue", label: "Dialogue", status: "1,420 Lines", type: "narrative" },
-      { id: "economy", label: "Economy", status: "Dynamic Trade", type: "simulation" },
-      { id: "simulation", label: "Simulation", status: "Physics Active", type: "simulation" },
+      { id: "missions", label: "Missions", status: "Coastal Recon & Infiltration", type: "quest" },
+      { id: "quests", label: "Quests", status: "24 Interconnected", type: "quest" },
+      { id: "dialogue", label: "Dialogue", status: "Branching Trees", type: "narrative" },
+      { id: "economy", label: "Economy", status: "Scavenger Trade", type: "simulation" },
     ],
   },
   {
-    id: "production",
-    label: "Production",
-    icon: "🏗️",
-    accent: "#06B6D4",
-    children: [
-      { id: "asset-factory", label: "Asset Factory", status: "312 Assets", type: "pipeline" },
-      { id: "world-builder", label: "World Builder", status: "Active Session", type: "tool" },
-      { id: "generation", label: "Generation", status: "Procedural v2.4", type: "pipeline" },
-      { id: "review", label: "Review", status: "3 Pending", type: "workflow" },
-      { id: "export", label: "Export", status: "Win64 / Linux", type: "build" },
-    ],
-  },
-  {
-    id: "ai",
-    label: "AI",
+    id: "agents",
+    label: "AGENT HIERARCHY",
     icon: "🤖",
     accent: "#EC4899",
     children: [
-      { id: "world-director", label: "World Director", status: "Monitoring", type: "agent" },
-      { id: "story-director", label: "Story Director", status: "Narrative Active", type: "agent" },
-      { id: "npc-agents", label: "NPC Agents", status: "42 Running", type: "agent" },
-      { id: "simulation-agents", label: "Simulation Agents", status: "Physics + Economy", type: "agent" },
+      { id: "game-director", label: "Game Director Agent", status: "Active Orchestrator", type: "director" },
+      { id: "world-director", label: "World Director Mesh", status: "Terrain / Biome / Env", type: "agent-group" },
+      { id: "content-director", label: "Content Director Mesh", status: "Char / Creature / Asset", type: "agent-group" },
+      { id: "gameplay-director", label: "Gameplay Director Mesh", status: "Quest / Mission / Econ", type: "agent-group" },
+      { id: "ai-director", label: "AI Director Mesh", status: "NPC / Behavior / Faction", type: "agent-group" },
+      { id: "qa-director", label: "QA & Build Director", status: "Test / Perf / Build", type: "agent-group" },
     ],
   },
 ];
@@ -83,275 +70,183 @@ const STUDIO_TREE: { id: string; label: string; icon: string; accent: string; ch
 
 const INSPECTOR_DATA: Record<string, { title: string; description: string; properties: { key: string; value: string }[]; actions?: string[] }> = {
   terrain: {
-    title: "Terrain Engine",
-    description: "Procedural heightmap generation with erosion simulation, LOD streaming, and real-time tessellation.",
+    title: "Coastal Region Heightmap",
+    description: "Post-apocalyptic coastal cliffside terrain generated via Procedural Erosion & Coastal Splatmaps.",
     properties: [
-      { key: "Resolution", value: "8192 × 8192" },
-      { key: "Height Range", value: "-200m to 4,800m" },
-      { key: "LOD Levels", value: "6 (auto-streaming)" },
-      { key: "Erosion Passes", value: "Hydraulic + Thermal" },
-      { key: "Material Layers", value: "12 PBR Splatmaps" },
+      { key: "Resolution", value: "8192 × 8192 (8K Mesh)" },
+      { key: "Height Range", value: "-50m Coastal to 1,200m Ridge" },
+      { key: "Erosion Passes", value: "Hydraulic + Tidal Erosion" },
+      { key: "Material Layers", value: "Rust Rock, Wet Sand, Dead Grass" },
     ],
-    actions: ["Regenerate", "Paint Layer", "Export Heightmap"],
+    actions: ["Regenerate Coastline", "Sculpt Cliffs", "Export Heightmap"],
+  },
+  environment: {
+    title: "Atmosphere & Dynamic Weather",
+    description: "Volumetric fog, toxic dust storms, acid rain cycles, and coastal raytraced lighting.",
+    properties: [
+      { key: "Active Weather", value: "Coastal Fog / Toxic Acid Rain" },
+      { key: "Day/Night Cycle", value: "48min Dynamic" },
+      { key: "Atmosphere", value: "Volumetric Dust Particles" },
+    ],
+    actions: ["Force Storm State", "Adjust Fog Density"],
+  },
+  locations: {
+    title: "World Locations & POIs",
+    description: "Generated post-apocalyptic points of interest: 3 survivor settlements and 1 abandoned military bunker.",
+    properties: [
+      { key: "Settlement Alpha", value: "Port Haven (Allied)" },
+      { key: "Settlement Beta", value: "Iron Ridge (Hostile)" },
+      { key: "Settlement Gamma", value: "Sunken Wharf (Neutral)" },
+      { key: "Military Compound", value: "Bunker 09 (Infected Zone)" },
+    ],
+    actions: ["Re-route Trade Roads", "Place Defense Turrets"],
   },
   biomes: {
-    title: "Biome System",
-    description: "Climate-driven biome placement with transition blending, vegetation density rules, and wildlife spawn zones.",
+    title: "Coastal Wasteland Biome",
+    description: "Desolate shoreline, dead pine forest, and rusted industrial ruin zones.",
     properties: [
-      { key: "Active Biomes", value: "16" },
-      { key: "Transition Width", value: "64m blend zones" },
-      { key: "Vegetation Density", value: "Per-biome rules" },
-      { key: "Temperature Range", value: "-40°C to 52°C" },
+      { key: "Active Zones", value: "4 Distinct Biomes" },
+      { key: "Vegetation", value: "Dead Pines & Kelp" },
     ],
-    actions: ["Edit Biome Map", "Preview Transitions"],
+    actions: ["Paint Biome", "Preview Density"],
   },
-  climate: {
-    title: "Climate Simulation",
-    description: "Dynamic weather system with wind patterns, precipitation, seasonal cycles, and atmospheric scattering.",
+  characters: {
+    title: "Faction Leaders & Key Figures",
+    description: "Autonomous high-tier NPCs governing Settlement relationships.",
     properties: [
-      { key: "Weather States", value: "Clear / Rain / Storm / Snow / Fog" },
-      { key: "Cycle Length", value: "24min real-time day" },
-      { key: "Seasons", value: "4 (each 6 in-game days)" },
-      { key: "Wind System", value: "Volumetric directional" },
+      { key: "Commander Vance", value: "Port Haven Militia Leader" },
+      { key: "Warlord Kael", value: "Iron Ridge Raider King" },
     ],
-    actions: ["Force Weather", "Edit Season Curve"],
-  },
-  ecology: {
-    title: "Ecology Systems",
-    description: "Interconnected flora and fauna simulation with predator-prey dynamics, growth cycles, and resource distribution.",
-    properties: [
-      { key: "Flora Species", value: "84 procedural variants" },
-      { key: "Fauna Species", value: "18 behavioral" },
-      { key: "Food Chain Depth", value: "4 trophic levels" },
-      { key: "Growth Sim", value: "Real-time per-tick" },
-    ],
-    actions: ["Inspect Food Web", "Spawn Species"],
-  },
-  settlements: {
-    title: "Settlement Placement",
-    description: "Procedural town generation with road networks, building archetypes, population simulation, and trade routes.",
-    properties: [
-      { key: "Towns", value: "8 generated" },
-      { key: "Castles", value: "2 hand-placed" },
-      { key: "Road Network", value: "A* pathfinding mesh" },
-      { key: "Population", value: "~2,400 simulated NPCs" },
-    ],
-    actions: ["Place Settlement", "Edit Roads", "Sim Population"],
+    actions: ["Inspect Memory Tree", "Edit Relations"],
   },
   npcs: {
-    title: "NPC Registry",
-    description: "Autonomous NPC entities with state machines, daily schedules, relationship matrices, and dialogue hooks.",
+    title: "Autonomous NPC Agents",
+    description: "42 active background NPCs executing utility AI goals, scavenging, and defending settlements.",
     properties: [
-      { key: "Total NPCs", value: "42 active" },
-      { key: "Named Characters", value: "14" },
-      { key: "Generic Townsfolk", value: "28" },
-      { key: "Schedule System", value: "24-hour tick cycle" },
-      { key: "Voice Lines", value: "680 synthesized" },
+      { key: "Active NPCs", value: "42 Simulated" },
+      { key: "Logic Engine", value: "Goal-Oriented Action Planning (GOAP)" },
     ],
-    actions: ["Create NPC", "Edit Schedule", "Preview Dialogue"],
+    actions: ["Debug GOAP State", "Trigger Raid Event"],
   },
   creatures: {
-    title: "Creature Catalog",
-    description: "Hostile and passive fauna with skeletal animation trees, AI behavior, loot tables, and spawn distribution.",
+    title: "Hostile Wildlife Catalog",
+    description: "Mutated coastal fauna with dynamic pack behavior trees.",
     properties: [
-      { key: "Species Count", value: "18" },
-      { key: "Boss Variants", value: "3 (multi-phase)" },
-      { key: "Loot Tables", value: "Per-creature weighted" },
-      { key: "Animation Rigs", value: "IK + Ragdoll blend" },
+      { key: "Coastal Lurkers", value: "Pack AI (Active Hostile)" },
+      { key: "Ash Stalkers", value: "Solitary Predator" },
     ],
-    actions: ["New Creature", "Edit Loot Table", "Preview Anim"],
+    actions: ["Spawn Creature", "Tune Aggro Radius"],
   },
-  factions: {
-    title: "Faction Graph",
-    description: "Multi-axis relationship system with reputation, trade privileges, territory control, and war declarations.",
+  items: {
+    title: "Loot & Weapon Tables",
+    description: "Procedural weapon variants, scrap resources, and military tech ammo.",
     properties: [
-      { key: "Factions", value: "6 active" },
-      { key: "Sentinel Order", value: "ALLIED (+85)" },
-      { key: "Shadow Syndicate", value: "HOSTILE (-90)" },
-      { key: "Iron Collective", value: "NEUTRAL (+12)" },
-      { key: "War State", value: "Syndicate vs Order" },
+      { key: "Scrap Value Curve", value: "Dynamic Rarity" },
+      { key: "Weapon Templates", value: "Pipe Guns, Rail Rifles" },
     ],
-    actions: ["Edit Relations", "Declare War", "Trade Treaty"],
-  },
-  behaviors: {
-    title: "Behavior Trees",
-    description: "Visual behavior tree editor for NPC and creature AI. Supports composites, decorators, and blackboard variables.",
-    properties: [
-      { key: "Tree Templates", value: "8 archetypes" },
-      { key: "Node Types", value: "Sequence / Selector / Parallel" },
-      { key: "Blackboard Vars", value: "Per-entity scoped" },
-      { key: "Hot Reload", value: "Live in-game preview" },
-    ],
-    actions: ["Open Editor", "New Tree", "Debug Entity"],
+    actions: ["Edit Drop Rates", "Bake Item Prefabs"],
   },
   missions: {
-    title: "Mission Chains",
-    description: "Multi-step mission sequences with branching objectives, failure states, and faction reputation consequences.",
+    title: "Interconnected Coastal Missions",
+    description: "Branching storyline linking the 3 settlements and the infiltration of Bunker 09.",
     properties: [
-      { key: "Active Chains", value: "12" },
-      { key: "Total Objectives", value: "67" },
-      { key: "Branch Points", value: "23 decision nodes" },
-      { key: "Fail States", value: "Per-objective fallback" },
+      { key: "Primary Quest", value: "The Coastal Signal" },
+      { key: "Infiltration Mission", value: "Bunker 09 Vault Key" },
     ],
-    actions: ["New Mission", "Edit Chain", "Preview Flow"],
+    actions: ["Simulate Quest Flow", "Edit Rewards"],
   },
   quests: {
-    title: "Quest Graph",
-    description: "Full quest dependency graph with prerequisites, rewards, unlock conditions, and journal entries.",
+    title: "Quest Graph & Dependencies",
+    description: "Prerequisite and consequence graph connecting all 24 sub-quests.",
     properties: [
       { key: "Total Quests", value: "24" },
-      { key: "Main Story", value: "8 quests" },
-      { key: "Side Quests", value: "16 quests" },
-      { key: "Reward Types", value: "XP / Gold / Items / Rep" },
+      { key: "Faction Triggers", value: "Allied / Enemy Multiplier" },
     ],
-    actions: ["New Quest", "Edit Rewards", "Link Prerequisite"],
+    actions: ["New Quest Node", "Check Graph Deadlocks"],
   },
   dialogue: {
-    title: "Dialogue Editor",
-    description: "Branching dialogue tree editor with condition nodes, voice synthesis integration, and localization hooks.",
+    title: "LLM Narrative & Voice Trees",
+    description: "Real-time AI voice dialogue trees with faction memory hooks.",
     properties: [
-      { key: "Total Lines", value: "1,420" },
-      { key: "Voice Synthesized", value: "100%" },
-      { key: "Branch Depth", value: "Up to 8 levels" },
-      { key: "Conditions", value: "Faction / Quest / Item" },
+      { key: "Voice Provider", value: "Synthesized ElevenLabs" },
+      { key: "Memory Depth", value: "Persistent History" },
     ],
-    actions: ["New Conversation", "Re-synthesize Voice", "Export Loc"],
+    actions: ["Generate Dialogue", "Test Synth Voice"],
   },
   economy: {
-    title: "Economy Simulation",
-    description: "Dynamic market system with supply/demand curves, trade routes, currency inflation, and merchant inventories.",
+    title: "Scavenger Trade Economy",
+    description: "Item barter system driven by settlement resource scarcity.",
     properties: [
-      { key: "Currencies", value: "Gold / Trade Tokens" },
-      { key: "Trade Routes", value: "12 active routes" },
-      { key: "Inflation Rate", value: "0.3% per game-day" },
-      { key: "Merchant Count", value: "18 persistent shops" },
+      { key: "Water Scarcity", value: "High Value (+40%)" },
+      { key: "Ammo Scarcity", value: "Critical (+85%)" },
     ],
-    actions: ["Edit Prices", "Inspect Supply Graph", "Reset Market"],
+    actions: ["Adjust Market Supply", "Simulate Trade Cycle"],
   },
-  simulation: {
-    title: "Physics & Simulation",
-    description: "Real-time physics simulation layer for destruction, fluids, cloth, and environmental interactions.",
+  "game-director": {
+    title: "Game Director Agent",
+    description: "Root agent orchestrating all sub-directors for procedural game generation.",
     properties: [
-      { key: "Physics Engine", value: "Custom Verlet + PhysX" },
-      { key: "Destruction", value: "Voxel fracture system" },
-      { key: "Cloth Sim", value: "GPU-accelerated" },
-      { key: "Fluid Sim", value: "SPH particle-based" },
+      { key: "Status", value: "Active Orchestration" },
+      { key: "Generation Pipeline", value: "Prompt → World → Content → Gameplay → Build" },
     ],
-    actions: ["Run Benchmark", "Toggle Debug Vis"],
-  },
-  "asset-factory": {
-    title: "Asset Factory",
-    description: "Procedural and manual asset creation pipeline with 3D mesh generation, texture baking, and material authoring.",
-    properties: [
-      { key: "Total Assets", value: "312" },
-      { key: "Meshes", value: "189 (LOD 0-3)" },
-      { key: "Textures", value: "84 PBR sets" },
-      { key: "Materials", value: "39 shader graphs" },
-    ],
-    actions: ["Generate Asset", "Import FBX", "Batch Bake"],
-  },
-  "world-builder": {
-    title: "World Builder",
-    description: "Interactive 3D placement tool for composing world scenes, placing props, and painting terrain details.",
-    properties: [
-      { key: "Session", value: "Active" },
-      { key: "Brush Mode", value: "Paint / Scatter / Stamp" },
-      { key: "Undo Stack", value: "128 steps" },
-      { key: "Snap Grid", value: "0.25m / 1m / 4m" },
-    ],
-    actions: ["Open 3D Viewport", "Save Scene", "Export Region"],
-  },
-  generation: {
-    title: "Procedural Generation",
-    description: "Rule-based procedural content generation for dungeons, interiors, wilderness areas, and item variants.",
-    properties: [
-      { key: "Generator Version", value: "v2.4.0" },
-      { key: "Dungeon Templates", value: "6 archetypes" },
-      { key: "Interior Templates", value: "12 room types" },
-      { key: "Seed Control", value: "Deterministic replay" },
-    ],
-    actions: ["Generate Dungeon", "New Seed", "Preview"],
-  },
-  review: {
-    title: "Review Queue",
-    description: "Quality gate for generated and authored content before promotion to the live build.",
-    properties: [
-      { key: "Pending Reviews", value: "3" },
-      { key: "Approved Today", value: "7" },
-      { key: "Rejected", value: "1 (texture artifact)" },
-      { key: "Auto-QA", value: "Collision + LOD check" },
-    ],
-    actions: ["Open Review", "Approve All", "Run QA"],
-  },
-  export: {
-    title: "Build & Export",
-    description: "Multi-platform build pipeline with shader compilation, asset cooking, and distribution packaging.",
-    properties: [
-      { key: "Targets", value: "Win64 / Linux / WebGPU" },
-      { key: "Last Build", value: "v1.0.4 — 0 warnings" },
-      { key: "Shader Compile", value: "DX12 + Vulkan + Metal" },
-      { key: "Package Size", value: "2.4 GB (compressed)" },
-    ],
-    actions: ["Build Debug", "Build Release", "Deploy"],
+    actions: ["Trigger Full Generation", "View Pipeline Tree"],
   },
   "world-director": {
-    title: "World Director",
-    description: "AI agent that monitors player tension curves and dynamically spawns encounters, weather shifts, or reinforcements.",
+    title: "World Director Mesh",
+    description: "Coordinates Terrain Agent, Biome Agent, and Environment Agent.",
     properties: [
-      { key: "Status", value: "Monitoring" },
-      { key: "Tension Model", value: "Real-time player tracking" },
-      { key: "Event Queue", value: "3 pending spawns" },
-      { key: "Difficulty Curve", value: "Adaptive (sigmoid)" },
+      { key: "Sub-Agents", value: "Terrain, Biome, Environment" },
+      { key: "Output Artifacts", value: "Heightmap, Weather Curve, POI Placement" },
     ],
-    actions: ["Force Event", "View Tension Graph", "Override Difficulty"],
+    actions: ["Re-run World Mesh"],
   },
-  "story-director": {
-    title: "Story Director",
-    description: "LLM-driven narrative agent that evolves global lore based on player choices and faction power balances.",
+  "content-director": {
+    title: "Content Director Mesh",
+    description: "Coordinates Character Agent, Creature Agent, and Asset Agent.",
     properties: [
-      { key: "Status", value: "Narrative Active" },
-      { key: "Story Arcs", value: "3 active threads" },
-      { key: "Player Choices", value: "14 tracked decisions" },
-      { key: "Lore Entries", value: "48 generated" },
+      { key: "Sub-Agents", value: "Character, Creature, Asset" },
+      { key: "Output Artifacts", value: "Skeletal Meshes, GOAP Rigs, Loot Tables" },
     ],
-    actions: ["Inject Plot Point", "View Arc Graph", "Generate Lore"],
+    actions: ["Re-run Content Mesh"],
   },
-  "npc-agents": {
-    title: "NPC Agents",
-    description: "Autonomous NPC simulation agents with memory, goals, and emergent social interactions.",
+  "gameplay-director": {
+    title: "Gameplay Director Mesh",
+    description: "Coordinates Quest Agent, Mission Agent, Dialogue Agent, and Economy Agent.",
     properties: [
-      { key: "Running", value: "42 agents" },
-      { key: "Memory Depth", value: "Last 100 interactions" },
-      { key: "Goal System", value: "Utility AI scoring" },
-      { key: "Social Graph", value: "Relationship matrix" },
+      { key: "Sub-Agents", value: "Quest, Mission, Dialogue, Economy" },
+      { key: "Output Artifacts", value: "Quest DAG, Voice Buffers, Market Graph" },
     ],
-    actions: ["Inspect Agent", "Reset Memory", "Spawn Agent"],
+    actions: ["Re-run Gameplay Mesh"],
   },
-  "simulation-agents": {
-    title: "Simulation Agents",
-    description: "Background agents managing physics ticks, economic cycles, weather progression, and ecology updates.",
+  "ai-director": {
+    title: "AI Director Mesh",
+    description: "Coordinates NPC Agent, Behavior Agent, and Faction Agent.",
     properties: [
-      { key: "Active Systems", value: "Physics + Economy" },
-      { key: "Tick Rate", value: "60Hz physics / 1Hz econ" },
-      { key: "CPU Budget", value: "12% of frame" },
-      { key: "Sync Mode", value: "Deterministic lockstep" },
+      { key: "Sub-Agents", value: "NPC, Behavior, Faction" },
+      { key: "Output Artifacts", value: "Behavior Trees, Faction Reputation Matrix" },
     ],
-    actions: ["Pause Sim", "Step Frame", "Profile"],
+    actions: ["Re-run AI Mesh"],
+  },
+  "qa-director": {
+    title: "QA & Build Director",
+    description: "Coordinates Test Agent, Performance Agent, and Build Agent.",
+    properties: [
+      { key: "Sub-Agents", value: "Test, Performance, Build" },
+      { key: "Build Output", value: "Executable Game Package (Win64/UE5.6)" },
+    ],
+    actions: ["Run Automated QA", "Cook Playable Build"],
   },
 };
 
 /* ─── Component ──────────────────────────────────────────────────── */
 
 export default function GamingPage() {
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["world"]));
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["world", "content", "gameplay", "agents"]));
   const [selectedNode, setSelectedNode] = useState<string>("terrain");
-  const [games, setGames] = useState<any[]>([]);
-
-  useEffect(() => {
-    brain.find("games").then((d) => {
-      if (d.data?.length) setGames(d.data);
-    });
-  }, []);
+  const [activeDockTab, setActiveDockTab] = useState<string>("ASSETS");
+  const [prompt, setPrompt] = useState<string>("");
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [genStep, setGenStep] = useState<string>("");
 
   const toggleSection = (id: string) => {
     setExpandedSections((prev) => {
@@ -362,11 +257,28 @@ export default function GamingPage() {
     });
   };
 
+  const handleAgentBuild = (customPrompt?: string) => {
+    const textToRun = customPrompt || prompt || "Create a post-apocalyptic coastal region with three settlements, dynamic weather, hostile wildlife, two factions, an abandoned military facility and interconnected missions.";
+    setIsGenerating(true);
+    setGenStep("Game Director initializing pipeline...");
+
+    setTimeout(() => setGenStep("World Director: Sculpting Coastal Heightmap & Biomes..."), 800);
+    setTimeout(() => setGenStep("Environment Agent: Baking Dynamic Weather & Atmospheric Fog..."), 1600);
+    setTimeout(() => setGenStep("Content Director: Spawning 3 Settlements, Bunker 09, & Mutant Wildlife..."), 2400);
+    setTimeout(() => setGenStep("Gameplay Director: Constructing Quest Graph & Dialogue Trees..."), 3200);
+    setTimeout(() => setGenStep("QA & Build Director: Compiling Playable UE5.6 Package..."), 4000);
+    setTimeout(() => {
+      setIsGenerating(false);
+      setGenStep("");
+      setSelectedNode("locations");
+    }, 4800);
+  };
+
   const activeSection = STUDIO_TREE.find((s) =>
     s.children.some((c) => c.id === selectedNode)
   );
   const activeNode = activeSection?.children.find((c) => c.id === selectedNode);
-  const inspector = INSPECTOR_DATA[selectedNode];
+  const inspector = INSPECTOR_DATA[selectedNode] || INSPECTOR_DATA["terrain"];
 
   return (
     <div className="flex flex-col h-full bg-[#0C0C0F] text-white font-sans overflow-hidden">
@@ -378,16 +290,22 @@ export default function GamingPage() {
             F
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[13px] font-bold text-white tracking-tight">PROJECT: MYTHOS WORLD</span>
+            <span className="text-[13px] font-bold text-white tracking-tight">PROJECT: ELITZE WORLD</span>
             <span className="text-[9px] font-semibold text-[#8B5CF6]/70 uppercase tracking-widest">FRONTIER GAME ENGINE</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <button className="px-3 py-1 rounded-md bg-[#10B981] hover:bg-[#059669] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-[#10B981]/20 transition-all">
+          <button 
+            onClick={() => handleAgentBuild()}
+            className="px-3 py-1 rounded-md bg-[#10B981] hover:bg-[#059669] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-[#10B981]/20 transition-all"
+          >
             <span>▶</span> PLAY
           </button>
-          <button className="px-3 py-1 rounded-md bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-[#8B5CF6]/20 transition-all">
+          <button 
+            onClick={() => handleAgentBuild()}
+            className="px-3 py-1 rounded-md bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm shadow-[#8B5CF6]/20 transition-all"
+          >
             <span>⚡</span> BUILD
           </button>
           <button className="px-3 py-1 rounded-md bg-[#141418] border border-[#1F1F28] hover:bg-[#1C1C24] text-[#A1A1AA] hover:text-white font-semibold text-xs transition-all">
@@ -396,13 +314,40 @@ export default function GamingPage() {
         </div>
       </header>
 
+      {/* ─── AI Prompt Build Input Bar ─────────────────────────── */}
+      <div className="bg-[#111115] border-b border-[#1F1F28] px-5 py-2 flex items-center gap-3 shrink-0">
+        <span className="text-sm">🤖</span>
+        <input
+          type="text"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="Tell Frontier's Game Director to build a world (e.g. 'Create a post-apocalyptic coastal region with 3 settlements, dynamic weather...')"
+          className="flex-1 bg-[#09090B] border border-[#1F1F28] rounded-md px-3 py-1.5 text-xs text-white placeholder-[#52525B] outline-none focus:border-[#8B5CF6]"
+        />
+        <button
+          onClick={() => handleAgentBuild()}
+          disabled={isGenerating}
+          className="px-4 py-1.5 bg-[#8B5CF6] hover:bg-[#7C3AED] disabled:bg-[#3F3F46] text-white font-bold text-xs rounded-md shadow-sm transition-all flex items-center gap-1.5 shrink-0"
+        >
+          {isGenerating ? "BUILDING WORLD..." : "GENERATE PROJECT"}
+        </button>
+      </div>
+
+      {/* ─── Agent Pipeline Generation Overlay Banner ─────────────── */}
+      {isGenerating && (
+        <div className="bg-[#8B5CF6]/20 border-b border-[#8B5CF6]/40 px-5 py-2 flex items-center gap-3 text-xs text-[#A78BFA] font-mono shrink-0 animate-pulse">
+          <span className="w-2 h-2 rounded-full bg-[#8B5CF6] animate-ping" />
+          <span>{genStep}</span>
+        </div>
+      )}
+
       {/* ─── Main Studio Layout: Tree | Canvas | Inspector ─────── */}
       <div className="flex-1 flex min-h-0 overflow-hidden">
 
         {/* ─── Left: Project Tree ─────────────────────────────── */}
         <div className="w-[220px] border-r border-[#1F1F28] bg-[#0E0E12] flex flex-col shrink-0 overflow-hidden">
-          <div className="px-3 py-2.5 border-b border-[#1F1F28]">
-            <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Project</span>
+          <div className="px-3 py-2.5 border-b border-[#1F1F28] flex items-center justify-between">
+            <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Project Hierarchy</span>
           </div>
           <div className="flex-1 overflow-y-auto py-1">
             {STUDIO_TREE.map((section) => (
@@ -418,8 +363,8 @@ export default function GamingPage() {
                   >
                     <path d="M8 5l8 7-8 7z" />
                   </svg>
-                  <span className="text-sm">{section.icon}</span>
-                  <span className="text-[11px] font-semibold text-[#A1A1AA] group-hover:text-white transition-colors">
+                  <span className="text-xs">{section.icon}</span>
+                  <span className="text-[10px] font-extrabold text-[#A1A1AA] tracking-wider group-hover:text-white transition-colors">
                     {section.label}
                   </span>
                 </button>
@@ -454,7 +399,7 @@ export default function GamingPage() {
           </div>
         </div>
 
-        {/* ─── Center: Canvas / Workspace ─────────────────────── */}
+        {/* ─── Center: 3D World Viewport & Canvas Workspace ──── */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
           {/* Breadcrumb bar */}
@@ -474,42 +419,67 @@ export default function GamingPage() {
             )}
           </div>
 
-          {/* Canvas Area */}
-          <div className="flex-1 overflow-y-auto p-6">
-            {inspector ? (
-              <div className="max-w-3xl space-y-6">
+          {/* 3D World Canvas & Inspector Body */}
+          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            
+            {/* Main 3D World Viewport */}
+            <div className="bg-[#111115] border border-[#1F1F28] rounded-xl overflow-hidden shadow-2xl">
+              <div className="px-4 py-2.5 border-b border-[#1F1F28] flex items-center justify-between bg-[#0E0E12]">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold text-[#8B5CF6] uppercase tracking-widest">3D WORLD VIEWPORT</span>
+                  <span className="text-[10px] text-[#52525B] font-mono">| UE 5.6 Native Runtime</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                  <span className="text-[10px] text-[#10B981] font-mono font-bold">60 FPS</span>
+                </div>
+              </div>
 
-                {/* Title block */}
-                <div>
-                  <h1 className="text-lg font-bold text-white tracking-tight">{inspector.title}</h1>
-                  <p className="text-[12px] text-[#71717A] mt-1 leading-relaxed max-w-xl">{inspector.description}</p>
+              {/* Viewport Render Canvas Simulation */}
+              <div className="h-[320px] bg-gradient-to-br from-[#090D16] via-[#101524] to-[#0A0D14] flex flex-col items-center justify-center relative overflow-hidden group">
+                
+                {/* Simulated 3D Grid Overlay */}
+                <div className="absolute inset-0 opacity-[0.08]" style={{
+                  backgroundImage: "linear-gradient(rgba(139,92,246,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.4) 1px, transparent 1px)",
+                  backgroundSize: "40px 40px",
+                }} />
+
+                {/* Simulated Procedural World Horizon */}
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#10B981]/10 via-transparent to-transparent pointer-events-none" />
+
+                {/* Viewport Overlay Content */}
+                <div className="relative z-10 flex flex-col items-center gap-3 text-center px-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 flex items-center justify-center text-2xl shadow-lg">
+                    {activeSection?.icon || "🌍"}
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-white tracking-wide uppercase">{inspector.title}</h3>
+                    <p className="text-[11px] text-[#71717A] max-w-md mt-1">{inspector.description}</p>
+                  </div>
                 </div>
 
-                {/* Properties Table */}
-                <div className="bg-[#111115] border border-[#1F1F28] rounded-lg overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-[#1F1F28]">
-                    <span className="text-[10px] font-bold text-[#52525B] uppercase tracking-widest">Properties</span>
-                  </div>
-                  <div className="divide-y divide-[#1F1F28]">
-                    {inspector.properties.map((prop) => (
-                      <div key={prop.key} className="flex items-center justify-between px-4 py-2.5 hover:bg-[#16161D] transition-colors">
-                        <span className="text-[11px] text-[#71717A]">{prop.key}</span>
-                        <span className="text-[11px] font-mono text-white">{prop.value}</span>
-                      </div>
-                    ))}
-                  </div>
+                {/* Viewport Corner HUD Controls */}
+                <div className="absolute bottom-3 left-3 flex items-center gap-2 text-[10px] font-mono bg-[#09090B]/80 border border-[#1F1F28] px-2.5 py-1 rounded-md text-[#71717A]">
+                  <span>Camera: Orbit</span>
+                  <span>FOV: 90°</span>
+                  <span>Light: Raytraced Lumen</span>
                 </div>
+              </div>
+            </div>
 
-                {/* Actions */}
+            {/* Entity Properties Table */}
+            <div className="bg-[#111115] border border-[#1F1F28] rounded-xl overflow-hidden">
+              <div className="px-4 py-2.5 border-b border-[#1F1F28] flex items-center justify-between">
+                <span className="text-[10px] font-bold text-[#52525B] uppercase tracking-widest">Entity & Component Properties</span>
                 {inspector.actions && (
-                  <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex items-center gap-2">
                     {inspector.actions.map((action, idx) => (
                       <button
                         key={action}
-                        className={`px-3 py-1.5 rounded-md text-[11px] font-semibold transition-all ${
+                        className={`px-2.5 py-1 rounded text-[10px] font-bold transition-all ${
                           idx === 0
-                            ? "bg-[#8B5CF6] text-white hover:bg-[#7C3AED] shadow-sm shadow-[#8B5CF6]/20"
-                            : "bg-[#141418] border border-[#1F1F28] text-[#A1A1AA] hover:text-white hover:border-[#3F3F46]"
+                            ? "bg-[#8B5CF6] text-white hover:bg-[#7C3AED]"
+                            : "bg-[#141418] border border-[#1F1F28] text-[#A1A1AA] hover:text-white"
                         }`}
                       >
                         {action}
@@ -517,111 +487,89 @@ export default function GamingPage() {
                     ))}
                   </div>
                 )}
-
-                {/* Canvas Placeholder — 3D viewport feel */}
-                <div className="bg-[#111115] border border-[#1F1F28] rounded-lg overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-[#1F1F28] flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-[#52525B] uppercase tracking-widest">Viewport</span>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-                      <span className="text-[10px] text-[#52525B] font-mono">Live</span>
-                    </div>
-                  </div>
-                  <div className="h-[280px] bg-gradient-to-br from-[#0C0C0F] via-[#111118] to-[#0E0E14] flex items-center justify-center relative">
-                    {/* Grid overlay */}
-                    <div className="absolute inset-0 opacity-[0.04]" style={{
-                      backgroundImage: "linear-gradient(rgba(139,92,246,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(139,92,246,0.3) 1px, transparent 1px)",
-                      backgroundSize: "40px 40px",
-                    }} />
-                    {/* Center crosshair */}
-                    <div className="relative z-10 flex flex-col items-center gap-2">
-                      <div className="text-3xl">{activeSection?.icon}</div>
-                      <span className="text-[11px] text-[#3F3F46] font-mono">{inspector.title} — Select an entity to preview</span>
-                    </div>
-                  </div>
-                </div>
-
               </div>
-            ) : (
-              <div className="flex items-center justify-center h-full text-[#3F3F46] text-sm">
-                Select a node from the project tree.
+              <div className="divide-y divide-[#1F1F28]">
+                {inspector.properties.map((prop) => (
+                  <div key={prop.key} className="flex items-center justify-between px-4 py-2.5 hover:bg-[#16161D] transition-colors">
+                    <span className="text-[11px] text-[#71717A] font-medium">{prop.key}</span>
+                    <span className="text-[11px] font-mono text-white font-semibold">{prop.value}</span>
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+
           </div>
         </div>
 
         {/* ─── Right: Inspector Panel ─────────────────────────── */}
         <div className="w-[240px] border-l border-[#1F1F28] bg-[#0E0E12] flex flex-col shrink-0 overflow-hidden">
           <div className="px-3 py-2.5 border-b border-[#1F1F28]">
-            <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Inspector</span>
+            <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">INSPECTOR</span>
           </div>
 
-          <div className="flex-1 overflow-y-auto py-2">
-            {inspector ? (
-              <div className="space-y-3 px-3">
+          <div className="flex-1 overflow-y-auto py-3 px-3 space-y-4">
+            {/* Selected Node Identity */}
+            <div className="space-y-1">
+              <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Selected Object</span>
+              <p className="text-[13px] font-bold text-white">{inspector.title}</p>
+              {activeNode?.type && (
+                <span className="inline-block text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#8B5CF6]/10 text-[#8B5CF6] border border-[#8B5CF6]/20">
+                  {activeNode.type}
+                </span>
+              )}
+            </div>
 
-                {/* Node identity */}
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm">{activeSection?.icon}</span>
-                    <span className="text-[12px] font-bold text-white">{inspector.title}</span>
-                  </div>
-                  {activeNode?.type && (
-                    <span className="inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#8B5CF6]/10 text-[#8B5CF6] border border-[#8B5CF6]/20">
-                      {activeNode.type}
-                    </span>
-                  )}
+            <div className="h-px bg-[#1F1F28]" />
+
+            {/* Transform Properties */}
+            <div className="space-y-2">
+              <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Transform</span>
+              <div className="space-y-1.5 font-mono text-[10px]">
+                <div className="flex justify-between px-2 py-1 bg-[#141418] rounded border border-[#1F1F28]">
+                  <span className="text-[#EF4444]">X: 1,420.5</span>
+                  <span className="text-[#10B981]">Y: -320.0</span>
+                  <span className="text-[#38BDF8]">Z: 85.4</span>
                 </div>
-
-                <div className="h-px bg-[#1F1F28]" />
-
-                {/* Quick props */}
-                <div className="space-y-2">
-                  <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Details</span>
-                  {inspector.properties.slice(0, 4).map((prop) => (
-                    <div key={prop.key} className="space-y-0.5">
-                      <span className="text-[10px] text-[#52525B] block">{prop.key}</span>
-                      <span className="text-[11px] font-mono text-[#A1A1AA] block">{prop.value}</span>
-                    </div>
-                  ))}
+                <div className="flex justify-between px-2 py-1 bg-[#141418] rounded border border-[#1F1F28]">
+                  <span className="text-[#71717A]">Rot: 0° / 45° / 0°</span>
                 </div>
-
-                <div className="h-px bg-[#1F1F28]" />
-
-                {/* Status */}
-                <div className="space-y-1.5">
-                  <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Status</span>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#10B981]" />
-                    <span className="text-[11px] text-[#10B981] font-mono">{activeNode?.status}</span>
-                  </div>
+                <div className="flex justify-between px-2 py-1 bg-[#141418] rounded border border-[#1F1F28]">
+                  <span className="text-[#71717A]">Scale: 1.0 / 1.0 / 1.0</span>
                 </div>
-
-                <div className="h-px bg-[#1F1F28]" />
-
-                {/* Section context */}
-                <div className="space-y-1.5">
-                  <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Section</span>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: activeSection?.accent }} />
-                    <span className="text-[11px] text-[#A1A1AA]">{activeSection?.label}</span>
-                  </div>
-                  <span className="text-[10px] text-[#3F3F46]">
-                    {activeSection?.children.length} items in this group
-                  </span>
-                </div>
-
               </div>
-            ) : (
-              <div className="px-3 py-4 text-[11px] text-[#3F3F46]">
-                No selection.
+            </div>
+
+            <div className="h-px bg-[#1F1F28]" />
+
+            {/* Component Stack */}
+            <div className="space-y-2">
+              <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Components</span>
+              <div className="space-y-1 text-[10px]">
+                {["StaticMeshComponent", "ProceduralTerrainGraph", "AtmosphericLighting", "AIAgentController"].map((comp) => (
+                  <div key={comp} className="flex items-center gap-1.5 px-2 py-1 rounded bg-[#141418] border border-[#1F1F28] text-[#A1A1AA]">
+                    <span className="text-[#8B5CF6]">⚙</span>
+                    <span>{comp}</span>
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+
+            <div className="h-px bg-[#1F1F28]" />
+
+            {/* Agent Hierarchy Quick Status */}
+            <div className="space-y-1.5">
+              <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Managing Agent</span>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+                <span className="text-[11px] text-[#10B981] font-mono font-semibold">Game Director Active</span>
+              </div>
+            </div>
+
           </div>
 
           {/* Inspector footer */}
           <div className="px-3 py-2 border-t border-[#1F1F28] text-[10px] text-[#3F3F46] font-mono">
-            frontier-studio v2.4.0
+            frontier-engine v2.4.0
           </div>
         </div>
 
@@ -630,12 +578,13 @@ export default function GamingPage() {
       {/* ─── Bottom Studio Dock ─────────────────────────────────── */}
       <footer className="h-9 border-t border-[#1F1F28] bg-[#0C0C0F] px-4 flex items-center justify-between shrink-0 z-20 select-none">
         <div className="flex items-center gap-1 font-mono text-[10px]">
-          {["ASSETS", "AGENTS", "CONSOLE", "LOGS", "SIMULATION", "BUILD"].map((tab, idx) => (
+          {["ASSETS", "AGENTS", "CONSOLE", "LOGS", "SIMULATION", "BUILD"].map((tab) => (
             <button
               key={tab}
+              onClick={() => setActiveDockTab(tab)}
               className={`px-3 py-1 rounded transition-colors ${
-                idx === 0
-                  ? "bg-[#1F1F28] text-white font-bold"
+                activeDockTab === tab
+                  ? "bg-[#8B5CF6] text-white font-bold shadow-sm"
                   : "text-[#71717A] hover:text-[#A1A1AA] hover:bg-[#141418]"
               }`}
             >
@@ -646,7 +595,7 @@ export default function GamingPage() {
         <div className="flex items-center gap-3 text-[10px] text-[#52525B] font-mono">
           <span className="flex items-center gap-1 text-[#10B981]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-            Agent Mesh Active
+            Agent Director Mesh: ONLINE
           </span>
           <span>UE 5.6 Runtime</span>
           <span>FPS: 60</span>
