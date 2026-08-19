@@ -9,70 +9,32 @@ interface NavItem {
   icon: string;
 }
 
-interface NavSection {
-  section: string;
-  items: NavItem[];
-}
-
-const NAV_SECTIONS: NavSection[] = [
-  {
-    section: "MISSION CONTROL",
-    items: [
-      { label: "Frontier Chat", href: "/chat", icon: "chat" },
-      { label: "Frontier Intelligence", href: "/intelligence", icon: "eye" },
-      { label: "Executive Dashboard", href: "/dashboard", icon: "chart" },
-    ],
-  },
-  {
-    section: "AGENT WORKSPACE",
-    items: [
-      { label: "Frontier Runtime", href: "/runtime", icon: "box" },
-      { label: "Voice & Vision", href: "/voice", icon: "mic" },
-      { label: "Swarm & Memory", href: "/swarm", icon: "users" },
-    ],
-  },
-  {
-    section: "SECURITY CENTER",
-    items: [
-      { label: "Terrell", href: "/profile", icon: "user" },
-    ],
-  },
+const FRONTIER_NAV_ITEMS: NavItem[] = [
+  { label: "HOME / DESKTOP", href: "/dashboard", icon: "home" },
+  { label: "FRONTIER CHAT", href: "/chat", icon: "chat" },
+  { label: "AGENTS", href: "/swarm", icon: "users" },
+  { label: "AGENT STUDIO", href: "/studio", icon: "studio" },
+  { label: "KNOWLEDGE", href: "/intelligence", icon: "brain" },
+  { label: "SECOPS", href: "/security", icon: "shield" },
+  { label: "WORKFLOWS", href: "/workflows", icon: "workflow" },
+  { label: "MODEL CENTER", href: "/marketplace", icon: "models" },
+  { label: "SYSTEM", href: "/runtime", icon: "system" },
+  { label: "SETTINGS", href: "/settings", icon: "settings" },
 ];
 
 function SidebarIcon({ name }: { name: string }) {
   switch (name) {
+    case "home":
+      return (
+        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      );
     case "chat":
       return (
         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-      );
-    case "eye":
-      return (
-        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-          <circle cx="12" cy="12" r="3" />
-        </svg>
-      );
-    case "chart":
-      return (
-        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="18" y1="20" x2="18" y2="10" />
-          <line x1="12" y1="20" x2="12" y2="4" />
-          <line x1="6" y1="20" x2="6" y2="14" />
-        </svg>
-      );
-    case "box":
-      return (
-        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-        </svg>
-      );
-    case "mic":
-      return (
-        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-          <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
         </svg>
       );
     case "users":
@@ -84,11 +46,55 @@ function SidebarIcon({ name }: { name: string }) {
           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
       );
-    case "user":
+    case "studio":
       return (
         <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-          <circle cx="12" cy="7" r="4" />
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+      );
+    case "brain":
+      return (
+        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
+          <path d="M12 6v6l4 2" />
+        </svg>
+      );
+    case "shield":
+      return (
+        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      );
+    case "workflow":
+      return (
+        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="16 3 21 3 21 8" />
+          <line x1="10" y1="14" x2="21" y2="3" />
+          <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+        </svg>
+      );
+    case "models":
+      return (
+        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+          <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+          <line x1="6" y1="6" x2="6.01" y2="6" />
+          <line x1="6" y1="18" x2="6.01" y2="18" />
+        </svg>
+      );
+    case "system":
+      return (
+        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        </svg>
+      );
+    case "settings":
+      return (
+        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
         </svg>
       );
     default:
@@ -122,7 +128,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-[280px] h-screen bg-[#111113] flex flex-col select-none shrink-0 border-r border-[#27272A] z-20">
+    <aside className="w-[260px] h-screen bg-[#111113] flex flex-col select-none shrink-0 border-r border-[#27272A] z-20">
       
       {/* Top Header */}
       <div className="h-16 flex items-center justify-between px-5 border-b border-[#27272A] shrink-0">
@@ -133,7 +139,7 @@ export default function Sidebar() {
           <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 border border-[#27272A] shadow-md">
             <img src="/chat-bg.jpg" alt="Logo" className="w-full h-full object-cover" />
           </div>
-          <span className="text-sm font-bold text-white tracking-tight uppercase">ELITZE FRONTIER</span>
+          <span className="text-xs font-bold text-white tracking-wider uppercase">FRONTIER OS</span>
         </div>
 
         <button 
@@ -149,35 +155,37 @@ export default function Sidebar() {
         </button>
       </div>
 
-      {/* Navigation Sections */}
-      <div className="flex-1 overflow-y-auto py-5 px-3 space-y-6">
-        {NAV_SECTIONS.map((sec) => (
-          <div key={sec.section}>
-            <div className="px-3 mb-2">
-              <span className="text-[10px] font-bold text-[#71717A] uppercase tracking-widest">{sec.section}</span>
-            </div>
-            <div className="space-y-1">
-              {sec.items.map((item) => {
-                const active = isActive(item.href);
-                return (
-                  <button
-                    key={item.href}
-                    onClick={() => router.push(item.href)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all ${
-                      active
-                        ? "bg-[#27272A] text-white shadow-sm"
-                        : "text-[#A1A1AA] hover:bg-[#1C1C1F] hover:text-white"
-                    }`}
-                  >
-                    <SidebarIcon name={item.icon} />
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        ))}
+      {/* Main OS Navigation Items */}
+      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+        <div className="px-3 mb-3">
+          <span className="text-[10px] font-bold text-[#71717A] uppercase tracking-widest">FRONTIER OS CORE</span>
+        </div>
+
+        {FRONTIER_NAV_ITEMS.map((item) => {
+          const active = isActive(item.href);
+          return (
+            <button
+              key={item.href}
+              onClick={() => router.push(item.href)}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all ${
+                active
+                  ? "bg-[#27272A] text-white shadow-sm border border-[#3F3F46]"
+                  : "text-[#A1A1AA] hover:bg-[#1C1C1F] hover:text-white"
+              }`}
+            >
+              <SidebarIcon name={item.icon} />
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
       </div>
+
+      {/* Footer Contact Indicator */}
+      <div className="p-3 border-t border-[#27272A] shrink-0 flex items-center justify-between text-[11px] text-[#71717A]">
+        <span className="font-semibold text-white">Terrell Hall</span>
+        <span className="text-[10px] text-[#D92A2A] font-bold uppercase">Sovereign OS</span>
+      </div>
+
     </aside>
   );
 }

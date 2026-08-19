@@ -22,6 +22,29 @@ It is designed as a real operating environment for people and agents, not just a
 
 ---
 
+## 🗺️ Platform Navigation Architecture
+
+```
+LANDING (https://elitze.org)
+   ↓
+LOGIN
+   ↓
+FRONTIER OS
+   │
+   ├── HOME / DESKTOP
+   ├── FRONTIER CHAT
+   ├── AGENTS
+   ├── AGENT STUDIO
+   ├── KNOWLEDGE
+   ├── SECOPS
+   ├── WORKFLOWS
+   ├── MODEL CENTER
+   ├── SYSTEM
+   └── SETTINGS
+```
+
+---
+
 ## ⚡ What’s Inside
 
 - **Frontier Chat** — conversational AI with access to the wider platform
