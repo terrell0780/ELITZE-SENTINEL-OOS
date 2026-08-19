@@ -140,7 +140,23 @@ npm run build
 
 ---
 
+## 7. Full Intellectual Property & Ownership Transfer Terms
+
+Upon final platform acquisition and closing of the Asset Purchase Agreement:
+1. **100% Unencumbered Ownership Transfer**: The acquirer receives clean, 100% full legal title to all source code, software repositories, system architecture designs, branding assets, trademarks, and associated domain rights (`elitze.org`).
+2. **Sole Original Creator**: Designed, engineered, and authored exclusively by **Terrell Hall** (`terrell0780@gmail.com`) / **TrueElitze Digital**. There are zero co-founders, third-party equity holders, or external IP encumbrances.
+3. **Clean Licensing & Compliance**: Comprises 100% original code and open-source compliant libraries (MIT / Apache-2.0). Zero copyleft (GPL / AGPL) license entanglements.
+4. **Complete Turnkey Deliverables Package**:
+   - Master Git Repository with 100% commit history.
+   - 16-Plane Python OS Kernel & 6 Microservices.
+   - Next.js 15 App Router Frontend Console (30 Hubs / 42 Routes).
+   - Pytest Test Suite (281/281 Tests Passed).
+   - Full Production Docker & Caddy Deployment Manifests.
+   - Domain Transfer (`elitze.org`).
+
+---
+
 <div align="center">
 Copyright © 2026 Terrell Hall / TrueElitze Digital. All rights reserved.<br>
-*Canonical Domain: https://elitze.ca*
+*Canonical Domain: https://elitze.org*
 </div>

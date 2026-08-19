@@ -100,6 +100,17 @@ Every line of code is empirically verified:
 
 ---
 
+## 📜 Full Ownership & Intellectual Property Guarantee
+
+When you acquire **Elitze Sentinel Frontier Oss**, you receive 100% clean, unencumbered ownership of the entire asset package:
+
+- **100% IP Transfer**: Complete assignment of all copyrights, source code repositories, architecture specs, brand assets, and domain rights (`elitze.org`).
+- **Sole Original Author**: Authored exclusively by **Terrell Hall** (`terrell0780@gmail.com`) / **TrueElitze Digital**. Zero co-founders, zero external equity, and zero third-party claims.
+- **Clean License Compliance**: Built using standard permissive open-source frameworks (MIT / Apache-2.0). Zero GPL copyleft restrictions.
+- **Turnkey Handover Package**: Full Git repository history, Next.js 15 frontend console (30 hubs / 42 routes), 16-plane Python OS kernel (6 microservices), Pytest verification suite (281/281 passed), and deployment manifests.
+
+---
+
 ## 🤝 Acquisition & Direct Contact
 
 We are evaluating buyout offers from direct buyers for a full platform transfer (Source Code, Intellectual Property, System Architecture, and Brand Assets).
