@@ -16,37 +16,45 @@ export default function IntelligencePage() {
 
   return (
     <div className="flex flex-col h-full bg-[#09090B]">
-      <header className="h-14 border-b border-[#27272A] flex items-center px-6 shrink-0 bg-[#09090B]">
-        <h1 className="text-lg font-semibold text-white">Executive Intelligence</h1>
-        <span className="text-xs text-[#A1A1AA] ml-3">{missions.length} missions</span>
+      <header className="h-12 border-b border-[#27272A] bg-[#09090B] px-5 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-6 rounded-md bg-[#0066FF] flex items-center justify-center text-[10px] font-black text-white shadow-sm shadow-[#0066FF]/20">
+            I
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[13px] font-bold text-white tracking-tight">INTELLIGENCE</span>
+            <span className="text-[9px] font-semibold text-[#0066FF]/70 uppercase tracking-widest">Mission History</span>
+          </div>
+        </div>
+        <span className="text-[11px] text-[#A1A1AA] font-mono">{missions.length} missions</span>
       </header>
       
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-5xl mx-auto space-y-4">
           {loading ? (
-            <p className="text-xs text-[#A1A1AA] text-center py-12">Loading missions...</p>
+            <p className="text-[11px] text-[#A1A1AA] text-center py-12">Loading missions...</p>
           ) : missions.length === 0 ? (
-            <div className="text-center py-12 bg-[#111113] border border-[#27272A] rounded-xl p-6">
-              <p className="text-sm text-[#A1A1AA]">No missions yet</p>
-              <p className="text-xs text-[#A1A1AA] mt-2">Submit a mission from the chat page.</p>
+            <div className="text-center py-12 bg-[#111115] border border-[#27272A] rounded-lg p-6">
+              <p className="text-[12px] font-semibold text-white">No missions yet</p>
+              <p className="text-[11px] text-[#71717A] mt-1">Submit a mission from the chat page.</p>
             </div>
           ) : (
             missions.map((m: any) => (
-              <div key={m.mission_id} className="bg-[#111113] border border-[#27272A] rounded-xl p-5">
+              <div key={m.mission_id} className="bg-[#111115] border border-[#27272A] rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <span
                       className={`w-2 h-2 rounded-full ${
-                        m.status === "completed" ? "bg-[#D92A2A]" : "bg-[#71717A]"
+                        m.status === "completed" ? "bg-[#0066FF]" : "bg-[#71717A]"
                       }`}
                     />
-                    <span className="text-sm font-semibold text-white">{m.goal}</span>
+                    <span className="text-[12px] font-semibold text-white">{m.goal}</span>
                   </div>
                   <span
-                    className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded border ${
+                    className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm border ${
                       m.status === "completed"
-                        ? "bg-[#D92A2A]/10 text-[#D92A2A] border-[#D92A2A]/30"
-                        : "bg-[#09090B] text-[#A1A1AA] border-[#27272A]"
+                        ? "bg-[#0066FF]/10 text-[#0066FF] border-[#0066FF]/30"
+                        : "bg-[#141418] text-[#A1A1AA] border-[#27272A]"
                     }`}
                   >
                     {m.status}
@@ -57,14 +65,14 @@ export default function IntelligencePage() {
                     {m.plan.map((step: string, i: number) => (
                       <span
                         key={i}
-                        className="text-[10px] font-mono px-2 py-1 bg-[#09090B] border border-[#27272A] rounded text-[#A1A1AA]"
+                        className="text-[11px] font-mono px-2 py-1 bg-[#141418] border border-[#27272A] rounded-md text-[#A1A1AA]"
                       >
                         {step}
                       </span>
                     ))}
                   </div>
                 )}
-                <div className="flex items-center gap-4 text-[10px] text-[#A1A1AA]">
+                <div className="flex items-center gap-4 text-[11px] text-[#A1A1AA]">
                   <span>{m.subtasks?.length || 0} subtasks</span>
                   {m.duration && <span>{m.duration.toFixed(2)}s</span>}
                 </div>

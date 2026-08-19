@@ -73,8 +73,8 @@ export default function GlobalSearchPage() {
     <div className="flex flex-col h-full bg-[#09090B] relative">
       <header className="absolute top-0 left-0 right-0 h-20 z-10 p-6 flex justify-between items-start pointer-events-none">
         <div className="pointer-events-auto">
-          <h1 className="text-lg font-semibold text-white drop-shadow-md">ELITZE GLOBAL</h1>
-          <p className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest drop-shadow-md mt-0.5">Gods Eye View</p>
+          <h1 className="text-[13px] font-bold text-white drop-shadow-md tracking-tight">ELITZE GLOBAL</h1>
+          <p className="text-[9px] font-semibold text-[#52525B] uppercase tracking-widest drop-shadow-md mt-0.5">Gods Eye View</p>
         </div>
 
         <form onSubmit={handleSearch} className="pointer-events-auto relative">
@@ -89,14 +89,14 @@ export default function GlobalSearchPage() {
             placeholder="Search Elitze Global, Google, Bing..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-96 bg-[#111113]/90 backdrop-blur-md border border-[#27272A] rounded-full py-2.5 pl-10 pr-4 text-sm text-white placeholder-[#A1A1AA] outline-none focus:border-[#D92A2A] shadow-lg transition-colors"
+            className="w-96 bg-[#111115]/90 backdrop-blur-md border border-[#27272A] rounded-full py-2.5 pl-10 pr-4 text-[11px] text-white placeholder-[#71717A] outline-none focus:border-[#0066FF] shadow-lg transition-colors"
           />
         </form>
       </header>
 
       {/* Zoom Slider Overlay */}
-      <div className="absolute bottom-10 right-10 z-10 bg-[#111113]/90 backdrop-blur-md border border-[#27272A] p-5 rounded-xl flex flex-col items-center gap-4 shadow-xl">
-        <span className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Space</span>
+      <div className="absolute bottom-10 right-10 z-10 bg-[#111115]/90 backdrop-blur-md border border-[#27272A] p-5 rounded-lg flex flex-col items-center gap-4 shadow-xl">
+        <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Space</span>
         <input 
           type="range" 
           min="1" 
@@ -104,10 +104,10 @@ export default function GlobalSearchPage() {
           step="0.1" 
           value={zoom} 
           onChange={handleZoomChange}
-          className="w-1.5 h-32 appearance-none bg-[#27272A] rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#D92A2A] [&::-webkit-slider-thumb]:cursor-pointer cursor-pointer origin-center -rotate-90 translate-y-14 translate-x-14"
+          className="w-1.5 h-32 appearance-none bg-[#27272A] rounded-full outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#0066FF] [&::-webkit-slider-thumb]:cursor-pointer cursor-pointer origin-center -rotate-90 translate-y-14 translate-x-14"
           style={{ width: "128px", height: "6px", transform: "rotate(270deg)" }}
         />
-        <span className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mt-28">Street</span>
+        <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest mt-28">Street</span>
       </div>
 
       {/* Map Container */}

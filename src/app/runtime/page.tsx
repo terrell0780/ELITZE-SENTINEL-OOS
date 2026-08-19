@@ -19,15 +19,23 @@ export default function RuntimePage() {
 
   return (
     <div className="h-full bg-[#09090B] overflow-y-auto flex flex-col">
-      <header className="border-b border-[#27272A] bg-[#09090B] p-6 flex flex-wrap items-center justify-between gap-4 shrink-0">
-        <h1 className="text-lg font-semibold text-white">Frontier Runtime</h1>
-        <div className="flex items-center gap-1.5 bg-[#111113] rounded-xl p-1 border border-[#27272A] text-xs">
+      <header className="h-12 border-b border-[#27272A] bg-[#09090B] px-5 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-6 rounded-md bg-[#0066FF] flex items-center justify-center text-[10px] font-black text-white shadow-sm shadow-[#0066FF]/20">
+            R
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[13px] font-bold text-white tracking-tight">RUNTIME</span>
+            <span className="text-[9px] font-semibold text-[#0066FF]/70 uppercase tracking-widest">Execution Monitor</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-1 bg-[#141418] rounded-md p-1 border border-[#27272A]">
           {(["tasks", "workers", "memory", "models"] as const).map(t => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`px-3 py-1.5 rounded-lg capitalize font-medium transition-all ${
-                tab === t ? "bg-[#D92A2A] text-white" : "text-[#A1A1AA] hover:text-[#A1A1AA]"
+              className={`px-3 py-1 rounded-[4px] capitalize text-[11px] font-semibold transition-all ${
+                tab === t ? "bg-[#18181B] text-white shadow-sm" : "text-[#A1A1AA] hover:text-white"
               }`}
             >
               {t}
@@ -45,8 +53,8 @@ export default function RuntimePage() {
               { label: "Total Missions", value: missions.length },
               { label: "Models", value: modelStats.length },
             ].map(s => (
-              <div key={s.label} className="bg-[#111113] rounded-xl border border-[#27272A] p-5">
-                <p className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mb-2">{s.label}</p>
+              <div key={s.label} className="bg-[#111115] border border-[#27272A] rounded-lg p-4">
+                <p className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest mb-2">{s.label}</p>
                 <p className="text-xl font-bold text-white">{s.value}</p>
               </div>
             ))}
@@ -55,25 +63,25 @@ export default function RuntimePage() {
           {tab === "tasks" && (
             <div className="space-y-4">
               {missions.length === 0 ? (
-                <div className="text-center py-12 bg-[#111113] border border-[#27272A] rounded-xl p-6">
-                  <p className="text-xs text-[#A1A1AA]">No missions yet. Send a message in chat.</p>
+                <div className="text-center py-12 bg-[#111115] border border-[#27272A] rounded-lg p-6">
+                  <p className="text-[11px] text-[#A1A1AA]">No missions yet. Send a message in chat.</p>
                 </div>
               ) : (
                 missions.map((m: any) => (
-                  <div key={m.mission_id} className="bg-[#111113] border border-[#27272A] rounded-xl p-5 space-y-3">
+                  <div key={m.mission_id} className="bg-[#111115] border border-[#27272A] rounded-lg p-4 space-y-3">
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-2.5">
-                        <span className={`w-2 h-2 rounded-full ${m.status === "completed" ? "bg-[#D92A2A]" : m.status === "failed" ? "bg-[#A1A1AA]" : "bg-[#D92A2A] animate-pulse"}`} />
-                        <span className="text-xs text-[#A1A1AA] font-medium">{m.goal?.slice(0, 60)}</span>
+                        <span className={`w-2 h-2 rounded-full ${m.status === "completed" ? "bg-[#0066FF]" : m.status === "failed" ? "bg-[#71717A]" : "bg-[#0066FF] animate-pulse"}`} />
+                        <span className="text-[11px] text-[#A1A1AA] font-mono">{m.goal?.slice(0, 60)}</span>
                       </div>
-                      <span className="text-xs text-[#A1A1AA]">{m.subtasks?.length || 0} tasks</span>
+                      <span className="text-[11px] text-[#A1A1AA] font-mono">{m.subtasks?.length || 0} tasks</span>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="flex-1 h-1.5 bg-[#09090B] border border-[#27272A] rounded-full overflow-hidden">
-                        <div className="h-full rounded-full bg-[#D92A2A]" style={{ width: `${m.duration ? 100 : 30}%` }} />
+                        <div className="h-full rounded-full bg-[#0066FF]" style={{ width: `${m.duration ? 100 : 30}%` }} />
                       </div>
-                      <span className="text-xs text-[#A1A1AA] capitalize">{m.status}</span>
-                      {m.duration && <span className="text-xs text-[#A1A1AA]">{m.duration.toFixed(1)}s</span>}
+                      <span className="text-[11px] text-[#A1A1AA] capitalize font-mono">{m.status}</span>
+                      {m.duration && <span className="text-[11px] text-[#A1A1AA] font-mono">{m.duration.toFixed(1)}s</span>}
                     </div>
                   </div>
                 ))
@@ -82,28 +90,28 @@ export default function RuntimePage() {
           )}
 
           {tab === "workers" && (
-            <div className="bg-[#111113] rounded-xl border border-[#27272A] p-6 text-center space-y-2">
-              <p className="text-sm text-[#A1A1AA]">{missions.length > 0 ? `${missions.length} mission(s) processed` : "Ready for tasks"}</p>
-              <p className="text-xs text-[#A1A1AA]">Agent orchestrator manages 4 agent types</p>
+            <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4 text-center space-y-2">
+              <p className="text-[12px] font-semibold text-white">{missions.length > 0 ? `${missions.length} mission(s) processed` : "Ready for tasks"}</p>
+              <p className="text-[11px] text-[#71717A]">Agent orchestrator manages 4 agent types</p>
             </div>
           )}
 
           {tab === "memory" && (
-            <div className="bg-[#111113] rounded-xl border border-[#27272A] p-6 text-center space-y-2">
-              <p className="text-sm text-[#A1A1AA]">STM → LTM → Vector memory active</p>
-              <p className="text-xs text-[#A1A1AA]">Auto-promotes frequently accessed memories</p>
+            <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4 text-center space-y-2">
+              <p className="text-[12px] font-semibold text-white">STM → LTM → Vector memory active</p>
+              <p className="text-[11px] text-[#71717A]">Auto-promotes frequently accessed memories</p>
             </div>
           )}
 
           {tab === "models" && (
             <div className="space-y-4">
               {modelStats.map((m: any) => (
-                <div key={m.model_id} className="bg-[#111113] border border-[#27272A] rounded-xl p-5 flex items-center justify-between gap-4">
+                <div key={m.model_id} className="bg-[#111115] border border-[#27272A] rounded-lg p-4 flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-xs text-white font-medium">{m.model_id}</p>
-                    <p className="text-xs text-[#A1A1AA] mt-1">{m.provider} · {m.latency_p50_ms}ms</p>
+                    <p className="text-[12px] font-semibold text-white">{m.model_id}</p>
+                    <p className="text-[11px] text-[#71717A] mt-1">{m.provider} · {m.latency_p50_ms}ms</p>
                   </div>
-                  <span className={`text-xs px-3 py-1 rounded-xl border ${m.available ? "bg-[#D92A2A]/10 text-[#D92A2A] border-[#D92A2A]/30" : "bg-[#09090B] text-[#A1A1AA] border-[#27272A]"}`}>
+                  <span className={`text-[11px] font-semibold px-3 py-1 rounded-md border ${m.available ? "bg-[#0066FF]/10 text-[#0066FF] border-[#0066FF]/30" : "bg-[#141418] text-[#A1A1AA] border-[#27272A]"}`}>
                     {m.available ? "Available" : "Unavailable"}
                   </span>
                 </div>

@@ -56,13 +56,13 @@ export default function SlugPage() {
         return (
           <div className="flex-1 flex flex-col font-mono text-sm text-[#A1A1AA]">
             <div className="flex items-center gap-4 mb-4 border-b border-[#27272A] pb-2">
-              <span className="text-[#D92A2A]">src/</span>
+              <span className="text-[#0066FF]">src/</span>
               <span>main.ts</span>
               <span>config.json</span>
             </div>
             <div className="flex-1">
               <div className="text-[#FAFAFA] mb-2">// Environment initialized</div>
-              <div><span className="text-[#D92A2A]">const</span> workspace = <span className="text-[#FAFAFA]">new</span> Workspace();</div>
+              <div><span className="text-[#0066FF]">const</span> workspace = <span className="text-[#FAFAFA]">new</span> Workspace();</div>
               <div>workspace.mount();</div>
             </div>
           </div>
@@ -71,8 +71,8 @@ export default function SlugPage() {
         return (
           <div className="flex-1 flex flex-col">
             <div className="flex justify-between mb-6">
-              <div className="h-8 w-48 bg-[#1A1A1D] rounded"></div>
-              <div className="h-8 w-24 bg-[#D92A2A]/10 rounded"></div>
+              <div className="h-8 w-48 bg-[#18181B] rounded"></div>
+              <div className="h-8 w-24 bg-[#0066FF]/10 rounded"></div>
             </div>
             <div className="border border-[#27272A] rounded-lg divide-y divide-[#27272A]">
               <div className="p-4 flex gap-4 text-xs text-[#A1A1AA] uppercase font-semibold bg-[#09090B]">
@@ -111,7 +111,7 @@ export default function SlugPage() {
               <span className="text-xs text-[#A1A1AA] uppercase font-semibold">System Status</span>
               <div className="flex items-end gap-2 h-16">
                 {[40, 70, 45, 90, 60, 30, 85, 50].map((h, i) => (
-                  <div key={i} className="flex-1 bg-[#D92A2A]/40 hover:bg-[#D92A2A] transition-all rounded-t-sm" style={{ height: `${h}%` }}></div>
+                  <div key={i} className="flex-1 bg-[#0066FF]/40 hover:bg-[#0066FF] transition-all rounded-t-sm" style={{ height: `${h}%` }}></div>
                 ))}
               </div>
             </div>
@@ -128,7 +128,7 @@ export default function SlugPage() {
       default:
         return (
           <div className="flex-1 flex flex-col justify-center items-center text-center space-y-4 min-h-[200px]">
-            <div className="w-16 h-16 rounded-full bg-[#1A1A1D] flex items-center justify-center border border-[#27272A]">
+            <div className="w-16 h-16 rounded-full bg-[#18181B] flex items-center justify-center border border-[#27272A]">
               <svg className="w-6 h-6 text-[#71717A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </div>
             <div>
@@ -143,7 +143,7 @@ export default function SlugPage() {
   return (
     <div className="flex flex-col h-full bg-[#09090B]">
       {/* Top breadcrumb bar */}
-      <header className="h-12 px-6 border-b border-[#27272A] bg-[#111113] flex items-center gap-2 shrink-0">
+      <header className="h-12 px-6 border-b border-[#27272A] bg-[#111115] flex items-center gap-2 shrink-0">
         <span className="text-xs text-[#A1A1AA] capitalize">{root}</span>
         {sub && (
           <>
@@ -162,7 +162,7 @@ export default function SlugPage() {
           <h1 className="text-xl font-semibold text-[#FAFAFA] mb-1">{meta.title}</h1>
           <p className="text-sm text-[#A1A1AA] mb-8">{meta.description}</p>
 
-          <div className="bg-[#111113] border border-[#27272A] rounded-xl p-6 min-h-[300px] flex flex-col shadow-sm">
+          <div className="bg-[#111115] border border-[#27272A] rounded-xl p-6 min-h-[300px] flex flex-col shadow-sm">
             {renderContent}
           </div>
         </div>

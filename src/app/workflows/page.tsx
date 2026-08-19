@@ -97,19 +97,22 @@ export default function WorkflowsPage() {
   return (
     <div className="h-full bg-[#09090B] flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="px-6 py-5 border-b border-[#27272A] shrink-0 flex items-center justify-between">
-        <div>
-          <h1 className="text-lg font-semibold text-white">Workflow Studio</h1>
-          <p className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mt-0.5">
-            Dedicated Workflow Pages & Real-time Video Render Monitors
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-[#D92A2A] font-mono font-semibold bg-[#D92A2A]/10 border border-[#D92A2A]/20 px-3 py-1.5 rounded-xl">
+      <header className="h-12 border-b border-[#1F1F28] bg-[#09090B] px-5 flex items-center justify-between shrink-0">
+  <div className="flex items-center gap-3">
+    <div className="w-6 h-6 rounded-md bg-[#8B5CF6] flex items-center justify-center text-[10px] font-black text-white shadow-sm shadow-[#8B5CF6]/20">
+      W
+    </div>
+    <div className="flex items-center gap-2">
+      <span className="text-[13px] font-bold text-white tracking-tight">WORKFLOWS</span>
+      <span className="text-[9px] font-semibold text-[#8B5CF6]/70 uppercase tracking-widest">Pipeline Monitor</span>
+    </div>
+  </div>
+  <div className="flex items-center gap-3">
+          <span className="text-xs text-[#8B5CF6] font-mono font-semibold bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-3 py-1.5 rounded-xl">
             {workflows.filter(w => w.status === "running").length} Active Executions
           </span>
         </div>
-      </header>
+</header>
 
       {/* Main Container */}
       <div className="flex-1 flex overflow-hidden">
@@ -117,7 +120,7 @@ export default function WorkflowsPage() {
         {/* Left: Workflow Selection Panel */}
         <aside className="w-80 border-r border-[#27272A] bg-[#09090B] flex flex-col overflow-y-auto">
           <div className="p-4 border-b border-[#27272A]">
-            <h2 className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Select Workflow</h2>
+            <h2 className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Select Workflow</h2>
           </div>
           <div className="p-3 space-y-2">
             {workflows.map(wf => {
@@ -128,23 +131,23 @@ export default function WorkflowsPage() {
                   onClick={() => setActiveWorkflow(wf)}
                   className={`p-4 rounded-xl border cursor-pointer transition-all ${
                     isSelected 
-                      ? "bg-[#111113] border-[#D92A2A]/60 shadow-lg" 
-                      : "bg-[#09090B] border-[#27272A] hover:border-[#27272A]/80 hover:bg-[#111113]/50"
+                      ? "bg-[#111115] border-[#8B5CF6]/60 shadow-lg" 
+                      : "bg-[#09090B] border-[#27272A] hover:border-[#27272A]/80 hover:bg-[#111115]/50"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#D92A2A] bg-[#D92A2A]/10 px-2 py-0.5 rounded border border-[#D92A2A]/20">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#52525B] bg-[#8B5CF6]/10 px-2 py-0.5 rounded border border-[#8B5CF6]/20">
                       {wf.category}
                     </span>
                     <span className={`text-[10px] font-semibold uppercase ${
-                      wf.status === "running" ? "text-[#D92A2A] animate-pulse" : "text-[#A1A1AA]"
+                      wf.status === "running" ? "text-[#8B5CF6] animate-pulse" : "text-[#A1A1AA]"
                     }`}>
                       {wf.status}
                     </span>
                   </div>
-                  <h3 className="text-xs font-semibold text-white mb-2">{wf.name}</h3>
+                  <h3 className="text-[12px] font-semibold text-white mb-2">{wf.name}</h3>
                   <div className="w-full bg-[#09090B] h-1.5 rounded-full overflow-hidden border border-[#27272A]">
-                    <div className="bg-[#D92A2A] h-full transition-all" style={{ width: `${wf.progress}%` }} />
+                    <div className="bg-[#8B5CF6] h-full transition-all" style={{ width: `${wf.progress}%` }} />
                   </div>
                 </div>
               );
@@ -158,7 +161,7 @@ export default function WorkflowsPage() {
             <div className="max-w-5xl w-full mx-auto space-y-6">
               
               {/* Workflow Page Title & Controls */}
-              <div className="flex items-center justify-between bg-[#111113] border border-[#27272A] rounded-xl p-5">
+              <div className="flex items-center justify-between bg-[#111115] border border-[#27272A] rounded-lg p-4">
                 <div>
                   <div className="flex items-center gap-3">
                     <h2 className="text-base font-bold text-white">{activeWorkflow.name}</h2>
@@ -171,7 +174,7 @@ export default function WorkflowsPage() {
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={() => handleRunWorkflow(activeWorkflow.id)}
-                    className="px-4 py-2 bg-[#D92A2A] text-white text-xs font-semibold rounded-xl hover:bg-[#D92A2A]/90 transition-all"
+                    className="px-3 py-1.5 bg-[#8B5CF6] text-white text-[11px] font-semibold rounded-md hover:opacity-90 transition-all"
                   >
                     Execute Workflow
                   </button>
@@ -179,11 +182,11 @@ export default function WorkflowsPage() {
               </div>
 
               {/* DEDICATED EMBEDDED VIDEO PLAYER FOR WORKFLOW */}
-              <div className="bg-[#111113] border border-[#27272A] rounded-xl p-5 space-y-4">
+              <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4 space-y-4">
                 <div className="flex items-center justify-between border-b border-[#27272A] pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#D92A2A] animate-ping" />
-                    <span className="text-xs font-semibold text-white">Dedicated Workflow Live Video Monitor</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#8B5CF6] animate-ping" />
+                    <span className="text-[12px] font-semibold text-white">Dedicated Workflow Live Video Monitor</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <select 
@@ -211,7 +214,7 @@ export default function WorkflowsPage() {
                   
                   {/* Overlay Video Telemetry HUD */}
                   <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md border border-white/10 rounded-lg px-3 py-1.5 text-[11px] font-mono text-white flex items-center gap-3">
-                    <span className="text-[#D92A2A] font-bold">● RENDER MONITOR</span>
+                    <span className="text-[#8B5CF6] font-bold">● RENDER MONITOR</span>
                     <span>FRAME: 0842 / 1200</span>
                     <span>GPU: 98%</span>
                   </div>
@@ -221,7 +224,7 @@ export default function WorkflowsPage() {
                     <div className="flex items-center gap-4">
                       <button 
                         onClick={() => setIsPlaying(!isPlaying)}
-                        className="w-8 h-8 rounded-full bg-[#D92A2A] flex items-center justify-center text-white hover:scale-105 transition-all"
+                        className="w-8 h-8 rounded-full bg-[#8B5CF6] flex items-center justify-center text-white hover:scale-105 transition-all"
                       >
                         {isPlaying ? "" : "▶"}
                       </button>
@@ -235,13 +238,13 @@ export default function WorkflowsPage() {
                         max="60" 
                         value={currentTime}
                         onChange={e => setCurrentTime(Number(e.target.value))}
-                        className="w-full accent-[#D92A2A] cursor-pointer"
+                        className="w-full accent-[#8B5CF6] cursor-pointer"
                       />
                     </div>
 
                     <div className="flex items-center gap-3 text-xs">
-                      <button className="px-2 py-1 bg-[#111113]/10 rounded hover:bg-[#111113]/20">Snapshot</button>
-                      <button className="px-2 py-1 bg-[#111113]/10 rounded hover:bg-[#111113]/20">Fullscreen</button>
+                      <button className="px-2 py-1 bg-[#111115]/10 rounded hover:bg-[#111115]/20">Snapshot</button>
+                      <button className="px-2 py-1 bg-[#111115]/10 rounded hover:bg-[#111115]/20">Fullscreen</button>
                     </div>
                   </div>
                 </div>
@@ -249,8 +252,8 @@ export default function WorkflowsPage() {
 
               {/* Execution Node Pipeline & Logs */}
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-[#111113] border border-[#27272A] rounded-xl p-5">
-                  <h3 className="text-xs font-semibold text-white mb-4">Pipeline Execution Nodes</h3>
+                <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4">
+                  <h3 className="text-[12px] font-semibold text-white mb-4">Pipeline Execution Nodes</h3>
                   <div className="space-y-3">
                     {[
                       { node: "Node 1: Source Asset Ingestion", status: "Done", time: "0.4s" },
@@ -260,7 +263,7 @@ export default function WorkflowsPage() {
                     ].map((n, idx) => (
                       <div key={n.node} className="flex items-center justify-between p-3 bg-[#09090B] border border-[#27272A] rounded-xl">
                         <div className="flex items-center gap-3">
-                          <span className="w-5 h-5 rounded-full bg-[#D92A2A]/20 text-[#D92A2A] text-[10px] font-bold flex items-center justify-center">
+                          <span className="w-5 h-5 rounded-full bg-[#8B5CF6]/20 text-[#8B5CF6] text-[10px] font-bold flex items-center justify-center">
                             {idx + 1}
                           </span>
                           <span className="text-xs font-medium text-white">{n.node}</span>
@@ -271,8 +274,8 @@ export default function WorkflowsPage() {
                   </div>
                 </div>
 
-                <div className="bg-[#111113] border border-[#27272A] rounded-xl p-5">
-                  <h3 className="text-xs font-semibold text-white mb-4">Live Execution Logs</h3>
+                <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4">
+                  <h3 className="text-[12px] font-semibold text-white mb-4">Live Execution Logs</h3>
                   <div className="bg-[#09090B] border border-[#27272A] rounded-xl p-4 font-mono text-[11px] text-[#A1A1AA] h-48 overflow-y-auto space-y-1">
                     {activeWorkflow.logs.map((log, i) => (
                       <p key={i} className="text-emerald-400/90">{log}</p>

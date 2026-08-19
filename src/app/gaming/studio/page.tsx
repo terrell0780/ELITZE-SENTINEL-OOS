@@ -59,19 +59,22 @@ export default function GameStudioPage() {
   return (
     <div className="h-full bg-[#09090B] flex flex-col overflow-hidden">
       {/* Top Header */}
-      <header className="px-6 py-5 border-b border-[#27272A] shrink-0 flex items-center justify-between">
-        <div>
-          <h1 className="text-lg font-semibold text-white">Game Building Studio</h1>
-          <p className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mt-0.5">
-            Dedicated Game Build Workflows & Realtime 3D Video Viewports
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <button className="px-4 py-2 bg-[#D92A2A] text-white text-xs font-semibold rounded-xl hover:bg-[#D92A2A]/90 transition-all">
+      <header className="h-12 border-b border-[#1F1F28] bg-[#09090B] px-5 flex items-center justify-between shrink-0">
+  <div className="flex items-center gap-3">
+    <div className="w-6 h-6 rounded-md bg-[#8B5CF6] flex items-center justify-center text-[10px] font-black text-white shadow-sm shadow-[#8B5CF6]/20">
+      G
+    </div>
+    <div className="flex items-center gap-2">
+      <span className="text-[13px] font-bold text-white tracking-tight">GAME STUDIO</span>
+      <span className="text-[9px] font-semibold text-[#8B5CF6]/70 uppercase tracking-widest">Production</span>
+    </div>
+  </div>
+  <div className="flex items-center gap-3">
+          <button className="px-3 py-1.5 bg-[#8B5CF6] text-white text-[11px] font-semibold rounded-md hover:opacity-90 transition-all">
             + New Game Project
           </button>
         </div>
-      </header>
+</header>
 
       {/* Main Studio Body */}
       <div className="flex-1 flex overflow-hidden">
@@ -79,7 +82,7 @@ export default function GameStudioPage() {
         {/* Left: Project Selector Sidebar */}
         <aside className="w-80 border-r border-[#27272A] bg-[#09090B] flex flex-col overflow-y-auto">
           <div className="p-4 border-b border-[#27272A]">
-            <h2 className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Active Game Projects</h2>
+            <h2 className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">Active Game Projects</h2>
           </div>
           <div className="p-3 space-y-2">
             {PROJECTS.map(proj => {
@@ -90,13 +93,13 @@ export default function GameStudioPage() {
                   onClick={() => setSelectedProject(proj)}
                   className={`p-4 rounded-xl border cursor-pointer transition-all ${
                     isSelected 
-                      ? "bg-[#111113] border-[#D92A2A]/60 shadow-lg" 
+                      ? "bg-[#111115] border-[#8B5CF6]/60 shadow-lg" 
                       : "bg-[#09090B] border-[#27272A] hover:border-[#27272A]/80"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-xs font-bold text-white">{proj.name}</span>
-                    <span className="text-[10px] text-[#D92A2A] font-mono font-semibold">v{proj.buildVersion}</span>
+                    <span className="text-[10px] text-[#8B5CF6] font-mono font-semibold">v{proj.buildVersion}</span>
                   </div>
                   <p className="text-[11px] text-[#A1A1AA] mb-2">{proj.genre} • {proj.engine}</p>
                   <div className="flex items-center justify-between text-[10px] text-[#A1A1AA]">
@@ -104,7 +107,7 @@ export default function GameStudioPage() {
                     <span>{proj.progress}%</span>
                   </div>
                   <div className="w-full bg-[#09090B] h-1.5 rounded-full overflow-hidden border border-[#27272A] mt-1.5">
-                    <div className="bg-[#D92A2A] h-full" style={{ width: `${proj.progress}%` }} />
+                    <div className="bg-[#8B5CF6] h-full" style={{ width: `${proj.progress}%` }} />
                   </div>
                 </div>
               );
@@ -116,11 +119,11 @@ export default function GameStudioPage() {
         <main className="flex-1 flex flex-col overflow-y-auto bg-[#09090B] p-6 space-y-6">
           
           {/* Game Workflow Header */}
-          <div className="flex flex-wrap items-center justify-between bg-[#111113] border border-[#27272A] rounded-xl p-5 gap-4">
+          <div className="flex flex-wrap items-center justify-between bg-[#111115] border border-[#27272A] rounded-lg p-4 gap-4">
             <div>
               <div className="flex items-center gap-3">
                 <h2 className="text-base font-bold text-white">{selectedProject.name} Workflow Studio</h2>
-                <span className="text-xs text-[#D92A2A] bg-[#D92A2A]/10 border border-[#D92A2A]/20 px-2.5 py-0.5 rounded font-mono font-semibold">
+                <span className="text-xs text-[#8B5CF6] bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 px-2.5 py-0.5 rounded font-mono font-semibold">
                   {selectedProject.engine}
                 </span>
               </div>
@@ -141,7 +144,7 @@ export default function GameStudioPage() {
                   key={t.id}
                   onClick={() => setActiveTab(t.id as any)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                    activeTab === t.id ? "bg-[#D92A2A] text-white" : "text-[#A1A1AA] hover:text-white"
+                    activeTab === t.id ? "bg-[#8B5CF6] text-white" : "text-[#A1A1AA] hover:text-white"
                   }`}
                 >
                   {t.label}
@@ -151,11 +154,11 @@ export default function GameStudioPage() {
           </div>
 
           {/* DEDICATED GAME BUILDING VIDEO VIEWPORT PLAYER */}
-          <div className="bg-[#111113] border border-[#27272A] rounded-xl p-5 space-y-4">
+          <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4 space-y-4">
             <div className="flex items-center justify-between border-b border-[#27272A] pb-3">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-                <span className="text-xs font-semibold text-white">Live 3D Game Viewport & Render Player</span>
+                <span className="text-[12px] font-semibold text-white">Live 3D Game Viewport & Render Player</span>
               </div>
               
               <div className="flex items-center gap-3">
@@ -185,7 +188,7 @@ export default function GameStudioPage() {
 
               {/* Viewport 3D Overlay HUD */}
               <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md border border-white/10 rounded-lg p-3 text-[11px] font-mono text-white space-y-1">
-                <div className="text-[#D92A2A] font-bold">GAME ENGINE VIEWPORT</div>
+                <div className="text-[#8B5CF6] font-bold">GAME ENGINE VIEWPORT</div>
                 <div>PROJECT: {selectedProject.name}</div>
                 <div>CAMERA: {cameraAngle}</div>
                 <div>TRIANGLES: 1.4M • DRAW CALLS: 142</div>
@@ -196,15 +199,15 @@ export default function GameStudioPage() {
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="w-8 h-8 rounded-full bg-[#D92A2A] flex items-center justify-center font-bold"
+                    className="w-8 h-8 rounded-full bg-[#8B5CF6] flex items-center justify-center font-bold"
                   >
                     {isPlaying ? "" : "▶"}
                   </button>
                   <span className="text-xs font-mono">00:18 / 01:00</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="px-3 py-1.5 bg-[#111113]/10 rounded-lg text-xs font-semibold hover:bg-[#111113]/20">Re-compile Shaders</button>
-                  <button className="px-3 py-1.5 bg-[#D92A2A] rounded-lg text-xs font-semibold hover:bg-[#D92A2A]/90">Deploy Build</button>
+                  <button className="px-3 py-1.5 bg-[#111115]/10 rounded-lg text-xs font-semibold hover:bg-[#111115]/20">Re-compile Shaders</button>
+                  <button className="px-3 py-1.5 bg-[#8B5CF6] rounded-lg text-xs font-semibold hover:bg-[#8B5CF6]/90">Deploy Build</button>
                 </div>
               </div>
             </div>
@@ -212,8 +215,8 @@ export default function GameStudioPage() {
 
           {/* Game Dev Inspector Tools */}
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-[#111113] border border-[#27272A] rounded-xl p-5 space-y-3">
-              <h3 className="text-xs font-semibold text-white">3D Lighting & Physics Grid</h3>
+            <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4 space-y-3">
+              <h3 className="text-[12px] font-semibold text-white">3D Lighting & Physics Grid</h3>
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between text-[#A1A1AA]"><span>Global Illumination</span><span className="text-white">Lumen 2.0</span></div>
                 <div className="flex justify-between text-[#A1A1AA]"><span>Physics Engine</span><span className="text-white">Chaos Physics</span></div>
@@ -221,8 +224,8 @@ export default function GameStudioPage() {
               </div>
             </div>
 
-            <div className="bg-[#111113] border border-[#27272A] rounded-xl p-5 space-y-3">
-              <h3 className="text-xs font-semibold text-white">C++ Game Logic Modules</h3>
+            <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4 space-y-3">
+              <h3 className="text-[12px] font-semibold text-white">C++ Game Logic Modules</h3>
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between text-[#A1A1AA]"><span>Player Character Controller</span><span className="text-emerald-400 font-mono">OK</span></div>
                 <div className="flex justify-between text-[#A1A1AA]"><span>NPC AI Behavior Trees</span><span className="text-emerald-400 font-mono">OK</span></div>
@@ -230,8 +233,8 @@ export default function GameStudioPage() {
               </div>
             </div>
 
-            <div className="bg-[#111113] border border-[#27272A] rounded-xl p-5 space-y-3">
-              <h3 className="text-xs font-semibold text-white">Build Pipeline Output</h3>
+            <div className="bg-[#111115] border border-[#27272A] rounded-lg p-4 space-y-3">
+              <h3 className="text-[12px] font-semibold text-white">Build Pipeline Output</h3>
               <div className="text-xs text-[#A1A1AA] space-y-1 font-mono">
                 <p> Compiled 14 Unreal C++ Modules</p>
                 <p> Baked 8K Texture Atlases</p>

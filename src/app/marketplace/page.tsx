@@ -19,20 +19,27 @@ export default function MarketplacePage() {
 
   return (
     <div className="flex flex-col h-full bg-[#09090B]">
-      <header className="h-16 border-b border-[#27272A] flex items-center px-6 shrink-0 bg-[#09090B]">
-        <h1 className="text-lg font-semibold text-white">Marketplace</h1>
-        <div className="flex-1" />
-        <button className="px-4 py-2 bg-[#D92A2A] text-white text-xs font-semibold rounded-lg hover:bg-[#D92A2A]/90 transition-colors">Publish</button>
+      <header className="h-12 border-b border-[#27272A] bg-[#09090B] px-5 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-6 rounded-md bg-[#0066FF] flex items-center justify-center text-[10px] font-black text-white shadow-sm shadow-[#0066FF]/20">
+            M
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[13px] font-bold text-white tracking-tight">MARKETPLACE</span>
+            <span className="text-[9px] font-semibold text-[#0066FF]/70 uppercase tracking-widest">Extensions</span>
+          </div>
+        </div>
+        <button className="bg-[#0066FF] text-white hover:opacity-90 text-[11px] font-semibold px-3 py-1.5 rounded-md transition-colors">Publish</button>
       </header>
-      <div className="flex gap-2 px-6 py-3 border-b border-[#27272A] overflow-x-auto bg-[#09090B]">
+      <div className="flex gap-2 px-5 py-3 border-b border-[#27272A] overflow-x-auto bg-[#09090B]">
         {CATEGORIES.map(c => (
           <button
             key={c}
             onClick={() => setCategory(c)}
-            className={`px-3 py-1.5 text-xs rounded-lg whitespace-nowrap transition-colors ${
+            className={`px-3 py-1 text-[11px] font-semibold rounded-[4px] whitespace-nowrap transition-colors ${
               category === c
-                ? "bg-[#111113] border border-[#27272A] text-white font-medium"
-                : "text-[#A1A1AA] hover:text-[#A1A1AA]"
+                ? "bg-[#141418] border border-[#27272A] text-white"
+                : "text-[#A1A1AA] hover:text-white"
             }`}
           >
             {c}
@@ -42,21 +49,21 @@ export default function MarketplacePage() {
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-5xl mx-auto grid sm:grid-cols-2 gap-4">
           {filtered.map(item => (
-            <div key={item.name} className="bg-[#111113] border border-[#27272A] rounded-xl p-5 hover:border-[#D92A2A]/40 transition-colors group flex flex-col justify-between">
+            <div key={item.name} className="bg-[#111115] border border-[#27272A] rounded-lg p-4 hover:border-[#0066FF]/40 transition-colors group flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest px-2 py-0.5 rounded bg-[#09090B] border border-[#27272A]">{item.type}</span>
-                  <span className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">{item.category}</span>
+                  <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest px-2 py-0.5 rounded-sm bg-[#141418] border border-[#27272A]">{item.type}</span>
+                  <span className="text-[9px] font-bold text-[#52525B] uppercase tracking-widest">{item.category}</span>
                 </div>
-                <h3 className="text-sm font-semibold text-white mb-1">{item.name}</h3>
-                <p className="text-xs text-[#A1A1AA] mb-4">{item.desc}</p>
+                <h3 className="text-[12px] font-semibold text-white mb-1">{item.name}</h3>
+                <p className="text-[11px] text-[#A1A1AA] mb-4">{item.desc}</p>
               </div>
               <div className="flex items-center justify-between pt-2 border-t border-[#27272A]/50">
-                <div className="flex items-center gap-3 text-[10px] text-[#A1A1AA]">
+                <div className="flex items-center gap-3 text-[11px] text-[#A1A1AA] font-mono">
                   <span>{item.rating} stars</span>
                   <span>{item.downloads} downloads</span>
                 </div>
-                <button className="px-3 py-1 bg-[#D92A2A]/10 border border-[#D92A2A]/30 text-xs font-medium text-[#D92A2A] rounded-lg opacity-0 group-hover:opacity-100 transition-all hover:bg-[#D92A2A]/20">Install</button>
+                <button className="px-3 py-1.5 bg-[#0066FF]/10 border border-[#0066FF]/30 text-[11px] font-semibold text-[#0066FF] rounded-md opacity-0 group-hover:opacity-100 transition-all hover:bg-[#0066FF]/20">Install</button>
               </div>
             </div>
           ))}

@@ -23,10 +23,10 @@ export default function WelcomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#111113] text-[#FAFAFA] font-sans flex flex-col selection:bg-[#D92A2A] selection:text-white">
+    <div className="min-h-screen bg-[#09090B] text-[#FAFAFA] font-sans flex flex-col selection:bg-[#0066FF] selection:text-white">
       
-      {/* ── SKY BLUE TOP NAVIGATION BAR ── */}
-      <header className="h-16 bg-[#D92A2A] px-8 flex items-center justify-between text-white shadow-md z-40">
+      {/* ── TOP NAVIGATION BAR ── */}
+      <header className="h-16 bg-[#0066FF] px-8 flex items-center justify-between text-white shadow-md z-40">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 border-2 border-white/80 rounded bg-black/90 p-0.5 overflow-hidden flex items-center justify-center shadow-md cursor-pointer" onClick={() => setShowAuth(true)}>
             <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover rounded-sm" />
@@ -43,7 +43,7 @@ export default function WelcomePage() {
           <a href="#contact" className="hover:text-white transition-colors">Contact</a>
           <button 
             onClick={() => setShowAuth(true)}
-            className="ml-4 px-4 py-1.5 bg-[#111113] text-[#B91C1C] font-semibold rounded-lg hover:bg-slate-100 transition-colors shadow-sm text-xs"
+            className="ml-4 px-4 py-1.5 bg-[#111115] text-[#0066FF] font-semibold rounded-lg hover:bg-white transition-colors shadow-sm text-xs"
           >
             Launch OS
           </button>
@@ -70,7 +70,7 @@ export default function WelcomePage() {
       </section>
 
       {/* ── FEATURES SECTION ── */}
-      <section id="features" className="py-24 px-6 bg-[#111113] text-center">
+      <section id="features" className="py-24 px-6 bg-[#09090B] text-center">
         <div className="max-w-4xl mx-auto space-y-4 mb-16">
           <h2 className="text-3xl font-bold text-[#FAFAFA]">Features</h2>
           <p className="text-sm text-[#A1A1AA] max-w-2xl mx-auto leading-relaxed">
@@ -78,7 +78,7 @@ export default function WelcomePage() {
           </p>
         </div>
 
-        {/* 4 Circular Sky Blue SVG Icon Badges (No Emojis) */}
+        {/* 4 Circular SVG Icon Badges */}
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 justify-items-center">
           {[
             { 
@@ -119,10 +119,10 @@ export default function WelcomePage() {
             },
           ].map((f, i) => (
             <div key={i} className="flex flex-col items-center gap-4 group cursor-pointer" onClick={() => setShowAuth(true)}>
-              <div className="w-24 h-24 rounded-full bg-[#D92A2A] text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-all duration-300">
+              <div className="w-24 h-24 rounded-full bg-[#0066FF] text-white flex items-center justify-center shadow-lg group-hover:scale-105 transition-all duration-300 shadow-[#0066FF]/20">
                 {f.icon}
               </div>
-              <h3 className="text-base font-semibold text-[#FAFAFA] group-hover:text-[#D92A2A] transition-colors">{f.title}</h3>
+              <h3 className="text-base font-semibold text-[#FAFAFA] group-hover:text-[#0066FF] transition-colors">{f.title}</h3>
               <p className="text-xs text-[#A1A1AA] max-w-[180px]">{f.desc}</p>
             </div>
           ))}
@@ -130,7 +130,7 @@ export default function WelcomePage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="py-12 bg-slate-900 text-white/80 border-t border-slate-800 mt-auto">
+      <footer className="py-12 bg-[#09090B] text-white/80 border-t border-[#27272A] mt-auto">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
           <div>
             &copy; {new Date().getFullYear()} elitze.org — Elitze Sentinel Frontier Oss
@@ -146,15 +146,15 @@ export default function WelcomePage() {
       {/* ── AUTH MODAL ── */}
       {showAuth && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#111113] border border-slate-200 rounded-2xl w-full max-w-md p-8 shadow-2xl relative">
+          <div className="bg-[#111115] border border-[#27272A] rounded-2xl w-full max-w-md p-8 shadow-2xl relative">
             <button 
               onClick={() => setShowAuth(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
+              className="absolute top-4 right-4 text-[#71717A] hover:text-white"
             >
               ✕
             </button>
             <div className="flex flex-col items-center mb-6">
-              <div className="w-12 h-12 rounded-xl bg-[#D92A2A] flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md">
+              <div className="w-12 h-12 rounded-xl bg-[#0066FF] flex items-center justify-center text-white text-xl font-bold mb-3 shadow-md shadow-[#0066FF]/30">
                 E
               </div>
               <h3 className="text-xl font-bold text-[#FAFAFA]">Frontier OS Access</h3>
@@ -167,14 +167,14 @@ export default function WelcomePage() {
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#D92A2A]"
+                  className="w-full px-4 py-2.5 bg-[#141418] border border-[#27272A] rounded-xl text-sm text-white outline-none focus:border-[#0066FF]"
                   required
                 />
               </div>
               <button 
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-[#D92A2A] hover:bg-[#B91C1C] text-white font-semibold rounded-xl text-sm shadow-md transition-all flex items-center justify-center gap-2"
+                className="w-full py-3 bg-[#0066FF] hover:bg-[#0052CC] text-white font-semibold rounded-xl text-sm shadow-md shadow-[#0066FF]/25 transition-all flex items-center justify-center gap-2"
               >
                 {loading ? "Authenticating..." : "Open Dashboard"}
               </button>

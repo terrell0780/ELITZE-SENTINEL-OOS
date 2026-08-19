@@ -43,27 +43,27 @@ export default function LeadGenPage() {
     <div className="flex h-full bg-[#09090B]">
       
       {/* Left Sidebar - Filters */}
-      <aside className="w-72 border-r border-[#27272A] flex flex-col bg-[#111113] overflow-y-auto shrink-0">
-        <div className="p-5 border-b border-[#27272A] shrink-0 sticky top-0 bg-[#111113] z-10">
+      <aside className="w-72 border-r border-[#27272A] flex flex-col bg-[#111115] overflow-y-auto shrink-0">
+        <div className="p-5 border-b border-[#27272A] shrink-0 sticky top-0 bg-[#111115] z-10">
           <h2 className="text-lg font-semibold text-white">Target Audience</h2>
-          <p className="text-xs text-[#A1A1AA] mt-1">270M+ verified contacts</p>
+          <p className="text-[11px] text-[#A1A1AA] mt-1">270M+ verified contacts</p>
         </div>
 
         <div className="p-5 flex flex-col gap-6">
           {/* Location & Distance Slider */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Location Radius</label>
-              <span className="text-xs font-bold text-[#D92A2A]">{getDistanceLabel(distance)}</span>
+              <label className="text-[10px] font-bold text-[#52525B] uppercase tracking-wider">Location Radius</label>
+              <span className="text-xs font-bold text-[#0066FF]">{getDistanceLabel(distance)}</span>
             </div>
-            <input type="text" placeholder="Enter City or Zip..." className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-3 py-2 text-xs text-white placeholder-[#71717A] outline-none focus:border-[#D92A2A]/50 transition-colors" />
+            <input type="text" placeholder="Enter City or Zip..." className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-3 py-2 text-xs text-white placeholder-[#71717A] outline-none focus:border-[#0066FF]/50 transition-colors" />
             <div className="pt-2 px-1">
               <input 
                 type="range" 
                 min="1" max="100" 
                 value={distance} 
                 onChange={(e) => setDistance(parseInt(e.target.value))}
-                className="w-full h-1 bg-[#27272A] rounded-lg appearance-none cursor-pointer outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#D92A2A]"
+                className="w-full h-1 bg-[#27272A] rounded-lg appearance-none cursor-pointer outline-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#0066FF]"
               />
               <div className="flex justify-between text-[9px] text-[#A1A1AA] mt-2 font-semibold uppercase tracking-widest">
                 <span>5km</span>
@@ -74,10 +74,10 @@ export default function LeadGenPage() {
 
           {/* Job Titles */}
           <div className="space-y-2">
-            <label className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Job Titles</label>
+            <label className="text-[10px] font-bold text-[#52525B] uppercase tracking-wider">Job Titles</label>
             <div className="flex flex-wrap gap-2">
               {['CTO', 'VP Engineering', 'Director', 'Founder'].map(tag => (
-                <span key={tag} className="px-2.5 py-1 bg-[#09090B] border border-[#27272A] rounded-md text-[10px] font-medium text-[#A1A1AA] cursor-pointer hover:border-[#D92A2A] transition-colors">
+                <span key={tag} className="px-2.5 py-1 bg-[#09090B] border border-[#27272A] rounded-md text-[10px] font-medium text-[#A1A1AA] cursor-pointer hover:border-[#0066FF] transition-colors">
                   {tag}
                 </span>
               ))}
@@ -86,8 +86,8 @@ export default function LeadGenPage() {
 
           {/* Industry */}
           <div className="space-y-2">
-            <label className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Industry</label>
-            <select className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-3 py-2 text-xs text-[#A1A1AA] outline-none focus:border-[#D92A2A]/50 appearance-none cursor-pointer">
+            <label className="text-[10px] font-bold text-[#52525B] uppercase tracking-wider">Industry</label>
+            <select className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-3 py-2 text-[11px] text-[#A1A1AA] outline-none focus:border-[#0066FF]/50 appearance-none cursor-pointer">
               <option>Software Development</option>
               <option>Financial Services</option>
               <option>Healthcare Tech</option>
@@ -97,19 +97,19 @@ export default function LeadGenPage() {
 
           {/* Intent Data */}
           <div className="space-y-2">
-            <label className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Buyer Intent Signals</label>
+            <label className="text-[10px] font-bold text-[#52525B] uppercase tracking-wider">Buyer Intent Signals</label>
             <div className="space-y-2">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" defaultChecked className="accent-[#D92A2A]" />
-                <span className="text-xs text-[#A1A1AA]">Researching Competitors</span>
+                <input type="checkbox" defaultChecked className="accent-[#0066FF]" />
+                <span className="text-[11px] text-[#A1A1AA]">Researching Competitors</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" defaultChecked className="accent-[#D92A2A]" />
-                <span className="text-xs text-[#A1A1AA]">Recent Funding Round</span>
+                <input type="checkbox" defaultChecked className="accent-[#0066FF]" />
+                <span className="text-[11px] text-[#A1A1AA]">Recent Funding Round</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="accent-[#D92A2A]" />
-                <span className="text-xs text-[#A1A1AA]">Hiring IT Roles</span>
+                <input type="checkbox" className="accent-[#0066FF]" />
+                <span className="text-[11px] text-[#A1A1AA]">Hiring IT Roles</span>
               </label>
             </div>
           </div>
@@ -119,57 +119,63 @@ export default function LeadGenPage() {
       {/* Main Content - Data Table */}
       <main className="flex-1 flex flex-col min-w-0 bg-[#09090B]">
         {/* Top Action Bar */}
-        <header className="h-14 border-b border-[#27272A] flex items-center px-6 shrink-0 justify-between bg-[#111113]">
-          <div className="flex items-center gap-4">
-            <span className="text-xs font-semibold text-[#A1A1AA]">
-              {selectedLeads.size} selected
-            </span>
-            <div className="h-4 w-px bg-[#27272A]"></div>
-            <button 
-              disabled={selectedLeads.size === 0}
-              className="px-3.5 py-1.5 bg-[#D92A2A] hover:bg-[#b82222] disabled:opacity-40 text-white text-xs font-semibold rounded-lg transition-colors flex items-center gap-2"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-              Add to Sequence
-            </button>
-            <button 
-              disabled={selectedLeads.size === 0}
-              className="px-3.5 py-1.5 bg-[#09090B] hover:bg-[#1A1A1D] disabled:opacity-40 text-white border border-[#27272A] text-xs font-semibold rounded-lg transition-colors flex items-center gap-2"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Export Info Email
-            </button>
-          </div>
-          <div className="text-[10px] text-[#A1A1AA] flex items-center gap-2 font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D92A2A]"></span>
-            SYSTEM SECURE • DATA ENCRYPTED
-          </div>
-        </header>
+        <header className="h-12 border-b border-[#27272A] bg-[#09090B] px-5 flex items-center justify-between shrink-0">
+  <div className="flex items-center gap-3">
+    <div className="w-6 h-6 rounded-md bg-[#0066FF] flex items-center justify-center text-[10px] font-black text-white shadow-sm shadow-[#0066FF]/20">
+      L
+    </div>
+    <div className="flex items-center gap-2">
+      <span className="text-[13px] font-bold text-white tracking-tight">LEAD GENERATION</span>
+      <span className="text-[9px] font-semibold text-[#0066FF]/70 uppercase tracking-widest">Prospecting</span>
+    </div>
+    
+  </div>
+  <div className="flex items-center gap-2">
+    <span className="text-[11px] font-semibold text-[#A1A1AA] mr-2">
+      {selectedLeads.size} selected
+    </span>
+    <div className="h-4 w-px bg-[#27272A] mr-2"></div>
+    <button 
+      disabled={selectedLeads.size === 0}
+      className="bg-[#0066FF] text-white hover:opacity-90 disabled:opacity-40 text-[11px] font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      Add to Sequence
+    </button>
+    <button 
+      disabled={selectedLeads.size === 0}
+      className="bg-[#141418] border border-[#27272A] text-[#A1A1AA] hover:text-white disabled:opacity-40 text-[11px] font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Export Info
+    </button>
+  </div>
+</header>
 
         {/* Table Container */}
         <div className="flex-1 overflow-auto bg-[#09090B]">
           <table className="w-full text-left border-collapse min-w-[800px]">
-            <thead className="bg-[#111113] sticky top-0 z-10">
+            <thead className="bg-[#111115] sticky top-0 z-10">
               <tr>
                 <th className="px-4 py-3.5 border-b border-[#27272A] w-10">
                   <input 
                     type="checkbox" 
                     checked={selectedLeads.size === MOCK_LEADS.length}
                     onChange={toggleSelectAll}
-                    className="accent-[#D92A2A] cursor-pointer" 
+                    className="accent-[#0066FF] cursor-pointer" 
                   />
                 </th>
-                <th className="px-4 py-3.5 border-b border-[#27272A] text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Prospect</th>
-                <th className="px-4 py-3.5 border-b border-[#27272A] text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Contact Info & Trust</th>
-                <th className="px-4 py-3.5 border-b border-[#27272A] text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Social Footprint</th>
-                <th className="px-4 py-3.5 border-b border-[#27272A] text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Location</th>
+                <th className="px-4 py-3.5 border-b border-[#27272A] text-[10px] font-bold text-[#52525B] uppercase tracking-wider">Prospect</th>
+                <th className="px-4 py-3.5 border-b border-[#27272A] text-[10px] font-bold text-[#52525B] uppercase tracking-wider">Contact Info & Trust</th>
+                <th className="px-4 py-3.5 border-b border-[#27272A] text-[10px] font-bold text-[#52525B] uppercase tracking-wider">Social Footprint</th>
+                <th className="px-4 py-3.5 border-b border-[#27272A] text-[10px] font-bold text-[#52525B] uppercase tracking-wider">Location</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#27272A]/50">
               {MOCK_LEADS.map(lead => (
                 <tr 
                   key={lead.id} 
-                  className={`hover:bg-[#111113] transition-colors cursor-pointer ${selectedLeads.has(lead.id) ? 'bg-[#D92A2A]/10' : ''}`}
+                  className={`hover:bg-[#18181B] transition-colors cursor-pointer ${selectedLeads.has(lead.id) ? 'bg-[#0066FF]/10' : ''}`}
                   onClick={() => toggleSelect(lead.id)}
                 >
                   <td className="px-4 py-4 w-10" onClick={e => e.stopPropagation()}>
@@ -177,16 +183,16 @@ export default function LeadGenPage() {
                       type="checkbox" 
                       checked={selectedLeads.has(lead.id)}
                       onChange={() => toggleSelect(lead.id)}
-                      className="accent-[#D92A2A] cursor-pointer" 
+                      className="accent-[#0066FF] cursor-pointer" 
                     />
                   </td>
                   
                   {/* Prospect Col */}
                   <td className="px-4 py-4">
                     <div className="flex flex-col">
-                      <span className="text-sm font-semibold text-white">{lead.name}</span>
-                      <span className="text-xs text-[#A1A1AA]">{lead.title}</span>
-                      <span className="text-xs text-[#D92A2A] font-medium mt-0.5">{lead.company}</span>
+                      <span className="text-[12px] font-semibold text-white">{lead.name}</span>
+                      <span className="text-[11px] text-[#A1A1AA]">{lead.title}</span>
+                      <span className="text-xs text-[#0066FF] font-medium mt-0.5">{lead.company}</span>
                     </div>
                   </td>
 
@@ -194,15 +200,15 @@ export default function LeadGenPage() {
                   <td className="px-4 py-4">
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-[#A1A1AA] font-mono">{lead.email}</span>
+                        <span className="text-[11px] text-[#A1A1AA] font-mono">{lead.email}</span>
                       </div>
                       {lead.verified ? (
-                        <div className="flex items-center gap-1.5 text-[#A1A1AA] bg-[#111113] border border-[#27272A] w-fit px-2 py-0.5 rounded">
+                        <div className="flex items-center gap-1.5 text-[#A1A1AA] bg-[#111115] border border-[#27272A] w-fit px-2 py-0.5 rounded">
                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                           <span className="text-[10px] font-semibold uppercase tracking-wider">Verified (Score: {lead.trustScore})</span>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-1.5 text-[#A1A1AA] bg-[#111113] border border-[#27272A] w-fit px-2 py-0.5 rounded">
+                        <div className="flex items-center gap-1.5 text-[#A1A1AA] bg-[#111115] border border-[#27272A] w-fit px-2 py-0.5 rounded">
                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                           <span className="text-[10px] font-semibold uppercase tracking-wider">Catch-all (Score: {lead.trustScore})</span>
                         </div>
@@ -227,7 +233,7 @@ export default function LeadGenPage() {
                   {/* Location Col */}
                   <td className="px-4 py-4">
                     <div className="flex flex-col">
-                      <span className="text-xs text-[#A1A1AA]">{lead.location}</span>
+                      <span className="text-[11px] text-[#A1A1AA]">{lead.location}</span>
                       <div className="flex items-center gap-1 mt-1 text-[#A1A1AA]">
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                         <span className="text-[10px] font-mono">{lead.distance} away</span>
