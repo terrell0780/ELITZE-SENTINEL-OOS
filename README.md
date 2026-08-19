@@ -20,7 +20,7 @@
 
 ## ⚡ What is Elitze Sentinel Frontier Oss?
 
-Forget standard API chat wrappers. **Elitze Sentinel Frontier Oss** is a full-blown, production-verified **Sovereign AI Operating System** built from the ground up to give enterprise teams, cybersecurity specialists, game developers, and autonomous agent builders 100% control over their AI infrastructure.
+Forget shallow API chat wrappers. **Elitze Sentinel Frontier Oss** is a full-blown, production-verified **Sovereign AI Operating System** built from the ground up to give software buyers, enterprise teams, cybersecurity specialists, game developers, and autonomous agent builders 100% control over their AI infrastructure.
 
 Whether you run on-premise hardware with local models via vLLM/Ollama or orchestrate cloud LLMs across Qwen3 235B, Llama 3.3 70B, and DeepSeek Coder V2, **Frontier OOS** unifies 30 application hubs under a single dark-mode console governed by a deterministic 16-plane security kernel.
 
@@ -33,7 +33,7 @@ Whether you run on-premise hardware with local models via vLLM/Ollama or orchest
 ### 🧠 Mission Control & Intelligence
 - **Frontier Chat**: Dynamic multi-model conversation engine with dark mode theme toggles, search pills, workflow triggers, and attachment handling.
 - **Executive Brain**: Real-time decision graphs, pipeline routers, and intelligent model fallback handling.
-- **System Dashboard**: Live telemetry, telemetry health monitoring, and system metrics.
+- **System Dashboard**: Live telemetry, health monitoring, and system metrics.
 
 ### 🎮 Gaming Studio & 3D World Building (Unreal Engine 5 & Unity)
 - **NPC Decision Compiler**: Compiles autonomous NPC behavior state trees directly for UE5 and Unity.
@@ -93,7 +93,7 @@ pytest
 
 ## 🏆 Verified Quality Metrics
 
-We don't do mock ups or fake code. Every line of code is empirically verified:
+Every line of code is empirically verified:
 - **Pytest Test Suite**: `281 / 281 Passed` (0 failures across all 6 microservices)
 - **Next.js Build**: `42 / 42 Routes Compiled` (0 errors)
 - **Secret Safety**: `100% Verified Clean` (0 API keys or `.env` files tracked in Git)
@@ -102,7 +102,7 @@ We don't do mock ups or fake code. Every line of code is empirically verified:
 
 ## 🤝 Acquisition & Direct Contact
 
-We are evaluating acquisition offers for a full platform transfer (Source Code, Intellectual Property, System Architecture, and Brand Assets).
+We are evaluating buyout offers from direct buyers for a full platform transfer (Source Code, Intellectual Property, System Architecture, and Brand Assets).
 
 - **Live Platform Demo**: [https://elitze.org](https://elitze.org)
 - **System Architecture Manifest**: [MANIFEST.md](MANIFEST.md)
