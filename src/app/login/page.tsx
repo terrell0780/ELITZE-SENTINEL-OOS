@@ -14,73 +14,98 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      router.push("/chat");
-    }, 600);
+      router.push("/dashboard");
+    }, 500);
   };
 
   return (
-    <div className="min-h-screen bg-[#050506] text-[#FAFAFA] flex items-center justify-center p-6 relative overflow-hidden font-sans select-none">
+    <div className="min-h-screen bg-[#0B0F19] text-[#F8FAFC] flex flex-col font-sans select-none relative overflow-hidden">
       
-      {/* Glow Effects */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-radial from-[#D0202F]/15 via-transparent to-transparent blur-3xl pointer-events-none z-0" />
-
-      {/* Login Card */}
-      <div className="w-full max-w-md bg-[#0D0D0F] border border-[#1F1F23] rounded-3xl p-8 shadow-2xl relative z-10">
-        
-        {/* Logo & Header */}
-        <div className="flex flex-col items-center text-center mb-8">
-          <div className="w-12 h-12 rounded-2xl overflow-hidden border border-[#27272A] shadow-xl mb-4">
-            <img src="/elitze-logo.png" alt="Logo" className="w-full h-full object-cover" />
+      {/* Top Header Navigation (Exact Match to Mockup 1 Header) */}
+      <header className="h-16 border-b border-[#1E293B] bg-[#0B0F19]/80 backdrop-blur-md flex items-center justify-between px-8 max-w-7xl w-full mx-auto relative z-10 shrink-0">
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push("/")}>
+          <div className="w-8 h-8 rounded-lg bg-[#0066FF] flex items-center justify-center font-extrabold text-white text-sm shadow-md shadow-[#0066FF]/30">
+            E
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight uppercase">FRONTIER OS TERMINAL</h1>
-          <p className="text-xs text-[#71717A] mt-1 font-medium">Authenticate to access Sovereign Kernel & 30 Hubs</p>
+          <span className="text-sm font-bold text-white tracking-tight">Elitze Sentinel</span>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-[11px] font-bold text-[#71717A] uppercase tracking-wider mb-2">Operator ID / Email</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="operator@elitze.org"
-              className="w-full bg-[#141417] border border-[#27272A] rounded-xl px-4 py-3 text-xs text-white placeholder-[#52525B] outline-none focus:border-[#D0202F] transition-all"
-            />
-          </div>
+        <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-[#94A3B8]">
+          <Link href="/dashboard" className="hover:text-white transition-colors">Features</Link>
+          <Link href="/intelligence" className="hover:text-white transition-colors">Docs</Link>
+          <Link href="/marketplace" className="hover:text-white transition-colors">Integrations</Link>
+          <Link href="/security" className="hover:text-white transition-colors">Security</Link>
+        </nav>
 
-          <div>
-            <label className="block text-[11px] font-bold text-[#71717A] uppercase tracking-wider mb-2">Access Key / Password</label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••••••"
-              className="w-full bg-[#141417] border border-[#27272A] rounded-xl px-4 py-3 text-xs text-white placeholder-[#52525B] outline-none focus:border-[#D0202F] transition-all"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3.5 rounded-xl bg-[#D0202F] hover:bg-[#B01825] text-white font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-[#D0202F]/20 transition-all hover:scale-[1.02] active:scale-[0.98] mt-6 flex items-center justify-center gap-2"
+        <div className="flex items-center gap-3">
+          <Link
+            href="/login"
+            className="text-xs font-semibold text-white bg-[#0066FF] hover:bg-[#0052CC] px-4 py-2 rounded-lg shadow-md shadow-[#0066FF]/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-            {loading ? (
-              <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-            ) : (
-              <span>AUTHENTICATE & ENTER OS</span>
-            )}
-          </button>
-        </form>
+            Get started
+          </Link>
+        </div>
+      </header>
 
-        <div className="mt-6 pt-6 border-t border-[#1C1C20] flex items-center justify-between text-[11px] text-[#71717A]">
-          <Link href="/" className="hover:text-white transition-colors">← Back to Landing</Link>
-          <span className="text-[#D0202F] font-bold">16-Plane Kernel Active</span>
+      {/* Main Login Canvas */}
+      <main className="flex-1 flex items-center justify-center p-6 relative z-10">
+        
+        {/* Centered Login Card (Exact Match to Mockup 1) */}
+        <div className="w-full max-w-sm bg-[#111827] border border-[#1E293B] rounded-2xl p-8 shadow-2xl relative">
+          
+          <div className="mb-6 text-left">
+            <h1 className="text-xl font-bold text-white tracking-tight">Sign in</h1>
+            <p className="text-xs text-[#94A3B8] mt-1 font-normal">Enter your credentials to access your account</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="block text-xs font-medium text-[#CBD5E1] mb-1.5">Email address</label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="name@company.com"
+                className="w-full bg-[#0B0F19] border border-[#334155] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-[#64748B] outline-none focus:border-[#0066FF] focus:ring-1 focus:ring-[#0066FF] transition-all"
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="block text-xs font-medium text-[#CBD5E1]">Password</label>
+                <a href="#" className="text-xs text-[#38BDF8] hover:underline font-medium">Forgot password?</a>
+              </div>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full bg-[#0B0F19] border border-[#334155] rounded-lg px-3.5 py-2.5 text-xs text-white placeholder-[#64748B] outline-none focus:border-[#0066FF] focus:ring-1 focus:ring-[#0066FF] transition-all"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-2.5 rounded-lg bg-[#0066FF] hover:bg-[#0052CC] text-white font-semibold text-xs shadow-md shadow-[#0066FF]/25 transition-all hover:scale-[1.01] active:scale-[0.99] mt-2 flex items-center justify-center gap-2"
+            >
+              {loading ? (
+                <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+              ) : (
+                <span>Sign in</span>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-6 pt-5 border-t border-[#1E293B] text-center text-xs text-[#94A3B8]">
+            Don't have an account? <Link href="/" className="text-[#38BDF8] hover:underline font-semibold">Sign up</Link>
+          </div>
+
         </div>
 
-      </div>
+      </main>
 
     </div>
   );

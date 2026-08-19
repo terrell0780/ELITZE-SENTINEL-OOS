@@ -115,10 +115,10 @@ export default function Sidebar() {
 
   if (collapsed) {
     return (
-      <aside className="w-14 h-screen bg-[#111113] flex flex-col items-center py-4 border-r border-[#27272A] select-none shrink-0 z-20">
+      <aside className="w-14 h-screen bg-[#0B0F19] flex flex-col items-center py-4 border-r border-[#1E293B] select-none shrink-0 z-20">
         <button
           onClick={() => setCollapsed(false)}
-          className="w-9 h-9 rounded-lg flex items-center justify-center text-[#A1A1AA] hover:text-white hover:bg-[#1C1C1F] transition-colors"
+          className="w-9 h-9 rounded-lg flex items-center justify-center text-[#94A3B8] hover:text-white hover:bg-[#1E293B] transition-colors"
           title="Expand Sidebar"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -128,23 +128,23 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-[260px] h-screen bg-[#111113] flex flex-col select-none shrink-0 border-r border-[#27272A] z-20">
+    <aside className="w-[260px] h-screen bg-[#0B0F19] flex flex-col select-none shrink-0 border-r border-[#1E293B] z-20">
       
       {/* Top Header */}
-      <div className="h-16 flex items-center justify-between px-5 border-b border-[#27272A] shrink-0">
+      <div className="h-16 flex items-center justify-between px-5 border-b border-[#1E293B] shrink-0">
         <div 
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => router.push("/chat")}
         >
-          <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 border border-[#27272A] shadow-md">
-            <img src="/chat-bg.jpg" alt="Logo" className="w-full h-full object-cover" />
+          <div className="w-8 h-8 rounded-lg bg-[#0066FF] flex items-center justify-center font-extrabold text-white text-sm shadow-md shadow-[#0066FF]/30">
+            E
           </div>
           <span className="text-xs font-bold text-white tracking-wider uppercase">FRONTIER OS</span>
         </div>
 
         <button 
           onClick={() => setCollapsed(true)}
-          className="text-[#71717A] hover:text-white transition-colors p-1 rounded-md hover:bg-[#1C1C1F]"
+          className="text-[#64748B] hover:text-white transition-colors p-1 rounded-md hover:bg-[#1E293B]"
           title="Collapse Sidebar"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -158,7 +158,7 @@ export default function Sidebar() {
       {/* Main OS Navigation Items */}
       <div className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
         <div className="px-3 mb-3">
-          <span className="text-[10px] font-bold text-[#71717A] uppercase tracking-widest">FRONTIER OS CORE</span>
+          <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest">FRONTIER OS CORE</span>
         </div>
 
         {FRONTIER_NAV_ITEMS.map((item) => {
@@ -169,8 +169,8 @@ export default function Sidebar() {
               onClick={() => router.push(item.href)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all ${
                 active
-                  ? "bg-[#27272A] text-white shadow-sm border border-[#3F3F46]"
-                  : "text-[#A1A1AA] hover:bg-[#1C1C1F] hover:text-white"
+                  ? "bg-[#0066FF] text-white shadow-md shadow-[#0066FF]/25"
+                  : "text-[#94A3B8] hover:bg-[#1E293B] hover:text-white"
               }`}
             >
               <SidebarIcon name={item.icon} />
@@ -181,9 +181,9 @@ export default function Sidebar() {
       </div>
 
       {/* Footer Contact Indicator */}
-      <div className="p-3 border-t border-[#27272A] shrink-0 flex items-center justify-between text-[11px] text-[#71717A]">
+      <div className="p-3 border-t border-[#1E293B] shrink-0 flex items-center justify-between text-[11px] text-[#64748B]">
         <span className="font-semibold text-white">Terrell Hall</span>
-        <span className="text-[10px] text-[#D92A2A] font-bold uppercase">Sovereign OS</span>
+        <span className="text-[10px] text-[#38BDF8] font-bold uppercase">Sovereign OS</span>
       </div>
 
     </aside>
