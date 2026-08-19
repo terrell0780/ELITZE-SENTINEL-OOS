@@ -13,4 +13,11 @@
 
 ## 3. Strict Verification & Audit Mandate
 - Run `pytest` across all microservices (`elitze_sentinel`, `frontier-core`, `frontier-enterprise`, `frontier-api`, `frontier-code`, `frontier-gaming-studio`). All 281 unit tests must pass cleanly.
-- Run `npm run build` for Next.js App Router compilation. All 42 routes must compile with Exit Code 0 before declaring success.
+- Run `npm run build` for Next.js App Router compilation. All 43 routes must compile with Exit Code 0 before declaring success.
+
+## 4. Product Lock Mandate
+- Product: **Elitze Sentinel Frontier OOS** (B2B Sovereign AI + Security Operating System).
+- Objective: Make the existing working product look expensive, coherent, and finished.
+- Frontend modifications only unless a visual change genuinely requires backend work.
+- Preserve every existing feature: APIs, authentication, chat, agents, model routing, security, workflows, databases, integrations, runtime, routes.
+- Do NOT rename product, do NOT change architecture, do NOT rebuild from scratch, do NOT remove functionality.
