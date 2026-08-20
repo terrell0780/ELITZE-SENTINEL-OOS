@@ -3,193 +3,165 @@
 import { useState, useEffect } from "react";
 import { brain } from "@/lib/brain";
 
-const AGENT_TYPES = [
-  { value: "security", label: "Security", model: "qwen/qwen3-235b" },
-  { value: "coding", label: "Code & Development", model: "deepseek/deepseek-coder-v2" },
-  { value: "research", label: "Data & Research", model: "qwen/qwen-2.5-72b-instruct" },
-];
-
 export default function StudioPage() {
-  const [agents, setAgents] = useState<any[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [showBuildModal, setShowBuildModal] = useState(false);
-  const [newAgent, setNewAgent] = useState({ name: "", type: "coding" });
+  const [agents, setAgents] = useState<any[]>([
+    { id: "director", name: "Director Agent", model: "qwen/qwen3-235b", tools: ["SwarmOrchestrator", "TaskPlanner"], memory: "Vector (Chroma)", permissions: "Full Execution", status: "Active" },
+    { id: "security", name: "Security Sentinel", model: "deepseek/deepseek-r1", tools: ["CVEIntelligence", "PatchEngine"], memory: "Persistent Log", permissions: "SecOps Lead", status: "Active" },
+    { id: "builder", name: "Builder Agent", model: "deepseek/deepseek-coder-v2", tools: ["CodeInterpreter", "DockerSandbox"], memory: "Repository AST", permissions: "Write Access", status: "Active" },
+    { id: "research", name: "Research Agent", model: "qwen/qwen-2.5-72b", tools: ["WebSearch", "DocumentScraper"], memory: "STM Cache", permissions: "Read Only", status: "Idle" },
+  ]);
+  const [selectedAgentId, setSelectedAgentId] = useState<string>("director");
+  const [activeBottomTab, setActiveBottomTab] = useState<string>("Events");
 
   useEffect(() => {
-    brain.find("agents").then(d => {
+    brain.find("agents").then((d) => {
       if (d.data?.length) {
-        setAgents(d.data);
-        setSelectedId(d.data[0]._id);
-      } else {
-        const initial = [
-          { _id: "ag-1", name: "Security Sentinel", type: "security", model: "qwen/qwen3-235b", status: "active", tasks: 0 },
-          { _id: "ag-2", name: "Code Review Engine", type: "coding", model: "deepseek/deepseek-coder-v2", status: "active", tasks: 0 },
-          { _id: "ag-3", name: "Research Analyst", type: "research", model: "qwen/qwen-2.5-72b-instruct", status: "idle", tasks: 0 },
-        ];
-        setAgents(initial);
-        setSelectedId("ag-1");
+        setAgents((prev) => [...d.data, ...prev]);
       }
     });
   }, []);
 
-  const selectedAgent = agents.find(a => a._id === selectedId);
-
-  const buildAgent = () => {
-    if (!newAgent.name.trim()) return;
-    const typeObj = AGENT_TYPES.find(t => t.value === newAgent.type);
-    const agent = {
-      _id: `ag-${Date.now()}`,
-      name: newAgent.name,
-      type: newAgent.type,
-      model: typeObj?.model || "qwen/qwen3-235b",
-      status: "active",
-      tasks: 0,
-    };
-    brain.insert("agents", agent);
-    setAgents(prev => [agent, ...prev]);
-    setSelectedId(agent._id);
-    setShowBuildModal(false);
-    setNewAgent({ name: "", type: "coding" });
-  };
+  const selectedAgent = agents.find((a) => a.id === selectedAgentId || a._id === selectedAgentId) || agents[0];
 
   return (
-    <div className="flex h-full bg-[#09090B]">
-      {/* Left Panel - Agent List */}
-      <div className="w-72 border-r border-[#27272A] flex flex-col bg-[#111113]">
-        <div className="h-14 px-5 border-b border-[#27272A] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest">Agents</span>
-            <span className="text-[10px] px-2 py-0.5 rounded bg-[#09090B] border border-[#27272A] text-[#A1A1AA] font-mono">{agents.length}</span>
-          </div>
-          <button onClick={() => setShowBuildModal(true)} className="text-xs text-[#D92A2A] hover:text-white font-semibold transition-colors">
-            + New
+    <div className="h-full bg-[#08090c] text-[#f5f7fa] flex flex-col font-sans overflow-hidden select-none">
+      
+      {/* ── Header ── */}
+      <header className="h-[52px] border-b border-[#ffffff14] bg-[#0d0f13] px-4 flex items-center justify-between shrink-0 font-mono text-xs">
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-[#f5f7fa]">AGENT STUDIO</span>
+          <span className="text-[#687180] text-[10px]">| Multi-Agent Graph Visualizer</span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button className="px-3 py-1 rounded bg-[#11141a] hover:bg-[#161a21] border border-[#ffffff14] text-xs font-semibold text-[#a7adb8] hover:text-white transition-colors">
+            Run
+          </button>
+          <button className="px-3 py-1 rounded bg-[#11141a] hover:bg-[#161a21] border border-[#ffffff14] text-xs font-semibold text-[#a7adb8] hover:text-white transition-colors">
+            Save
+          </button>
+          <button className="px-3 py-1 rounded bg-[#1677ff] hover:bg-[#1677ff]/90 text-xs font-bold text-white transition-colors shadow-sm">
+            Deploy
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto">
-          {agents.map(ag => {
-            const isActive = ag._id === selectedId;
-            return (
-              <div
-                key={ag._id}
-                onClick={() => setSelectedId(ag._id)}
-                className={`px-5 py-4 border-b border-[#27272A]/50 cursor-pointer transition-colors hover:bg-[#1A1A1D] ${
-                  isActive ? "bg-[#09090B] border-l-2 border-l-[#D92A2A]" : "border-l-2 border-l-transparent"
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-semibold text-white truncate">{ag.name}</span>
-                  <div className={`w-1.5 h-1.5 rounded-full ${ag.status === "active" ? "bg-[#D92A2A]" : "bg-[#71717A]"}`} />
-                </div>
-                <div className="text-[10px] text-[#A1A1AA] font-mono truncate">{ag.model}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      </header>
 
-      {/* Right Panel - Workspace */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#09090B]">
-        {selectedAgent ? (
-          <>
-            <div className="h-14 px-6 border-b border-[#27272A] flex items-center justify-between bg-[#111113] shrink-0">
-              <div className="flex items-center gap-3">
-                <h1 className="text-lg font-semibold text-white">{selectedAgent.name}</h1>
-                <span className="text-[#27272A]">|</span>
-                <span className="text-xs text-[#A1A1AA] font-mono">{selectedAgent.model}</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs text-[#A1A1AA]">
-                <div className={`w-2 h-2 rounded-full ${selectedAgent.status === "active" ? "bg-[#D92A2A]" : "bg-[#71717A]"}`} />
-                <span>{selectedAgent.status === "active" ? "Active" : "Idle"}</span>
-              </div>
-            </div>
-            <div className="flex-1 p-6 overflow-y-auto">
-              <div className="max-w-4xl mx-auto space-y-6">
-                <section>
-                  <h3 className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mb-3">Configuration</h3>
-                  <div className="bg-[#111113] border border-[#27272A] rounded-xl p-6 space-y-5">
-                    <div>
-                      <label className="block text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mb-2">Agent Name</label>
-                      <input 
-                        type="text" 
-                        defaultValue={selectedAgent.name} 
-                        className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-4 py-2.5 text-xs text-white outline-none focus:border-[#D92A2A]/50 transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mb-2">Model Selection</label>
-                      <input 
-                        type="text" 
-                        readOnly 
-                        value={selectedAgent.model} 
-                        className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-4 py-2.5 text-xs text-[#A1A1AA] font-mono outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mb-2">System Prompt</label>
-                      <textarea 
-                        rows={4}
-                        placeholder="Define agent behavior..."
-                        className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-4 py-2.5 text-xs text-white placeholder-[#71717A] outline-none resize-none focus:border-[#D92A2A]/50 transition-colors"
-                      ></textarea>
-                    </div>
-                  </div>
-                </section>
-                
-                <section>
-                  <h3 className="text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mb-3">Activity</h3>
-                  <div className="bg-[#111113] border border-[#27272A] rounded-xl p-6 flex items-center justify-center min-h-[140px]">
-                    <span className="text-xs text-[#A1A1AA]">No tasks yet</span>
-                  </div>
-                </section>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="flex-1 flex items-center justify-center">
-            <span className="text-xs text-[#A1A1AA]">Select or create an agent</span>
-          </div>
-        )}
-      </div>
-
-      {/* Build Modal */}
-      {showBuildModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs" onClick={() => setShowBuildModal(false)}>
-          <div className="bg-[#111113] border border-[#27272A] rounded-xl p-6 w-full max-w-sm mx-4" onClick={e => e.stopPropagation()}>
-            <h2 className="text-lg font-semibold text-white mb-5">Create Agent</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mb-2">Name</label>
-                <input
-                  type="text"
-                  value={newAgent.name}
-                  onChange={e => setNewAgent({ ...newAgent, name: e.target.value })}
-                  placeholder="e.g. Data Pipeline Optimizer"
-                  autoFocus
-                  className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-4 py-2.5 text-xs text-white placeholder-[#71717A] outline-none focus:border-[#D92A2A]/50 transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-[10px] font-semibold text-[#71717A] uppercase tracking-widest mb-2">Type</label>
-                <select
-                  value={newAgent.type}
-                  onChange={e => setNewAgent({ ...newAgent, type: e.target.value })}
-                  className="w-full bg-[#09090B] border border-[#27272A] rounded-lg px-4 py-2.5 text-xs text-white outline-none focus:border-[#D92A2A]/50 transition-colors"
+      {/* ── Main Workspace 3-Pane Layout ── */}
+      <div className="flex-1 flex min-h-0 overflow-hidden">
+        
+        {/* Left: AGENTS LIST */}
+        <aside className="w-[200px] border-r border-[#ffffff14] bg-[#0d0f13] flex flex-col shrink-0 overflow-y-auto p-3 space-y-3">
+          <span className="text-[9px] font-mono font-bold text-[#687180] uppercase tracking-widest block">AGENTS</span>
+          <div className="space-y-1">
+            {agents.map((ag) => {
+              const active = (ag.id || ag._id) === selectedAgentId;
+              return (
+                <button
+                  key={ag.id || ag._id}
+                  onClick={() => setSelectedAgentId(ag.id || ag._id)}
+                  className={`w-full text-left px-2.5 py-1.5 rounded text-xs transition-colors font-medium ${
+                    active
+                      ? "bg-[#1677ff]/15 text-[#1677ff] font-semibold border-l-2 border-[#1677ff]"
+                      : "text-[#a7adb8] hover:bg-[#161a21] hover:text-[#f5f7fa]"
+                  }`}
                 >
-                  {AGENT_TYPES.map(t => (
-                    <option key={t.value} value={t.value}>{t.label}</option>
-                  ))}
-                </select>
+                  <p className="truncate">{ag.name}</p>
+                </button>
+              );
+            })}
+          </div>
+        </aside>
+
+        {/* Center: AGENT CANVAS (nodes / edges) */}
+        <main className="flex-1 bg-[#08090c] flex flex-col items-center justify-center relative overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.05]" style={{
+            backgroundImage: "linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }} />
+
+          {/* Simulated Node Edge Graph Canvas */}
+          <div className="relative z-10 flex flex-col items-center gap-6">
+            <div className="p-3 bg-[#11141a] border border-[#1677ff] rounded-lg text-center shadow-lg font-mono text-xs space-y-1">
+              <span className="text-[10px] text-[#1677ff] font-bold uppercase">Root Node</span>
+              <p className="font-bold text-[#f5f7fa]">{selectedAgent.name}</p>
+              <p className="text-[10px] text-[#687180]">{selectedAgent.model}</p>
+            </div>
+
+            <div className="w-0.5 h-8 bg-[#1677ff]/50" />
+
+            <div className="flex items-center gap-4 font-mono text-xs">
+              <div className="p-2.5 bg-[#0d0f13] border border-[#ffffff14] rounded-md text-center text-[11px] text-[#a7adb8]">
+                Tool: {selectedAgent.tools?.[0] || "CodeInterpreter"}
+              </div>
+              <div className="p-2.5 bg-[#0d0f13] border border-[#ffffff14] rounded-md text-center text-[11px] text-[#a7adb8]">
+                Tool: {selectedAgent.tools?.[1] || "DockerSandbox"}
               </div>
             </div>
-            <div className="flex gap-3 justify-end mt-6">
-              <button onClick={() => setShowBuildModal(false)} className="px-4 py-2 text-xs text-[#A1A1AA] hover:text-white transition-colors">Cancel</button>
-              <button onClick={buildAgent} className="px-4 py-2 bg-[#D92A2A] text-white text-xs font-semibold rounded-lg hover:bg-[#b82222] transition-colors">
-                Deploy
-              </button>
+          </div>
+        </main>
+
+        {/* Right: CONFIGURATION */}
+        <aside className="w-[240px] border-l border-[#ffffff14] bg-[#0d0f13] flex flex-col shrink-0 p-3 space-y-4 overflow-y-auto font-mono text-xs">
+          <span className="text-[9px] font-bold text-[#687180] uppercase tracking-widest block">CONFIGURATION</span>
+          
+          <div className="space-y-3">
+            <div>
+              <span className="text-[10px] text-[#687180] uppercase block">Model</span>
+              <p className="font-bold text-[#f5f7fa] mt-0.5">{selectedAgent.model || "qwen/qwen3-235b"}</p>
+            </div>
+
+            <div className="pt-2 border-t border-[#ffffff0f] space-y-1">
+              <span className="text-[10px] text-[#687180] uppercase block">Tools Enabled</span>
+              <div className="space-y-1">
+                {(selectedAgent.tools || ["WebSearch", "CodeInterpreter"]).map((t: string) => (
+                  <div key={t} className="bg-[#11141a] px-2 py-1 rounded border border-[#ffffff0f] text-[10px] text-[#a7adb8]">
+                    {t}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-[#ffffff0f]">
+              <span className="text-[10px] text-[#687180] uppercase block">Memory Architecture</span>
+              <p className="text-[11px] text-[#f5f7fa] mt-0.5">{selectedAgent.memory || "Vector (Chroma)"}</p>
+            </div>
+
+            <div className="pt-2 border-t border-[#ffffff0f]">
+              <span className="text-[10px] text-[#687180] uppercase block">Permissions</span>
+              <p className="text-[11px] text-[#10b981] font-semibold mt-0.5">{selectedAgent.permissions || "Full Execution"}</p>
+            </div>
+
+            <div className="pt-2 border-t border-[#ffffff0f]">
+              <span className="text-[10px] text-[#687180] uppercase block">Runtime State</span>
+              <p className="text-[11px] text-[#38bdf8] mt-0.5">{selectedAgent.status || "Active"}</p>
             </div>
           </div>
+        </aside>
+
+      </div>
+
+      {/* ── Bottom Dock ── */}
+      <footer className="h-9 border-t border-[#ffffff14] bg-[#0d0f13] px-3 flex items-center justify-between shrink-0 font-mono text-[10px]">
+        <div className="flex items-center gap-1">
+          {["Events", "Logs", "Runs", "Output"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveBottomTab(tab)}
+              className={`px-2.5 py-1 rounded transition-colors ${
+                activeBottomTab === tab
+                  ? "bg-[#161a21] text-[#f5f7fa] font-bold"
+                  : "text-[#687180] hover:text-[#a7adb8]"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
         </div>
-      )}
+        <div className="text-[#687180]">
+          Swarm Orchestrator v2.4.0
+        </div>
+      </footer>
+
     </div>
   );
 }

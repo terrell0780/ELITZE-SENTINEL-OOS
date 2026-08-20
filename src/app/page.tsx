@@ -1,11 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { brain } from "@/lib/brain";
 
 export default function Home() {
   const router = useRouter();
   const [prompt, setPrompt] = useState("");
+  const [recentMissions, setRecentMissions] = useState<any[]>([]);
+
+  useEffect(() => {
+    brain.listMissions().then((missions: any) => {
+      if (Array.isArray(missions)) {
+        setRecentMissions(missions.slice(0, 3));
+      }
+    });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,114 +25,153 @@ export default function Home() {
 
   const getGreeting = () => {
     const h = new Date().getHours();
-    if (h < 12) return "Good morning.";
-    if (h < 17) return "Good afternoon.";
-    return "Good evening.";
+    if (h < 12) return "Good morning";
+    if (h < 17) return "Good afternoon";
+    return "Good evening";
   };
 
   return (
-    <div className="min-h-screen bg-[#09090B] text-white font-sans flex flex-col">
+    <div className="flex-1 flex flex-col items-center justify-between p-6 lg:p-12 overflow-y-auto bg-[#08090c] text-[#f5f7fa] selection:bg-[#1677ff] selection:text-white">
+      
+      <div className="w-full max-w-[760px] mx-auto space-y-10 my-auto py-4">
 
-      {/* ─── Top ──────────────────────────────────────────────── */}
-      <header className="px-8 py-6 flex items-center gap-3">
-        <div className="w-6 h-6 rounded-md bg-[#0066FF] flex items-center justify-center font-extrabold text-white text-[10px] shadow-sm shadow-[#0066FF]/25">
-          E
+        {/* ── Header Branding & Greeting ── */}
+        <div className="text-center space-y-2">
+          <span className="text-[10px] font-mono font-bold text-[#687180] tracking-widest uppercase block">
+            {getGreeting()}, Terrell
+          </span>
+          <h1 className="text-3xl font-extrabold text-[#f5f7fa] tracking-tight uppercase">
+            FRONTIER
+          </h1>
+          <p className="text-sm text-[#a7adb8] font-normal">
+            What are you working on?
+          </p>
         </div>
-        <span className="text-[11px] font-bold text-[#A1A1AA] tracking-widest uppercase">ELITZE SENTINEL</span>
-      </header>
 
-      {/* ─── Center ───────────────────────────────────────────── */}
-      <main className="flex-1 flex flex-col items-center justify-center px-6 -mt-16">
-        <div className="w-full max-w-[640px] space-y-10">
-
-          {/* Greeting */}
-          <div>
-            <h1 className="text-[28px] font-semibold text-white tracking-tight leading-tight">
-              {getGreeting()}
-            </h1>
-            <p className="text-[15px] text-[#71717A] mt-2">
-              What are you working on?
-            </p>
-          </div>
-
-          {/* Command Input */}
-          <form onSubmit={handleSubmit}>
-            <div className="relative">
-              <input
-                type="text"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Ask Frontier to investigate, build, analyze or execute..."
-                className="w-full bg-[#111113] border border-[#27272A] rounded-xl px-4 py-3.5 text-[13px] text-white placeholder-[#3F3F46] outline-none focus:border-[#27272A] focus:ring-1 focus:ring-[#0066FF]/30 transition-all"
-              />
+        {/* ── Command Input Box ── */}
+        <form onSubmit={handleSubmit} className="w-full">
+          <div className="bg-[#0d0f13] border border-[#ffffff14] focus-within:border-[#1677ff] rounded-xl p-3 shadow-xl transition-all flex flex-col gap-2">
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e);
+                }
+              }}
+              placeholder="Ask Frontier to investigate, build, analyze or execute..."
+              className="w-full bg-transparent text-xs sm:text-sm text-[#f5f7fa] placeholder-[#687180] outline-none resize-none min-h-[52px] max-h-[120px] font-sans"
+              rows={2}
+            />
+            <div className="flex items-center justify-between border-t border-[#ffffff0f] pt-2">
+              <span className="text-[10px] text-[#687180] font-mono">
+                Press Enter to execute query
+              </span>
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg bg-[#0066FF] hover:bg-[#0052CC] text-white flex items-center justify-center transition-colors"
+                className="w-7 h-7 rounded-md bg-[#1677ff] hover:bg-[#1677ff]/90 text-white flex items-center justify-center font-bold shadow-sm transition-all"
+                title="Execute Prompt"
               >
-                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <line x1="12" y1="19" x2="12" y2="5" />
-                  <polyline points="5 12 12 5 19 12" />
-                </svg>
+                ↑
               </button>
-            </div>
-          </form>
-
-          {/* Recent Work */}
-          <div>
-            <h2 className="text-[11px] font-bold text-[#52525B] uppercase tracking-widest mb-4">Recent Work</h2>
-
-            <div className="grid grid-cols-3 gap-3">
-
-              {/* Security Investigation */}
-              <button
-                onClick={() => router.push("/security")}
-                className="text-left p-4 rounded-lg bg-[#111113] border border-[#1F1F28] hover:border-[#27272A] transition-all group"
-              >
-                <p className="text-[12px] font-semibold text-white group-hover:text-[#38BDF8] transition-colors">
-                  Security Investigation
-                </p>
-                <p className="text-[11px] text-[#52525B] font-mono mt-1.5">CVE-2026-21849</p>
-                <div className="mt-3 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]" />
-                  <span className="text-[10px] text-[#52525B]">Critical Exposure</span>
-                </div>
-              </button>
-
-              {/* World Project */}
-              <button
-                onClick={() => router.push("/gaming")}
-                className="text-left p-4 rounded-lg bg-[#111113] border border-[#1F1F28] hover:border-[#27272A] transition-all group"
-              >
-                <p className="text-[12px] font-semibold text-white group-hover:text-[#38BDF8] transition-colors">
-                  World Project
-                </p>
-                <p className="text-[11px] text-[#52525B] font-mono mt-1.5">Project Atlas</p>
-                <div className="mt-3 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#8B5CF6]" />
-                  <span className="text-[10px] text-[#52525B]">World Generation</span>
-                </div>
-              </button>
-
-              {/* Agent Run */}
-              <button
-                onClick={() => router.push("/chat")}
-                className="text-left p-4 rounded-lg bg-[#111113] border border-[#1F1F28] hover:border-[#27272A] transition-all group"
-              >
-                <p className="text-[12px] font-semibold text-white group-hover:text-[#38BDF8] transition-colors">
-                  Agent Run
-                </p>
-                <p className="text-[11px] text-[#52525B] font-mono mt-1.5">Threat Analyst</p>
-                <div className="mt-3 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-                  <span className="text-[10px] text-[#52525B]">Completed</span>
-                </div>
-              </button>
-
             </div>
           </div>
+        </form>
 
+        {/* ── Quick Access Cards ── */}
+        <div className="space-y-3">
+          <h2 className="text-[10px] font-mono font-bold text-[#687180] uppercase tracking-widest">
+            QUICK ACCESS
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            
+            {/* Security */}
+            <button
+              onClick={() => router.push("/security")}
+              className="text-left p-4 rounded-lg bg-[#0d0f13] border border-[#ffffff14] hover:border-[#1677ff]/50 hover:bg-[#11141a] transition-all group space-y-2"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-[#1677ff]">SECOPS</span>
+                <span className="text-xs text-[#687180] group-hover:text-white transition-colors">→</span>
+              </div>
+              <p className="text-xs font-bold text-[#f5f7fa] group-hover:text-[#1677ff] transition-colors">
+                Security
+              </p>
+              <p className="text-[11px] text-[#a7adb8]">Investigate →</p>
+            </button>
+
+            {/* Game Project */}
+            <button
+              onClick={() => router.push("/gaming")}
+              className="text-left p-4 rounded-lg bg-[#0d0f13] border border-[#ffffff14] hover:border-[#1677ff]/50 hover:bg-[#11141a] transition-all group space-y-2"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-[#10b981]">STUDIO</span>
+                <span className="text-xs text-[#687180] group-hover:text-white transition-colors">→</span>
+              </div>
+              <p className="text-xs font-bold text-[#f5f7fa] group-hover:text-[#1677ff] transition-colors">
+                Game Project
+              </p>
+              <p className="text-[11px] text-[#a7adb8]">Open Studio →</p>
+            </button>
+
+            {/* Agent Runtime */}
+            <button
+              onClick={() => router.push("/runtime")}
+              className="text-left p-4 rounded-lg bg-[#0d0f13] border border-[#ffffff14] hover:border-[#1677ff]/50 hover:bg-[#11141a] transition-all group space-y-2"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-[#38bdf8]">RUNTIME</span>
+                <span className="text-xs text-[#687180] group-hover:text-white transition-colors">→</span>
+              </div>
+              <p className="text-xs font-bold text-[#f5f7fa] group-hover:text-[#1677ff] transition-colors">
+                Agent Runtime
+              </p>
+              <p className="text-[11px] text-[#a7adb8]">View Runs →</p>
+            </button>
+
+          </div>
         </div>
-      </main>
+
+        {/* ── Recent Activity ── */}
+        <div className="space-y-3">
+          <h2 className="text-[10px] font-mono font-bold text-[#687180] uppercase tracking-widest">
+            RECENT ACTIVITY
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            
+            {/* Card 1: CVE Investigation */}
+            <div
+              onClick={() => router.push("/threat-intel")}
+              className="p-3.5 rounded-lg bg-[#0d0f13] border border-[#ffffff14] hover:border-[#ffffff24] transition-all cursor-pointer space-y-1.5"
+            >
+              <p className="text-xs font-bold text-[#f5f7fa]">CVE Investigation</p>
+              <p className="text-[10px] font-mono text-[#ef4444]">Critical Exposure</p>
+            </div>
+
+            {/* Card 2: World Builder */}
+            <div
+              onClick={() => router.push("/world")}
+              className="p-3.5 rounded-lg bg-[#0d0f13] border border-[#ffffff14] hover:border-[#ffffff24] transition-all cursor-pointer space-y-1.5"
+            >
+              <p className="text-xs font-bold text-[#f5f7fa]">World Builder</p>
+              <p className="text-[10px] font-mono text-[#10b981]">Project Atlas</p>
+            </div>
+
+            {/* Card 3: Agent Run */}
+            <div
+              onClick={() => router.push("/runtime")}
+              className="p-3.5 rounded-lg bg-[#0d0f13] border border-[#ffffff14] hover:border-[#ffffff24] transition-all cursor-pointer space-y-1.5"
+            >
+              <p className="text-xs font-bold text-[#f5f7fa]">Agent Run</p>
+              <p className="text-[10px] font-mono text-[#38bdf8]">Completed</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
 
     </div>
   );
